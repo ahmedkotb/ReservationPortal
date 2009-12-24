@@ -32,6 +32,7 @@ public class LoginController extends HttpServlet {
         try {
             User x =  ReservationPortalSystem.getInstance().login((String)request.getParameter("userName"),(String)request.getParameter("password"));
             out.print( x.loginName + "    "  + x.getEmail()  + " " +  x.getPhoneNumber() );
+
         } finally { 
             out.close();
         }
