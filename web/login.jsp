@@ -1,6 +1,6 @@
 <%-- 
-    Document   : index
-    Created on : Dec 24, 2009, 8:53:15 PM
+    Document   : login
+    Created on : Dec 24, 2009, 9:52:18 PM
     Author     : ahmed
 --%>
 
@@ -14,7 +14,13 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
-        <a href="login.jsp">login now</a>
+        <h1>please login</h1>
+
+        <form action="login" method="post">
+            User Name :<input type="text" name="userName" value="" />
+            Password : <input type="password" name="password" value="" />
+            <input type="submit" value="login" />
+        </form>
+
     </body>
 </html>
