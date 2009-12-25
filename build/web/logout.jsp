@@ -1,6 +1,6 @@
 <%-- 
-    Document   : index
-    Created on : Dec 24, 2009, 8:53:15 PM
+    Document   : logout
+    Created on : Dec 25, 2009, 2:42:28 AM
     Author     : ahmed
 --%>
 
@@ -14,8 +14,9 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <jsp:include page="header.jsp"/>
-        <h1>Reservation Portal Home Page</h1>
-        <a href="login.jsp">login now</a>
+        <%
+            session.invalidate();
+        %>
+        <h1>hope to see u soon...</h1>
     </body>
 </html>

@@ -14,12 +14,13 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>please login</h1>
+        <jsp:include page="header.jsp"/>
+        <h2>Reservation Portal</h2>
 
         <form action="login" method="post">
-            User Name :<input type="text" name="userName" value="" />
-            Password : <input type="password" name="password" value="" />
-            <input type="submit" value="login" />
+            User Name :<input type="text" name="userName" value="" /> <br>
+            Password : <input type="password" name="password" value="" /> <br>
+            <input type="submit" value="login"/>
         </form>
 
     </body>

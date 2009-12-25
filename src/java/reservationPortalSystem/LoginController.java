@@ -33,8 +33,13 @@ public class LoginController extends HttpServlet {
         try {
             HttpSession session = request.getSession(true);
             User x =  ReservationPortalSystem.getInstance().login((String)request.getParameter("userName"),(String)request.getParameter("password"));
-            session.setAttribute("user", x);
-            out.print( x.userName + "    "  + x.getEmail()  + " " +  x.getPhoneNumber() );
+
+            if (x != null){
+                session.setAttribute("user", x);
+                out.print( x.userName + "    "  + x.getEmail()  + " " +  x.getPhoneNumber() );
+            }else{
+                out.println("wrong password or username");
+            }
 
         } finally { 
             out.close();
