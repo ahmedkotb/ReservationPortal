@@ -11,14 +11,12 @@ package reservationPortalSystem;
  */
 public class Customer extends User {
 
-    public Customer()
-    {
+    public Customer(){
         super();
     }
 
-    public Customer(String loginName, String password, String address, String email, String phoneNumber)
-    {
-        super(loginName, password, address, email, phoneNumber);
+    public Customer(String name,String loginName, String password, String address, String email, String phoneNumber){
+        super(name,loginName, password, address, email, phoneNumber);
     }
 
 

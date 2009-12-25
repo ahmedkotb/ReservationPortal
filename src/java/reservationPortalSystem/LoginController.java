@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -30,8 +31,10 @@ public class LoginController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
+            HttpSession session = request.getSession(true);
             User x =  ReservationPortalSystem.getInstance().login((String)request.getParameter("userName"),(String)request.getParameter("password"));
-            out.print( x.loginName + "    "  + x.getEmail()  + " " +  x.getPhoneNumber() );
+            session.setAttribute("user", x);
+            out.print( x.userName + "    "  + x.getEmail()  + " " +  x.getPhoneNumber() );
 
         } finally { 
             out.close();
