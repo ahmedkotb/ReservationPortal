@@ -43,7 +43,13 @@ public abstract class User
         loggedIn=false;
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getAddress(){
         return address;
