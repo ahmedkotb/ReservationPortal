@@ -6,7 +6,6 @@
 package reservationPortalSystem;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,9 +14,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Ahmed Kotb
+ * @author ahmed
  */
-public class LoginController extends HttpServlet {
+public class RegisterController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -28,22 +27,25 @@ public class LoginController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            HttpSession session = request.getSession(true);
-            User x =  ReservationPortalSystem.getInstance().login((String)request.getParameter("userName"),(String)request.getParameter("password"));
+        HttpSession session = request.getSession();
 
-            if (x != null){
-                session.setAttribute("user", x);
-                out.print( x.userName + "    "  + x.getEmail()  + " " +  x.getPhoneNumber() );
-            }else{
-                out.println("wrong password or username");
-            }
-
-        } finally { 
-            out.close();
+        String requestStr  = (String)request.getParameter("req");
+        if (requestStr == null || requestStr.equals("customer")){
+            //go to the normal customer register page
+            //getServletContext().getRequestDispatcher("/registeradmin.jsp").forward(request, response);
+        }else if (requestStr.equals("admin")){
+            //go to the admin register page
+            getServletContext().getRequestDispatcher("/registeradmin.jsp").forward(request, response);
+        }else if (requestStr.equals("registerCustomer")){
+            //register the customer
+        }else if (requestStr.equals("registerAdmin")){
+            //register the user information
+            //should get all the user info and create an admin object and save it to database
+            getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+        }else{
+            getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
         }
+
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

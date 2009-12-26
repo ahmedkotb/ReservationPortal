@@ -14,8 +14,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <jsp:include page="header.jsp"/>
-        <h1>Reservation Portal Home Page</h1>
-        <a href="login.jsp">login now</a>
+        <jsp:forward page="login.jsp"/>;
     </body>
 </html>
