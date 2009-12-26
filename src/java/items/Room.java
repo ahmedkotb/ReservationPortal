@@ -13,17 +13,23 @@ public class Room
 
     private double pricePerDay;
     private int guestNumber;
+    private int roomNumber;
+    private boolean reserved;   //a flag to determine whether this room is reservsed or not
 
     public Room()
     {
-        pricePerDay=0.0;
-        guestNumber=0;
+        pricePerDay = 0.0;
+        guestNumber = 0;
+        roomNumber = 0;
+        reserved = false;
     }
 
-    public Room(int pricePerDay, int guestNumber)
+    public Room(int pricePerDay, int guestNumber, int roomNumber)
     {
         this.pricePerDay = pricePerDay;
         this.guestNumber = guestNumber;
+        this.roomNumber = roomNumber;
+        reserved = false;
     }
 
     public int getGuestNumber()
@@ -41,8 +47,28 @@ public class Room
         return pricePerDay;
     }
 
-    public void setPricePerDay(double  pricePerDay)
+    public void setPricePerDay(double pricePerDay)
     {
         this.pricePerDay = pricePerDay;
+    }
+
+    public boolean isReserved()
+    {
+        return reserved;
+    }
+
+    public void setReserved(boolean reserved)
+    {
+        this.reserved = reserved;
+    }
+
+    public int getRoomNumber()
+    {
+        return roomNumber;
+    }
+
+    public void setRoomNumber(int roomNumber)
+    {
+        this.roomNumber = roomNumber;
     }
 }

@@ -21,15 +21,17 @@ public class Car extends ReservationItem
 
     public Car()
     {
-        carModel="";
-        carType="";
-        availableNumber=0;
-        rentPrice=0.0;
-        myAgency=new CarAgency();
+        super();
+        carModel = "";
+        carType = "";
+        availableNumber = 0;
+        rentPrice = 0.0;
+        myAgency = new CarAgency();
     }
 
-    public Car(String carModel, CarType carType, int availableNumber, double rentPrice, CarAgency myAgency)
+    public Car(int quantity, String carModel, CarType carType, int availableNumber, double rentPrice, CarAgency myAgency)
     {
+        super(quantity);
         this.carModel = carModel;
         this.carType = carType.toString();
         this.availableNumber = availableNumber;
@@ -106,8 +108,4 @@ public class Car extends ReservationItem
     {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
-
-
-
 }
