@@ -86,6 +86,8 @@ public class ReservationPortalSystem {
 
     public static void main(String []args)
     {
+        //test method
+        System.out.println("testing....");
         User x = new Admin("ahmed kotb","ahmed", "5d41402abc4b2a76b9719d911017c592", "Alex", "@", "010", true,"good admin , worked in xyz for 3 days");
         ReservationPortalSystem systemInstance=getInstance();
         //systemInstance.getConnection();
