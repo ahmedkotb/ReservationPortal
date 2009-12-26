@@ -5,6 +5,7 @@
 package items;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -159,4 +160,29 @@ public abstract class Flight extends ReservationItem
         return false;
 
     }
+     @Override
+    public void reserve(HashMap<String ,Integer> info)
+    {
+        //setting availableFirstSeats
+         availableFirstSeats=availableFirstSeats-info.get("FirstSeats");
+        //setting availableBussinessSeats
+         availableBussinessSeats=availableBussinessSeats-info.get("BussinessSeats");
+        //setting availableEconomySeats
+         availableEconomySeats=availableEconomySeats-info.get("EconomySeats");
+
+
+    }
+
+    @Override
+    public void returnBack(HashMap<String ,Integer> info)
+    {
+        //setting availableFirstSeats
+         availableFirstSeats=availableFirstSeats+info.get("FirstSeats");
+        //setting availableBussinessSeats
+         availableBussinessSeats=availableBussinessSeats+info.get("BussinessSeats");
+        //setting availableEconomySeats
+         availableEconomySeats=availableEconomySeats+info.get("EconomySeats");
+
+    }
+
 }
