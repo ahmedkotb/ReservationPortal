@@ -42,7 +42,7 @@ public class ReservationPortalSystem {
         //assuming that we have only one user with user name ahmed and password hello
         //x is the object in the data base
         //hello md5 hash is : 5d41402abc4b2a76b9719d911017c592
-        User x = new Admin("ahmed kotb","ahmed", "5d41402abc4b2a76b9719d911017c592", "Alex", "@", "010", true);
+        User x = new Admin("ahmed kotb","ahmed", "5d41402abc4b2a76b9719d911017c592", "Alex", "@", "010", true,"good admin , worked in xyz for 3 days");
         try {
             //login steps...
             //generate the hash of the username compare it to hash of username required
