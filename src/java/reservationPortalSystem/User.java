@@ -12,7 +12,8 @@ import java.util.Date;
  */
 public abstract class User
 {
-    protected String loginName;
+    protected String name;
+    protected String userName;
     protected String password;
     protected String address;
     protected String email;
@@ -21,7 +22,8 @@ public abstract class User
     protected boolean loggedIn;
 
     public User(){
-        loginName = "" ;
+        name = "";
+        userName = "" ;
         password ="";
         address="";
         email="";
@@ -30,9 +32,9 @@ public abstract class User
         loggedIn=false;
     }
 
-    public User(String loginName, String password, String address, String email, String phoneNumber)
-    {
-        this.loginName = loginName;
+    public User(String name,String userName, String password, String address, String email, String phoneNumber){
+        this.name = name;
+        this.userName = userName;
         this.password = password;
         this.address = address;
         this.email = email;
@@ -75,12 +77,12 @@ public abstract class User
         this.loggedIn = loggedIn;
     }
 
-    public String getLoginName(){
-        return loginName;
+    public String getUserName(){
+        return userName;
     }
 
-    public void setLoginName(String loginName){
-        this.loginName = loginName;
+    public void setUserName(String userName){
+        this.userName = userName;
     }
 
     public String getPassword(){
