@@ -22,6 +22,7 @@
             Password : <input type="password" name="password" value="" /> <br>
             <input type="submit" value="login"/>
         </form>
-
+        <a href="register?req=user">register User</a> <br>
+        <a href="register?req=admin">register Admin</a>
     </body>
 </html>

@@ -5,6 +5,7 @@
 package items;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -159,4 +160,16 @@ public abstract class Flight extends ReservationItem
         return false;
 
     }
+     @Override
+    public void reserve(HashMap info)
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void returnBack(HashMap info)
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }

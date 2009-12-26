@@ -29,16 +29,6 @@ public class OneWayFlight extends Flight {
 
 
 
-    @Override
-    public void reserve()
-    {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void returnBack()
-    {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+   
 
 }

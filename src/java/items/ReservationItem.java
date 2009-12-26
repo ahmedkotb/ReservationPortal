@@ -5,6 +5,7 @@
 package items;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -64,13 +65,14 @@ public abstract class ReservationItem
 
     /**
      * used to decrement the number of availabe items
+     * @param info the data wanted to determine which avialable number of items to be decremented
      */
-    public abstract void reserve();
+    public abstract void reserve(HashMap info);
 
     /**
      * used to increment the number of availabe items
      */
-    public abstract void returnBack();    
+    public abstract void returnBack(HashMap info);
 
     /**
      *check if the item is reserved by any customer or not so that an admin can remove this item
