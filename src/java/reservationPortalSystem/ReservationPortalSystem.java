@@ -74,12 +74,13 @@ public class ReservationPortalSystem {
     public void register(User user) {
     }
 
-    public void save(User user) {
+    public void save(Object presistantObject) {
         //start transiction
         databaseConnector.currentTransaction().begin();
 
-        databaseConnector.makePersistent(user);
+        databaseConnector.makePersistent(presistantObject);
 
+        //end transiction
         databaseConnector.currentTransaction().commit();
 
     }
@@ -91,6 +92,7 @@ public class ReservationPortalSystem {
         //systemInstance.getConnection();
         systemInstance.initSystem();
         systemInstance.save(x);
+        //x.setName("Ahmed Mohsen");
     }
 
 }
