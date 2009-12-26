@@ -8,6 +8,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import utilities.MD5HashGenerator;
+import java.util.*;
+import javax.jdo.*;
+import com.objectdb.Utilities;
+import java.io.File;
 
 /**
  *
@@ -16,8 +20,14 @@ import utilities.MD5HashGenerator;
 public class ReservationPortalSystem {
 
     private static ReservationPortalSystem systemInstance;
+    private static PersistenceManager databaseConnector = Utilities.getPersistenceManager("database"+File.separator +"database.odb");
 
     private ReservationPortalSystem() {
+    }
+
+    public static PersistenceManager getConnection()
+    {
+        return databaseConnector;
     }
 
     public static ReservationPortalSystem getInstance() {
@@ -29,6 +39,8 @@ public class ReservationPortalSystem {
     }
 
     private void initSystem() {
+
+        com.objectdb.Enhancer.enhance("reservationPortalSystem.*");
     }
 
     /**
@@ -61,4 +73,24 @@ public class ReservationPortalSystem {
 
     public void register(User user) {
     }
+
+    public void save(User user) {
+        //start transiction
+        databaseConnector.currentTransaction().begin();
+
+        databaseConnector.makePersistent(user);
+
+        databaseConnector.currentTransaction().commit();
+
+    }
+
+    public static void main(String []args)
+    {
+        User x = new Admin("ahmed kotb","ahmed", "5d41402abc4b2a76b9719d911017c592", "Alex", "@", "010", true,"good admin , worked in xyz for 3 days");
+        ReservationPortalSystem systemInstance=getInstance();
+        //systemInstance.getConnection();
+        systemInstance.initSystem();
+        systemInstance.save(x);
+    }
+
 }
