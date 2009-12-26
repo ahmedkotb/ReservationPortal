@@ -48,10 +48,9 @@ public class SingleDate implements DateInformation
         if (StartDate.before(today))
         {
             return false;
-        } else
-        {
-            return true;
         }
+        return true;
+
 
     }
 }
