@@ -20,13 +20,12 @@ import java.io.File;
 public class ReservationPortalSystem {
 
     private static ReservationPortalSystem systemInstance;
-    private static PersistenceManager databaseConnector = Utilities.getPersistenceManager("database"+File.separator +"database.odb");
+    private static PersistenceManager databaseConnector = Utilities.getPersistenceManager("database" + File.separator + "database.odb");
 
     private ReservationPortalSystem() {
     }
 
-    public static PersistenceManager getConnection()
-    {
+    public static PersistenceManager getConnection() {
         return databaseConnector;
     }
 
@@ -41,7 +40,8 @@ public class ReservationPortalSystem {
 
     private void initSystem() {
 
-        com.objectdb.Enhancer.enhance("reservationPortalSystem.*");
+        com.objectdb.Enhancer.enhance("reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer");
+        //com.objectdb.Enhancer.enhance("reservationPortalSystem.*");
     }
 
     /**
@@ -55,13 +55,13 @@ public class ReservationPortalSystem {
         //assuming that we have only one user with user name ahmed and password hello
         //x is the object in the data base
         //hello md5 hash is : 5d41402abc4b2a76b9719d911017c592
-        User x = new Admin("ahmed kotb","ahmed", "5d41402abc4b2a76b9719d911017c592", "Alex", "@", "010", true,"good admin , worked in xyz for 3 days");
+        User x = new Admin("ahmed kotb", "ahmed", "5d41402abc4b2a76b9719d911017c592", "Alex", "@", "010", true, "good admin , worked in xyz for 3 days");
         //login steps...
         //generate the hash of the username compare it to hash of username required
         if (MD5HashGenerator.generateHash(password).equals(x.getPassword())) {
             return x;
         }
-        
+
         return null;
     }
 
@@ -71,27 +71,33 @@ public class ReservationPortalSystem {
     public void register(User user) {
     }
 
-    public void save(Object presistantObject) {
-        //start transiction
-        databaseConnector.currentTransaction().begin();
+    synchronized public void save(Object presistantObject) {
+        try {
+            databaseConnector = Utilities.getPersistenceManager("database" + File.separator + "database.odb");
+            databaseConnector.currentTransaction().begin();  //start transiction
+            databaseConnector.makePersistent(presistantObject);
+            databaseConnector.currentTransaction().commit();    //end transiction
+        } finally {
+// Close the database and active transaction:
+            if (databaseConnector.currentTransaction().isActive()) {
+                databaseConnector.currentTransaction().rollback();
+            }
+            if (!databaseConnector.isClosed()) {
+                databaseConnector.close();
+            }
 
-        databaseConnector.makePersistent(presistantObject);
 
-        //end transiction
-        databaseConnector.currentTransaction().commit();
-
+        }
     }
 
-    public static void main(String []args)
-    {
+    public static void main(String[] args) {
         //test method
         System.out.println("testing....");
-        User x = new Admin("ahmed kotb","ahmed", "5d41402abc4b2a76b9719d911017c592", "Alex", "@", "010", true,"good admin , worked in xyz for 3 days");
-        ReservationPortalSystem systemInstance=getInstance();
+        User x = new Admin("toot", "toot", "toot", "teet", "@", "010", true, "good admin , worked in xyz for 3 days");
+        ReservationPortalSystem systemInstance = getInstance();
         //systemInstance.getConnection();
         systemInstance.initSystem();
         systemInstance.save(x);
         //x.setName("Ahmed Mohsen");
     }
-
 }
