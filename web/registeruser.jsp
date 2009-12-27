@@ -27,19 +27,15 @@
                 </tr>
                 <tr>
                     <td>Password : </td>
-                    <td><input type="password" name="userName" value="" /></td>
+                    <td><input type="password" name="password" value="" /></td>
                 </tr>
                 <tr>
                     <td>Confirm Password : </td>
-                    <td><input type="password" name="userName" value="" /></td>
+                    <td><input type="password" value="" /></td>
                 </tr>
                 <tr>
                     <td>Address : </td>
-                    <td><input type="text" name="Address" value="" /></td>
-                </tr>
-                <tr>
-                    <td>Address : </td>
-                    <td><input type="text" name="Address" value="" /></td>
+                    <td><input type="text" name="address" value="" /></td>
                 </tr>
                 <tr>
                     <td>Email : </td>

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import utilities.MD5HashGenerator;
 
 /**
  *
@@ -41,12 +42,41 @@ public class RegisterController extends HttpServlet {
         }else if (requestStr.equals("registerAdmin")){
             //register the user information
             //should get all the user info and create an admin object and save it to database
-            getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+            //getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+            User x = getUserFromRequest(request);
+            ReservationPortalSystem.getInstance().save(x);
         }else{
             getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
         }
 
     } 
+
+    private User getUserFromRequest(HttpServletRequest request){
+        String reqStr = (String)request.getParameter("req");
+        if (reqStr.equals("registerAdmin")){
+            Admin newAdmin = new Admin();
+            newAdmin.setName((String)request.getParameter("name"));
+            newAdmin.setUserName((String)request.getParameter("userName"));
+            newAdmin.setPassword(MD5HashGenerator.generateHash((String)request.getParameter("password")));
+            newAdmin.setAddress((String)request.getParameter("address"));
+            newAdmin.setEmail((String)request.getParameter("email"));
+            newAdmin.setPhoneNumber((String)request.getParameter("phone"));
+            newAdmin.setActivated(false);
+            newAdmin.setQualifications((String)request.getParameter("qualifications"));
+            return newAdmin;
+        }else if (reqStr.equals("registerUser")){
+            Customer newCustomer = new Customer();
+            newCustomer.setName((String)request.getParameter("name"));
+            newCustomer.setUserName((String)request.getParameter("userName"));
+            newCustomer.setPassword(MD5HashGenerator.generateHash((String)request.getParameter("password")));
+            newCustomer.setAddress((String)request.getParameter("address"));
+            newCustomer.setEmail((String)request.getParameter("email"));
+            newCustomer.setPhoneNumber((String)request.getParameter("phone"));
+            return newCustomer;
+        }else{
+            return null;
+        }
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
