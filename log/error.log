@@ -1,0 +1,9 @@
+Exception on Dec 27, 2009 4:38:57 AM by fe 1.04.2470
+javax.jdo.JDOFatalUserException: PersistenceManager is closed
+	at com.objectdb.Logger.newFatalUserException(Logger.java:579)
+	at com.objectdb.jdo.PMImpl.assertOpen(PMImpl.java:1043)
+	at com.objectdb.jdo.PMImpl.assertNoActiveTransaction(PMImpl.java:1062)
+	at com.objectdb.jdo.TransactionImpl.begin(TransactionImpl.java:83)
+	at reservationPortalSystem.ReservationPortalSystem.save(ReservationPortalSystem.java:93)
+	at reservationPortalSystem.ReservationPortalSystem.main(ReservationPortalSystem.java:123)
+

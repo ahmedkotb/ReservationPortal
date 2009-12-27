@@ -5,6 +5,8 @@
 
 package reservationPortalSystem;
 
+import com.objectdb.Utilities;
+import java.io.File;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import utilities.MD5HashGenerator;
+import javax.jdo.*;
+import com.objectdb.Utilities;
+import java.io.PrintWriter;
+import java.util.Collection;
+import java.util.Iterator;
 
 /**
  *
@@ -43,10 +50,37 @@ public class RegisterController extends HttpServlet {
             //register the user information
             //should get all the user info and create an admin object and save it to database
             //getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
-        
-            User x = new Admin("toot", "toot", "toot", "teet", "@", "010", true, "good admin , worked in xyz for 3 days");
-            //User x = getUserFromRequest(request);
+
+
+
+//
+            //com.objectdb.Enhancer.enhance("reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer");
+//
+//            User x = new Admin("same7", "teet", "toot", "teet", "@", "010", true, "good admin , worked in xyz for 3 days");
+            User x = getUserFromRequest(request);
+            //PersistenceManager   databaseConnector = Utilities.getPersistenceManager("/home/ahmed/Projects/ReservationPortal/database/" + "database.odb");
+            //databaseConnector.currentTransaction().begin(); //start transiction
+            //databaseConnector.makePersistent(x);
+//           // x.getAddress();
+            //databaseConnector.currentTransaction().commit();    //end transiction
+
+//             PrintWriter p = (PrintWriter)response.getWriter();
+//
+//                Query query = databaseConnector.newQuery(User.class);
+//		Collection result = (Collection)query.execute();
+//				Iterator itr = result.iterator();
+//
+//				while (itr.hasNext()){
+//
+//				p.println(((User)itr.next()).getName());
+//				}
+//				query.close(result);
+
+
             ReservationPortalSystem.getInstance().save(x);
+
+           
+           // getServletContext().getRequestDispatcher("/login.jsp").forwarred(request, response);
         }else{
             getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
         }
