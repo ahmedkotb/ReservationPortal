@@ -43,6 +43,7 @@ public class RegisterController extends HttpServlet {
             //register the user information
             //should get all the user info and create an admin object and save it to database
             //getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+            //MD5HashGenerator.generateHash((String)request.getParameter("password"));
             User x = getUserFromRequest(request);
             ReservationPortalSystem.getInstance().save(x);
         }else{
@@ -57,7 +58,8 @@ public class RegisterController extends HttpServlet {
             Admin newAdmin = new Admin();
             newAdmin.setName((String)request.getParameter("name"));
             newAdmin.setUserName((String)request.getParameter("userName"));
-            newAdmin.setPassword(MD5HashGenerator.generateHash((String)request.getParameter("password")));
+            //newAdmin.setPassword(MD5HashGenerator.generateHash((String)request.getParameter("password")));
+            newAdmin.setPassword("new password");
             newAdmin.setAddress((String)request.getParameter("address"));
             newAdmin.setEmail((String)request.getParameter("email"));
             newAdmin.setPhoneNumber((String)request.getParameter("phone"));
@@ -68,7 +70,8 @@ public class RegisterController extends HttpServlet {
             Customer newCustomer = new Customer();
             newCustomer.setName((String)request.getParameter("name"));
             newCustomer.setUserName((String)request.getParameter("userName"));
-            newCustomer.setPassword(MD5HashGenerator.generateHash((String)request.getParameter("password")));
+            //newCustomer.setPassword(MD5HashGenerator.generateHash((String)request.getParameter("password")));
+            newCustomer.setPassword("new password");
             newCustomer.setAddress((String)request.getParameter("address"));
             newCustomer.setEmail((String)request.getParameter("email"));
             newCustomer.setPhoneNumber((String)request.getParameter("phone"));
