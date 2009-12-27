@@ -33,6 +33,7 @@ public class ReservationPortalSystem {
     public static ReservationPortalSystem getInstance() {
         if (systemInstance == null) {
             systemInstance = new ReservationPortalSystem();
+            systemInstance.initSystem();
         }
 
         return systemInstance;
@@ -55,16 +56,12 @@ public class ReservationPortalSystem {
         //x is the object in the data base
         //hello md5 hash is : 5d41402abc4b2a76b9719d911017c592
         User x = new Admin("ahmed kotb","ahmed", "5d41402abc4b2a76b9719d911017c592", "Alex", "@", "010", true,"good admin , worked in xyz for 3 days");
-        try {
-            //login steps...
-            //generate the hash of the username compare it to hash of username required
-            if (MD5HashGenerator.generateHash(password).equals(x.getPassword())) {
-                return x;
-            }
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(ReservationPortalSystem.class.getName()).log(Level.SEVERE, null, ex);
+        //login steps...
+        //generate the hash of the username compare it to hash of username required
+        if (MD5HashGenerator.generateHash(password).equals(x.getPassword())) {
+            return x;
         }
-
+        
         return null;
     }
 
