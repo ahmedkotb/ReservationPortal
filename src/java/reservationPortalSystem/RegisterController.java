@@ -43,8 +43,9 @@ public class RegisterController extends HttpServlet {
             //register the user information
             //should get all the user info and create an admin object and save it to database
             //getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
-            //MD5HashGenerator.generateHash((String)request.getParameter("password"));
-            User x = getUserFromRequest(request);
+        
+            User x = new Admin("toot", "toot", "toot", "teet", "@", "010", true, "good admin , worked in xyz for 3 days");
+            //User x = getUserFromRequest(request);
             ReservationPortalSystem.getInstance().save(x);
         }else{
             getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
