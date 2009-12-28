@@ -7,6 +7,8 @@ package reservationPortalSystem;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -41,6 +43,10 @@ public class LoginController extends HttpServlet {
                 out.println("wrong password or username");
             }
 
+        } catch (Exception ex)
+        {
+            out.print(ex);
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         } finally { 
             out.close();
         }

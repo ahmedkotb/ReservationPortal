@@ -58,23 +58,27 @@ public class ReservationPortalSystem
      * login method
      * @param userName the user name entered in the login form
      * @param password the password entered in the login form
-     * @return a user object or null if the user doesn't exit
+     * @return a user object or userNotfoundException if the user doesn't exit
      */
-    public User login(String userName, String password)
+    public User login(String userName, String password) throws Exception
     {
-        //testing
-        //assuming that we have only one user with user name ahmed and password hello
-        //x is the object in the data base
-        //hello md5 hash is : 5d41402abc4b2a76b9719d911017c592
-        User x = new Admin("ahmed kotb", "ahmed", "5d41402abc4b2a76b9719d911017c592", "Alex", "@", "010", true, "good admin , worked in xyz for 3 days");
-        //login steps...
-        //generate the hash of the username compare it to hash of username required
-        if (MD5HashGenerator.generateHash(password).equals(x.getPassword()))
-        {
-            return x;
+
+        Query query = databaseConnector.newQuery(User.class,"this.userName == userName");
+        query.declareParameters("String userName");
+        Collection result = (Collection)query.execute(userName);
+        Iterator itr = result.iterator();
+
+       if (itr.hasNext() == false) throw new Exception("UserNotFoundException");
+
+
+        User user  = (User) itr.next();
+        if (MD5HashGenerator.generateHash(password).equals(user.getPassword())){
+            return user;
+        }else{
+           // throw new Exception("UserNotFoundException");
+            return null;
         }
 
-        return null;
     }
 
     public void logout(User user)
@@ -109,25 +113,27 @@ public class ReservationPortalSystem
         }
     }
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws Exception
     {
         //test method
+        ReservationPortalSystem systemInstance = getInstance();
         System.out.println("testing....");
-      // com.objectdb.Enhancer.enhance("items.*,reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer");
+       //com.objectdb.Enhancer.enhance("items.*,reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer");
         User x = new Admin("toot", "toot", "toot", "teet", "@", "010", true, "good admin , worked in xyz for 3 days");
+        systemInstance.login("toot","toot");
         Location l=new Location("1", "1", "1");
         Location l2=new Location("2", "2", "2");
         ArrayList<Location> ll=new ArrayList<Location>();
         ll.add(l2);ll.add(l);
         CarAgency ag=new CarAgency("motor ride", ll);
       Car c=new Car(10, "Mercedes", CarType.Economy, 9, 150, ag);
-        ReservationPortalSystem systemInstance = getInstance();
+        //ReservationPortalSystem systemInstance = getInstance();
         //systemInstance.getConnection();
         //systemInstance.initSystem();
         //systemInstance.save(c);
         Car d=new Car();
         d.setObjectData( c.getObjectData());
-        systemInstance.save(d);
+        //systemInstance.save(d);
         //x.setName("Ahmed Mohsen");
     }
 }
