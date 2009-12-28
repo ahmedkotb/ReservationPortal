@@ -2,24 +2,24 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package reservationPortalSystem;
+
+package controllers;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import reservationPortalSystem.Owner;
+import reservationPortalSystem.ReservationPortalSystem;
+import reservationPortalSystem.User;
 
 /**
  *
- * @author Ahmed Kotb
+ * @author ahmed
  */
-public class LoginController extends HttpServlet {
-
+public class ownerController extends HttpServlet {
+   
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -28,32 +28,31 @@ public class LoginController extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            HttpSession session = request.getSession(true);
-            User user = ReservationPortalSystem.getInstance().login((String) request.getParameter("userName"), (String) request.getParameter("password"));
 
-            if (user != null) {
-                session.setAttribute("user", user);
-                if (user instanceof Owner) {
-                    getServletContext().getRequestDispatcher("/owner/owner.jsp").forward(request, response);
-                } else {
-                    out.print(user.userName + "    " + user.getEmail() + " " + user.getPhoneNumber());
-                }
-
-            } else {
-                out.println("wrong password or username");
-            }
-
-        } catch (Exception ex) {
-            out.print(ex);
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            out.close();
+        if (request.getSession().getAttribute("user") == null || !((User)request.getSession().getAttribute("user") instanceof Owner)){
+            getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+            return;
         }
-    }
+
+        String req = (String)request.getParameter("req");
+        if (req == null){
+            getServletContext().getRequestDispatcher("/owner/owner.jsp").forward(request, response);
+        }else if (req.equals("allAdmins")) {
+            request.getSession().setAttribute("mode", "allAdmins");
+            request.getSession().setAttribute("result", ReservationPortalSystem.getInstance().getAllAdmins());
+            getServletContext().getRequestDispatcher("/owner/owner.jsp").forward(request, response);
+        }else if (req.equals("newAdmins")){
+            request.getSession().setAttribute("mode", "newAdmins");
+            request.getSession().setAttribute("result", ReservationPortalSystem.getInstance().getNewAdmins());
+            getServletContext().getRequestDispatcher("/owner/owner.jsp").forward(request, response);
+        }else if (req.equals("activate")) {
+            String userName = (String)request.getParameter("userName");
+            ReservationPortalSystem.getInstance().activateAdmin(userName);
+            getServletContext().getRequestDispatcher("/owner").forward(request, response);
+        }
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
@@ -65,9 +64,9 @@ public class LoginController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
-    }
+    } 
 
     /** 
      * Handles the HTTP <code>POST</code> method.
@@ -78,7 +77,7 @@ public class LoginController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -90,4 +89,5 @@ public class LoginController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

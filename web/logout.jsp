@@ -4,7 +4,7 @@
     Author     : ahmed
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" import="reservationPortalSystem.ReservationPortalSystem , reservationPortalSystem.User"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -15,6 +15,8 @@
     </head>
     <body>
         <%
+            if ((User)session.getAttribute("user") != null)
+                ReservationPortalSystem.getInstance().logout((User)session.getAttribute("user"));
             session.invalidate();
         %>
         <h1>hope to see u soon...</h1>

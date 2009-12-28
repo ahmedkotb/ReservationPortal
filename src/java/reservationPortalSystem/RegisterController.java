@@ -40,13 +40,13 @@ public class RegisterController extends HttpServlet {
         }else if (requestStr.equals("registerCustomer")){
             //register the customer
             User x = getUserFromRequest(request);
-            ReservationPortalSystem.getInstance().save(x);
+            ReservationPortalSystem.getInstance().register(x);
             getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
         }else if (requestStr.equals("registerAdmin")){
             //register the user information
             //should get all the user info and create an admin object and save it to database
             User x = getUserFromRequest(request);
-            ReservationPortalSystem.getInstance().save(x);
+            ReservationPortalSystem.getInstance().register(x);
             getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
         }else{
             getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
@@ -69,6 +69,8 @@ public class RegisterController extends HttpServlet {
             return newAdmin;
         }else if (reqStr.equals("registerCustomer")){
             Customer newCustomer = new Customer();
+            //to register a new owner replace the previous line with this one
+            //Owner newCustomer = new Owner();
             newCustomer.setName((String)request.getParameter("name"));
             newCustomer.setUserName((String)request.getParameter("userName"));
             newCustomer.setPassword(MD5HashGenerator.generateHash((String)request.getParameter("password")));

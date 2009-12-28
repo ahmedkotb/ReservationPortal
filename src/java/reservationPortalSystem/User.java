@@ -28,7 +28,7 @@ public abstract class User
         address="";
         email="";
         phoneNumber="0";
-        lastLoginDate=new Date();
+        lastLoginDate=null;
         loggedIn=false;
     }
 
@@ -39,7 +39,7 @@ public abstract class User
         this.address = address;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        lastLoginDate=new Date();
+        lastLoginDate=null;
         loggedIn=false;
     }
 
