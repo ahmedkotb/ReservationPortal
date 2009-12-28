@@ -185,4 +185,14 @@ public abstract class Flight extends ReservationItem
 
     }
 
+     public void setObjectData(HashMap fields)
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public HashMap getEmptyFields()
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }

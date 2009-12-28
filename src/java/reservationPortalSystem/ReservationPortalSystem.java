@@ -11,26 +11,35 @@ import utilities.MD5HashGenerator;
 import java.util.*;
 import javax.jdo.*;
 import com.objectdb.Utilities;
+import items.Car;
+import items.CarAgency;
+import items.CarType;
+import items.Location;
 import java.io.File;
 
 /**
  *
  * @author ahmed
  */
-public class ReservationPortalSystem {
+public class ReservationPortalSystem
+{
 
     private static ReservationPortalSystem systemInstance;
     private static PersistenceManager databaseConnector = Utilities.getPersistenceManager("database" + File.separator + "database.odb");
 
-    private ReservationPortalSystem() {
+    private ReservationPortalSystem()
+    {
     }
 
-    public static PersistenceManager getConnection() {
+    public static PersistenceManager getConnection()
+    {
         return databaseConnector;
     }
 
-    public static ReservationPortalSystem getInstance() {
-        if (systemInstance == null) {
+    public static ReservationPortalSystem getInstance()
+    {
+        if (systemInstance == null)
+        {
             systemInstance = new ReservationPortalSystem();
             systemInstance.initSystem();
         }
@@ -38,9 +47,10 @@ public class ReservationPortalSystem {
         return systemInstance;
     }
 
-    private void initSystem() {
+    private void initSystem()
+    {
 
-        com.objectdb.Enhancer.enhance("reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer");
+        //com.objectdb.Enhancer.enhance("reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer");
         //com.objectdb.Enhancer.enhance("reservationPortalSystem.*");
     }
 
@@ -50,7 +60,8 @@ public class ReservationPortalSystem {
      * @param password the password entered in the login form
      * @return a user object or null if the user doesn't exit
      */
-    public User login(String userName, String password) {
+    public User login(String userName, String password)
+    {
         //testing
         //assuming that we have only one user with user name ahmed and password hello
         //x is the object in the data base
@@ -58,46 +69,65 @@ public class ReservationPortalSystem {
         User x = new Admin("ahmed kotb", "ahmed", "5d41402abc4b2a76b9719d911017c592", "Alex", "@", "010", true, "good admin , worked in xyz for 3 days");
         //login steps...
         //generate the hash of the username compare it to hash of username required
-        if (MD5HashGenerator.generateHash(password).equals(x.getPassword())) {
+        if (MD5HashGenerator.generateHash(password).equals(x.getPassword()))
+        {
             return x;
         }
 
         return null;
     }
 
-    public void logout(User user) {
+    public void logout(User user)
+    {
     }
 
-    public void register(User user) {
+    public void register(User user)
+    {
     }
 
-    synchronized public void save(Object presistantObject) {
-        try {
-            databaseConnector = Utilities.getPersistenceManager("database" + File.separator + "database.odb");
+    synchronized public void save(Object presistantObject)
+    {
+        try
+        {
+            //databaseConnector = Utilities.getPersistenceManager("database" + File.separator + "database.odb");
             databaseConnector.currentTransaction().begin();  //start transiction
             databaseConnector.makePersistent(presistantObject);
             databaseConnector.currentTransaction().commit();    //end transiction
-        } finally {
+        } finally
+        {
 // Close the database and active transaction:
-            if (databaseConnector.currentTransaction().isActive()) {
+            if (databaseConnector.currentTransaction().isActive())
+            {
                 databaseConnector.currentTransaction().rollback();
             }
-            if (!databaseConnector.isClosed()) {
-                databaseConnector.close();
+            if (!databaseConnector.isClosed())
+            {
+                //databaseConnector.close();
             }
 
 
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         //test method
         System.out.println("testing....");
+      // com.objectdb.Enhancer.enhance("items.*,reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer");
         User x = new Admin("toot", "toot", "toot", "teet", "@", "010", true, "good admin , worked in xyz for 3 days");
+        Location l=new Location("1", "1", "1");
+        Location l2=new Location("2", "2", "2");
+        ArrayList<Location> ll=new ArrayList<Location>();
+        ll.add(l2);ll.add(l);
+        CarAgency ag=new CarAgency("motor ride", ll);
+      Car c=new Car(10, "Mercedes", CarType.Economy, 9, 150, ag);
         ReservationPortalSystem systemInstance = getInstance();
         //systemInstance.getConnection();
-        systemInstance.initSystem();
-        systemInstance.save(x);
+        //systemInstance.initSystem();
+        //systemInstance.save(c);
+        Car d=new Car();
+        d.setObjectData( c.getObjectData());
+        systemInstance.save(d);
         //x.setName("Ahmed Mohsen");
     }
 }

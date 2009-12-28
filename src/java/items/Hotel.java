@@ -133,4 +133,14 @@ public class Hotel extends ReservationItem
         return false;
 
     }
+
+    public void setObjectData(HashMap fields)
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public HashMap getEmptyFields()
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

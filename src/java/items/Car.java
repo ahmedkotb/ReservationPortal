@@ -4,6 +4,7 @@
  */
 package items;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -105,6 +106,38 @@ public class Car extends ReservationItem
 
     @Override
     public boolean isInUse()
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public HashMap getObjectData()
+    {
+        HashMap<String, Object> fields = new HashMap<String, Object>();    //the hash map containig the fields of the object
+        fields.putAll(super.getObjectData());   //putting the common attributes from the abstract class in the map
+        fields.put("car Type", carType);
+        fields.put("car Model", carModel);
+        fields.put("available Number", availableNumber);
+        fields.put("rentPrice", rentPrice);
+        fields.put("my Agency", myAgency);
+        return fields;
+    }
+
+    public void setObjectData(HashMap fields)
+    {
+        //setting the attributes from parent class
+        quantity = (Integer) fields.get("quantity");
+        //setting the concrete class attributes
+        rating = (Double) fields.get("rating");
+        reviews = (ArrayList<Review>) fields.get("reviews");
+        carType = (String) fields.get("car Type");
+        carModel = (String) fields.get("car Model");
+        availableNumber = (Integer) fields.get("available Number");
+        rentPrice = (Double) fields.get("rentPrice");
+        myAgency = (CarAgency) fields.get("my Agency");
+    }
+
+    public HashMap getEmptyFields()
     {
         throw new UnsupportedOperationException("Not supported yet.");
     }

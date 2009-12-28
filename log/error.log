@@ -7,3 +7,15 @@ javax.jdo.JDOFatalUserException: PersistenceManager is closed
 	at reservationPortalSystem.ReservationPortalSystem.save(ReservationPortalSystem.java:93)
 	at reservationPortalSystem.ReservationPortalSystem.main(ReservationPortalSystem.java:123)
 
+Exception on Dec 28, 2009 4:11:00 AM by fe 1.04.2470
+javax.jdo.JDOFatalUserException: PersistenceManager is closed
+	at com.objectdb.Logger.newFatalUserException(Logger.java:579)
+	at com.objectdb.hb.rB(hb.java:2435)
+	at com.objectdb.hb.rB(hb.java:2414)
+	at com.objectdb.hb.Mf(hb.java:2396)
+	at com.objectdb.rz.isLoaded(rz.java:292)
+	at items.ReservationItem.jdoGetquantity(ReservationItem.java)
+	at items.ReservationItem.getObjectData(ReservationItem.java:110)
+	at items.Car.getObjectData(Car.java:115)
+	at reservationPortalSystem.ReservationPortalSystem.main(ReservationPortalSystem.java:128)
+

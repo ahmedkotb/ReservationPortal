@@ -11,7 +11,7 @@ import java.util.HashMap;
  *
  * @author ahmed
  */
-public abstract class ReservationItem
+public abstract class ReservationItem implements Hashable
 {
 
     protected Double rating;      //the customer rating for this item
@@ -98,4 +98,19 @@ public abstract class ReservationItem
     {
         reviews.add(review);
     }
+
+
+    /**
+     * return a hash map representing the item attributes
+     * @return the attributes map
+     */
+    public HashMap getObjectData()
+    {
+        HashMap<String,Object> fields=new HashMap<String, Object>();    //the hash map containig the fields of the object
+        fields.put("quantity", quantity);
+        fields.put("rating", rating);
+        fields.put("reviews", reviews);
+        return fields;
+    }
+
 }
