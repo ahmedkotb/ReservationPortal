@@ -40,17 +40,21 @@ public class ownerController extends HttpServlet {
         if (req == null){
             getServletContext().getRequestDispatcher("/owner/owner.jsp").forward(request, response);
         }else if (req.equals("allAdmins")) {
-            request.getSession().setAttribute("mode", "allAdmins");
-            request.getSession().setAttribute("result", ReservationPortalSystem.getInstance().getAllAdmins());
+            request.setAttribute("mode", "allAdmins");
+            request.setAttribute("result", ReservationPortalSystem.getInstance().getAllAdmins());
             getServletContext().getRequestDispatcher("/owner/owner.jsp").forward(request, response);
         }else if (req.equals("newAdmins")){
-            request.getSession().setAttribute("mode", "newAdmins");
-            request.getSession().setAttribute("result", ReservationPortalSystem.getInstance().getNewAdmins());
+            request.setAttribute("mode", "newAdmins");
+            request.setAttribute("result", ReservationPortalSystem.getInstance().getNewAdmins());
             getServletContext().getRequestDispatcher("/owner/owner.jsp").forward(request, response);
         }else if (req.equals("activate")) {
             String userName = (String)request.getParameter("userName");
-            ReservationPortalSystem.getInstance().activateAdmin(userName);
-            getServletContext().getRequestDispatcher("/owner").forward(request, response);
+            ReservationPortalSystem.getInstance().setAdminActivation(userName, true);
+            getServletContext().getRequestDispatcher("/owner/owner.jsp").forward(request, response);
+        }else if (req.equals("deactivate")){
+            String userName = (String)request.getParameter("userName");
+            ReservationPortalSystem.getInstance().setAdminActivation(userName, false);
+            getServletContext().getRequestDispatcher("/owner/owner.jsp").forward(request, response);
         }
     } 
 

@@ -132,17 +132,18 @@ public class ReservationPortalSystem {
     }
 
     /**
-     * activate an admin with a specific name
+     * activate or deactivate an admin with a specific name according to the value given
      * @param adminUserName the user name to be activated
+     * @param value if true the admin will be activated else it will be disactivated and will not be allowed to login
      */
-    public void activateAdmin(String adminUserName){
+    public void setAdminActivation(String adminUserName,boolean value){
         Query query = databaseConnector.newQuery(Admin.class, "this.userName == adminUserName");
         query.declareParameters("String adminUserName");
         Collection result = (Collection) query.execute(adminUserName);
         //if (result.size() == 0) return;
         Admin admin = (Admin)result.iterator().next();
         databaseConnector.currentTransaction().begin();
-        admin.setActivated(true);
+        admin.setActivated(value);
         databaseConnector.currentTransaction().commit();
        
     }

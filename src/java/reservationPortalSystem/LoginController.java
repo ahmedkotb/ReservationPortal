@@ -39,6 +39,13 @@ public class LoginController extends HttpServlet {
                 session.setAttribute("user", user);
                 if (user instanceof Owner) {
                     getServletContext().getRequestDispatcher("/owner/owner.jsp").forward(request, response);
+                } else if (user instanceof Admin){
+                    if (((Admin)user).isActivated())
+                        out.print("ADMIN HOME PAGE <br> " + user.userName + "    " + user.getEmail() + " " + user.getPhoneNumber());
+                    else {
+                        out.print("you are not activated yet or have been deactivated by the owner of the portal");
+                        session.invalidate();
+                    }
                 } else {
                     out.print(user.userName + "    " + user.getEmail() + " " + user.getPhoneNumber());
                 }
