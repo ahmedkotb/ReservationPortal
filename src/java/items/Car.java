@@ -115,11 +115,11 @@ public class Car extends ReservationItem
     {
         HashMap<String, Object> fields = new HashMap<String, Object>();    //the hash map containig the fields of the object
         fields.putAll(super.getObjectData());   //putting the common attributes from the abstract class in the map
-        fields.put("car Type", carType);
-        fields.put("car Model", carModel);
-        fields.put("available Number", availableNumber);
+        fields.put("carType", carType);
+        fields.put("carModel", carModel);
+        fields.put("availableNumber", availableNumber);
         fields.put("rentPrice", rentPrice);
-        fields.put("my Agency", myAgency);
+        fields.put("myAgency", myAgency);
         return fields;
     }
 
@@ -127,18 +127,14 @@ public class Car extends ReservationItem
     {
         //setting the attributes from parent class
         quantity = (Integer) fields.get("quantity");
-        //setting the concrete class attributes
         rating = (Double) fields.get("rating");
         reviews = (ArrayList<Review>) fields.get("reviews");
-        carType = (String) fields.get("car Type");
-        carModel = (String) fields.get("car Model");
-        availableNumber = (Integer) fields.get("available Number");
+        //setting the concrete class attributess
+        carType = (String) fields.get("carType");
+        carModel = (String) fields.get("carModel");
+        availableNumber = (Integer) fields.get("availableNumber");
         rentPrice = (Double) fields.get("rentPrice");
-        myAgency = (CarAgency) fields.get("my Agency");
+        myAgency = (CarAgency) fields.get("myAgency");
     }
 
-    public HashMap getEmptyFields()
-    {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 }

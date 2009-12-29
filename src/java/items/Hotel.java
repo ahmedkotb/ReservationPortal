@@ -134,13 +134,31 @@ public class Hotel extends ReservationItem
 
     }
 
-    public void setObjectData(HashMap fields)
+     @Override
+    public HashMap getObjectData()
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        HashMap<String, Object> fields = new HashMap<String, Object>();    //the hash map containig the fields of the object
+        fields.putAll(super.getObjectData());   //putting the common attributes from the abstract class in the map
+        fields.put("location", location);
+        fields.put("stars", stars);
+        fields.put("branches", branches);
+        fields.put("myRooms", myRooms);
+        return fields;
     }
 
-    public HashMap getEmptyFields()
+    public void setObjectData(HashMap fields)
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        //setting the attributes from parent class
+        quantity = (Integer) fields.get("quantity");
+        rating = (Double) fields.get("rating");
+        reviews = (ArrayList<Review>) fields.get("reviews");
+        //setting the concrete class attributess
+        location=(Location) fields.get("location");
+        stars=(Integer)fields.get("stars");
+        branches=(ArrayList<Hotel>) fields.get("branches");
+        myRooms=(ArrayList<Room>) fields.get("myRooms");
+
+        
     }
+   
 }

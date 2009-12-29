@@ -14,6 +14,5 @@ public interface Hashable
 {
     public HashMap getObjectData();
     public void setObjectData(HashMap fields);
-    public HashMap getEmptyFields();
 
 }

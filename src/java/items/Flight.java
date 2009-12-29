@@ -185,14 +185,44 @@ public abstract class Flight extends ReservationItem
 
     }
 
-     public void setObjectData(HashMap fields)
+    @Override
+    public HashMap getObjectData()
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        HashMap<String, Object> fields = new HashMap<String, Object>();    //the hash map containig the fields of the object
+        fields.putAll(super.getObjectData());   //putting the common attributes from the abstract class in the map
+        fields.put("sourceAirport", sourceAirport);
+        fields.put("destinationAirport", destinationAirport);
+        fields.put("economyTicketPrice", economyTicketPrice);
+        fields.put("firstTicketPrice",firstTicketPrice);
+        fields.put("bussinessTicketPrice", bussinessTicketPrice);
+        fields.put("availableEconomySeats", availableEconomySeats);
+        fields.put("availableFirstSeats",availableFirstSeats);
+        fields.put("availableBussinessSeats", availableBussinessSeats);
+        fields.put("myAgeGroup",myAgeGroup);
+        fields.put("DateInformation",myDateInformation);
+        
+        return fields;
     }
 
-    public HashMap getEmptyFields()
+     public void setObjectData(HashMap fields)
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+         //setting the attributes from parent class
+        quantity = (Integer) fields.get("quantity");
+        rating = (Double) fields.get("rating");
+        reviews = (ArrayList<Review>) fields.get("reviews");
+        //setting the concrete class attributess
+        sourceAirport=(Airport) fields.get("sourceAirport");
+        destinationAirport=(Airport) fields.get("destinationAirport");
+        economyTicketPrice=(Double) fields.get("economyTicketPrice");
+        firstTicketPrice=(Double) fields.get("firstTicketPrice");
+        bussinessTicketPrice=(Double) fields.get("bussinessTicketPrice");
+        availableEconomySeats=(Integer)fields.get("availableEconomySeats");
+        availableFirstSeats=(Integer)fields.get("availableFirstSeats");
+        availableBussinessSeats=(Integer)fields.get("availableBussinessSeats");
+        myAgeGroup=(ArrayList<AgeGroup>) fields.get("myAgeGroup");
+        myDateInformation=(DateInformation) fields.get("DateInformation");
+
     }
+
 
 }
