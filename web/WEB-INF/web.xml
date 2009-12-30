@@ -29,6 +29,13 @@
             30
         </session-timeout>
     </session-config>
+    <listener>
+	<description>sessionListener</description>
+	<listener-class>
+		reservationPortalSystem.SessionListener
+	</listener-class>
+    </listener>
+
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
         </welcome-file-list>
