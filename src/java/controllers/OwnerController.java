@@ -18,7 +18,7 @@ import reservationPortalSystem.User;
  *
  * @author ahmed
  */
-public class ownerController extends HttpServlet {
+public class OwnerController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.

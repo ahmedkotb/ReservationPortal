@@ -4,8 +4,6 @@
  */
 package reservationPortalSystem;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import utilities.MD5HashGenerator;
 import java.util.*;
 import javax.jdo.*;
@@ -25,7 +23,26 @@ public class ReservationPortalSystem {
     private static ReservationPortalSystem systemInstance;
     private static PersistenceManager databaseConnector = Utilities.getPersistenceManager("database" + File.separator + "database.odb");
 
+    private ReservationItemManager itemManager;
     private ReservationPortalSystem() {
+    }
+
+    /**
+     * init the Reservation Portal System
+     */
+    private void initSystem() {
+        itemManager = new ReservationItemManager();
+    }
+
+    /**
+     * return the Reservation Item Manager of the system
+     * the client of this method should get the instance in one of the read only interfaces
+     * @return ReservationItemManager
+     * @see ICustomerReservationItemManager
+     * @see IAdminReservationItemManager
+     */
+    public ReservationItemManager getItemManager(){
+        return itemManager;
     }
 
     public static PersistenceManager getConnection() {
@@ -41,10 +58,6 @@ public class ReservationPortalSystem {
         return systemInstance;
     }
 
-    private void initSystem() {
- 
-    }
-
     /**
      * login method
      * @param userName the user name entered in the login form
@@ -58,12 +71,17 @@ public class ReservationPortalSystem {
         Collection result = (Collection) query.execute(userName);
         Iterator itr = result.iterator();
 
-        if (itr.hasNext() == false) {
+        //check if the user is found in the users database
+        if (itr.hasNext() == false)
             throw new Exception("UserNotFoundException");
-        }
 
-
+        //get the user
         User user = (User) itr.next();
+
+        //check if the admin was activated
+        if (user instanceof Admin  && !((Admin)user).isActivated())
+            throw new Exception("NotActivatedException");
+
         //compare given password with the hash generated
         if (MD5HashGenerator.generateHash(password).equals(user.getPassword())) {
             databaseConnector.currentTransaction().begin();
