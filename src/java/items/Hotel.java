@@ -68,6 +68,8 @@ public class Hotel extends ReservationItem
 
     public void addRoom(Room room)
     {
+        //auto incrementing the room number
+        room.setRoomNumber(myRooms.size()+1);
         myRooms.add(room);
     }
 

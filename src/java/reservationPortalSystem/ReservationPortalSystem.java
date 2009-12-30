@@ -32,6 +32,7 @@ public class ReservationPortalSystem {
         return databaseConnector;
     }
 
+
     public static ReservationPortalSystem getInstance() {
         if (systemInstance == null) {
             systemInstance = new ReservationPortalSystem();
@@ -155,18 +156,18 @@ public class ReservationPortalSystem {
         ReservationPortalSystem systemInstance = getInstance();
         System.out.println("testing....");
         com.objectdb.Enhancer.enhance("items.*,reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer , reservationPortalSystem.Owner");
-//        User x = new Admin("toot", "toot", "toot", "teet", "@", "010", true, "good admin , worked in xyz for 3 days");
-//        systemInstance.login("toot","toot");
-//        Location l=new Location("1", "1", "1");
-//        Location l2=new Location("2", "2", "2");
-//        ArrayList<Location> ll=new ArrayList<Location>();
-//        ll.add(l2);ll.add(l);
-//        CarAgency ag=new CarAgency("motor ride", ll);
-//      Car c=new Car(10, "Mercedes", CarType.Economy, 9, 150, ag);
-//        //ReservationPortalSystem systemInstance = getInstance();
-//        //systemInstance.getConnection();
-//        //systemInstance.initSystem();
-//        //systemInstance.save(c);
+        User x = new Admin("toot", "toot", "toot", "teet", "@", "010", true, "good admin , worked in xyz for 3 days");
+        systemInstance.login("toot","toot");
+        Location l=new Location("1", "1", "1");
+        Location l2=new Location("2", "2", "2");
+        ArrayList<Location> ll=new ArrayList<Location>();
+        ll.add(l2);ll.add(l);
+        CarAgency ag=new CarAgency("motor ride", ll);
+      Car c=new Car(10, "Mercedes", CarType.Economy, 9, 150, ag);
+        //ReservationPortalSystem systemInstance = getInstance();
+        //systemInstance.getConnection();
+        //systemInstance.initSystem();
+        systemInstance.save(c);
 //        Car d=new Car();
 //        d.setObjectData( c.getObjectData());
 //        //systemInstance.save(d);

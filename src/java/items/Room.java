@@ -32,6 +32,19 @@ public class Room
         reserved = false;
     }
 
+    /**
+     * another constructor that don't take the room number as parameter as it will auto incremented when used in Hotels
+     * @param pricePerDay
+     * @param guestNumber
+     */
+    public Room(int pricePerDay, int guestNumber)
+    {
+        this.pricePerDay = pricePerDay;
+        this.guestNumber = guestNumber;
+        reserved = false;
+    }
+
+
     public int getGuestNumber()
     {
         return guestNumber;
