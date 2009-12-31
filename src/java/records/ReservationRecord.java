@@ -47,11 +47,11 @@ public abstract class ReservationRecord
     public ReservationRecord(int reservationID, ReservationItem myReservationItem, Payment mypayment, Customer reserve, DateInformation myDateInformation)
     {
         this.reservationID = reservationID;
-        this.price = calculartePrice();
         this.myReservationItem = myReservationItem;
         this.mypayment = mypayment;
         this.reserver = reserve;
         this.myDateInformation = myDateInformation;
+        this.price = calculartePrice();
         this.status = (ReservationStatus.ONHOLD).toString();
     }
 
