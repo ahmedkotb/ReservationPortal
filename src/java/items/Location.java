@@ -67,4 +67,44 @@ public class Location
     {//database lookup
         return false;
     }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null)
+        {
+            return false;
+        }
+        if (getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final Location other = (Location) obj;
+        if ((this.country == null) ? (other.country != null) : !this.country.equals(other.country))
+        {
+            return false;
+        }
+        if ((this.city == null) ? (other.city != null) : !this.city.equals(other.city))
+        {
+            return false;
+        }
+        if ((this.street == null) ? (other.street != null) : !this.street.equals(other.street))
+        {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 3;
+        hash = 53 * hash + (this.country != null ? this.country.hashCode() : 0);
+        hash = 53 * hash + (this.city != null ? this.city.hashCode() : 0);
+        hash = 53 * hash + (this.street != null ? this.street.hashCode() : 0);
+        return hash;
+    }
+
+
+
 }
