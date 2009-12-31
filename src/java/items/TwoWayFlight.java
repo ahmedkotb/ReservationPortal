@@ -6,6 +6,7 @@
 package items;
 
 import java.util.ArrayList;
+import reservationPortalSystem.Admin;
 
 /**
  *
@@ -21,15 +22,10 @@ public class TwoWayFlight extends Flight {
 
     }
 
-  public TwoWayFlight(int quantity, Airport sourceAirport, Airport destinationAirport, Double economyTicketPrice, Double firstTicketPrice, Double bussinessTicketPrice, int availableFirstSeats, int availableBussinessSeats, int availableEconomySeats, ArrayList<AgeGroup> myAgeGroup,DoubleDate myDoubleDate)
+  public TwoWayFlight(int quantity, Airport sourceAirport, Airport destinationAirport, Double economyTicketPrice, Double firstTicketPrice, Double bussinessTicketPrice, int availableFirstSeats, int availableBussinessSeats, int availableEconomySeats, ArrayList<AgeGroup> myAgeGroup,DoubleDate myDoubleDate , Admin provider)
     {
-        super(quantity, sourceAirport, destinationAirport, economyTicketPrice, firstTicketPrice, bussinessTicketPrice, availableFirstSeats, availableBussinessSeats, availableEconomySeats, myAgeGroup);
+        super(quantity, sourceAirport, destinationAirport, economyTicketPrice, firstTicketPrice, bussinessTicketPrice, availableFirstSeats, availableBussinessSeats, availableEconomySeats, myAgeGroup , provider);
         myDateInformation=myDoubleDate;
-    }
-
-
-
-
-   
+    }   
 
 }
