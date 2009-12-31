@@ -6,6 +6,7 @@ package items;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import reservationPortalSystem.Admin;
 
 /**
  *
@@ -27,9 +28,9 @@ public class Hotel extends ReservationItem
         myRooms = new ArrayList<Room>();
     }
 
-    public Hotel(int quantity, Location location, int stars, ArrayList<Hotel> branches, ArrayList<Room> myRooms)
+    public Hotel(int quantity, Location location, int stars, ArrayList<Hotel> branches, ArrayList<Room> myRooms , Admin provider)
     {
-        super(quantity);
+        super(quantity , provider);
         this.location = location;
         this.stars = stars;
         this.branches = branches;

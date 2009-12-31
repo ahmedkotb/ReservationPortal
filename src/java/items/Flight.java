@@ -6,6 +6,7 @@ package items;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import reservationPortalSystem.Admin;
 
 /**
  *
@@ -39,9 +40,9 @@ public abstract class Flight extends ReservationItem
         myAgeGroup = new ArrayList<AgeGroup>();
     }
 
-    public Flight(int quantity, Airport sourceAirport, Airport destinationAirport, Double economyTicketPrice, Double firstTicketPrice, Double bussinessTicketPrice, int availableFirstSeats, int availableBussinessSeats, int availableEconomySeats, ArrayList<AgeGroup> myAgeGroup)
+    public Flight(int quantity, Airport sourceAirport, Airport destinationAirport, Double economyTicketPrice, Double firstTicketPrice, Double bussinessTicketPrice, int availableFirstSeats, int availableBussinessSeats, int availableEconomySeats, ArrayList<AgeGroup> myAgeGroup, Admin provider)
     {
-        super(quantity);
+        super(quantity, provider);
         this.sourceAirport = sourceAirport;
         this.destinationAirport = destinationAirport;
         this.economyTicketPrice = economyTicketPrice;
@@ -143,7 +144,6 @@ public abstract class Flight extends ReservationItem
         this.sourceAirport = sourceAirport;
     }
 
-
     public void addAgeGroup(AgeGroup group)
     {
 
@@ -160,28 +160,29 @@ public abstract class Flight extends ReservationItem
         return false;
 
     }
-     @Override
-    public void reserve(HashMap<String ,Integer> info)
+
+    @Override
+    public void reserve(HashMap<String, Integer> info)
     {
         //setting availableFirstSeats
-         availableFirstSeats=availableFirstSeats-info.get("FirstSeats");
+        availableFirstSeats = availableFirstSeats - info.get("FirstSeats");
         //setting availableBussinessSeats
-         availableBussinessSeats=availableBussinessSeats-info.get("BussinessSeats");
+        availableBussinessSeats = availableBussinessSeats - info.get("BussinessSeats");
         //setting availableEconomySeats
-         availableEconomySeats=availableEconomySeats-info.get("EconomySeats");
+        availableEconomySeats = availableEconomySeats - info.get("EconomySeats");
 
 
     }
 
     @Override
-    public void returnBack(HashMap<String ,Integer> info)
+    public void returnBack(HashMap<String, Integer> info)
     {
         //setting availableFirstSeats
-         availableFirstSeats=availableFirstSeats+info.get("FirstSeats");
+        availableFirstSeats = availableFirstSeats + info.get("FirstSeats");
         //setting availableBussinessSeats
-         availableBussinessSeats=availableBussinessSeats+info.get("BussinessSeats");
+        availableBussinessSeats = availableBussinessSeats + info.get("BussinessSeats");
         //setting availableEconomySeats
-         availableEconomySeats=availableEconomySeats+info.get("EconomySeats");
+        availableEconomySeats = availableEconomySeats + info.get("EconomySeats");
 
     }
 
@@ -193,36 +194,34 @@ public abstract class Flight extends ReservationItem
         fields.put("sourceAirport", sourceAirport);
         fields.put("destinationAirport", destinationAirport);
         fields.put("economyTicketPrice", economyTicketPrice);
-        fields.put("firstTicketPrice",firstTicketPrice);
+        fields.put("firstTicketPrice", firstTicketPrice);
         fields.put("bussinessTicketPrice", bussinessTicketPrice);
         fields.put("availableEconomySeats", availableEconomySeats);
-        fields.put("availableFirstSeats",availableFirstSeats);
+        fields.put("availableFirstSeats", availableFirstSeats);
         fields.put("availableBussinessSeats", availableBussinessSeats);
-        fields.put("myAgeGroup",myAgeGroup);
-        fields.put("DateInformation",myDateInformation);
-        
+        fields.put("myAgeGroup", myAgeGroup);
+        fields.put("DateInformation", myDateInformation);
+
         return fields;
     }
 
-     public void setObjectData(HashMap fields)
+    public void setObjectData(HashMap fields)
     {
-         //setting the attributes from parent class
+        //setting the attributes from parent class
         quantity = (Integer) fields.get("quantity");
         rating = (Double) fields.get("rating");
         reviews = (ArrayList<Review>) fields.get("reviews");
         //setting the concrete class attributess
-        sourceAirport=(Airport) fields.get("sourceAirport");
-        destinationAirport=(Airport) fields.get("destinationAirport");
-        economyTicketPrice=(Double) fields.get("economyTicketPrice");
-        firstTicketPrice=(Double) fields.get("firstTicketPrice");
-        bussinessTicketPrice=(Double) fields.get("bussinessTicketPrice");
-        availableEconomySeats=(Integer)fields.get("availableEconomySeats");
-        availableFirstSeats=(Integer)fields.get("availableFirstSeats");
-        availableBussinessSeats=(Integer)fields.get("availableBussinessSeats");
-        myAgeGroup=(ArrayList<AgeGroup>) fields.get("myAgeGroup");
-        myDateInformation=(DateInformation) fields.get("DateInformation");
+        sourceAirport = (Airport) fields.get("sourceAirport");
+        destinationAirport = (Airport) fields.get("destinationAirport");
+        economyTicketPrice = (Double) fields.get("economyTicketPrice");
+        firstTicketPrice = (Double) fields.get("firstTicketPrice");
+        bussinessTicketPrice = (Double) fields.get("bussinessTicketPrice");
+        availableEconomySeats = (Integer) fields.get("availableEconomySeats");
+        availableFirstSeats = (Integer) fields.get("availableFirstSeats");
+        availableBussinessSeats = (Integer) fields.get("availableBussinessSeats");
+        myAgeGroup = (ArrayList<AgeGroup>) fields.get("myAgeGroup");
+        myDateInformation = (DateInformation) fields.get("DateInformation");
 
     }
-
-
 }

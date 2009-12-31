@@ -4,9 +4,7 @@
 <jdo>
 
     <package name="items">
-        <class name="ReservationItem" >
-	<field name="provider" persistence-modifier="persistent" />
-	</class>
+        <class name="ReservationItem" />
         <class name="Car" persistence-capable-superclass="ReservationItem" >
             <field name="myAgency" persistence-modifier="persistent" />
         </class>

@@ -6,6 +6,7 @@ package items;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import reservationPortalSystem.Admin;
 
 /**
  *
@@ -30,9 +31,9 @@ public class Car extends ReservationItem
         myAgency = new CarAgency();
     }
 
-    public Car(int quantity, String carModel, CarType carType, int availableNumber, double rentPrice, CarAgency myAgency)
+    public Car(int quantity, String carModel, CarType carType, int availableNumber, double rentPrice, CarAgency myAgency,Admin provider)
     {
-        super(quantity);
+        super(quantity,provider);
         this.carModel = carModel;
         this.carType = carType.toString();
         this.availableNumber = availableNumber;

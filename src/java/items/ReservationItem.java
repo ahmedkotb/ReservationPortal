@@ -6,6 +6,7 @@ package items;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import reservationPortalSystem.Admin;
 
 /**
  *
@@ -17,19 +18,32 @@ public abstract class ReservationItem implements Hashable
     protected Double rating;      //the customer rating for this item
     protected int quantity;     //the orgin amount of the item
     protected ArrayList<Review> reviews;    // a list of reviews
+    protected Admin provider;
 
     public ReservationItem()
     {
         quantity=0;
         rating=0.0;
         reviews=new ArrayList<Review>();
+        provider=new Admin();
     }
 
-    public ReservationItem(int quantity)
+    public ReservationItem(int quantity,Admin provider)
     {
         this.quantity = quantity;            //added by admin
         rating=0.0;                         //added by customer
         reviews=new ArrayList<Review>();    //added by customer
+        this.provider=provider;
+    }
+
+    public Admin getProvider()
+    {
+        return provider;
+    }
+
+    public void setProvider(Admin provider)
+    {
+        this.provider = provider;
     }
 
     public int getQuantity()
