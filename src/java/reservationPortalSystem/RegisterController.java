@@ -68,9 +68,9 @@ public class RegisterController extends HttpServlet {
             newAdmin.setQualifications((String)request.getParameter("qualifications"));
             return newAdmin;
         }else if (reqStr.equals("registerCustomer")){
-            //Customer newCustomer = new Customer();
+            Customer newCustomer = new Customer();
             //to register a new owner replace the previous line with this one
-            Owner newCustomer = new Owner();
+            //Owner newCustomer = new Owner();
             newCustomer.setName((String)request.getParameter("name"));
             newCustomer.setUserName((String)request.getParameter("userName"));
             newCustomer.setPassword(MD5HashGenerator.generateHash((String)request.getParameter("password")));

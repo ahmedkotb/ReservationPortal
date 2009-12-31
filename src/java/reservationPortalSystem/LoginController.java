@@ -53,7 +53,7 @@ public class LoginController extends HttpServlet {
             getServletContext().getRequestDispatcher("/admin/admin.jsp").forward(request, response);
         } else {
             // TODO should create the customer manager and set it in the session
-            out.print("RR" + user.userName + "    " + user.getEmail() + " " + user.getPhoneNumber());
+            getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);            
         }
     }
 
