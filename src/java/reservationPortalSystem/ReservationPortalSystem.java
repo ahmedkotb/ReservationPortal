@@ -9,11 +9,6 @@ import java.util.*;
 import javax.jdo.*;
 import com.objectdb.Utilities;
 import items.*;
-import items.Car;
-import items.CarAgency;
-import items.CarType;
-import items.DoubleDate;
-import items.Location;
 import java.io.File;
 import records.CarReservation;
 
@@ -25,7 +20,8 @@ public class ReservationPortalSystem
 {
 
     private static ReservationPortalSystem systemInstance;
-    private static PersistenceManager databaseConnector = Utilities.getPersistenceManager("/home/ahmed/database" + File.separator + "database.odb");
+    //private PersistenceManager databaseConnector = Utilities.getPersistenceManager("database" + File.separator + "database.odb");
+    private PersistenceManager databaseConnector = Utilities.getPersistenceManager("/home/ahmed/database/database.odb");
     private ReservationItemManager itemManager;
 
     private ReservationPortalSystem()
@@ -52,8 +48,7 @@ public class ReservationPortalSystem
         return itemManager;
     }
 
-    public static PersistenceManager getConnection()
-    {
+    public PersistenceManager getConnection() {
         return databaseConnector;
     }
 
