@@ -32,7 +32,12 @@ public class AdminController extends HttpServlet {
         String req = (String)request.getParameter("req");
 
         if (req == null){
-            out.print("admin home page");
+            getServletContext().getRequestDispatcher("/admin/admin.jsp").forward(request, response);
+        }else if (req.equals("addAgencyPage")){
+            request.setAttribute("mode", "addAgencyPage");
+            getServletContext().getRequestDispatcher("/admin/admin.jsp").forward(request, response);
+        }else if (req.equals("addAgency")){
+            //not made yet
         }
     } 
 

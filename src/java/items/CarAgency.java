@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class CarAgency {
 
     private String name;
+    private String description;
     private ArrayList<Location> supportedLocations;
 
     public CarAgency()

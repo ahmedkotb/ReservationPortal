@@ -50,9 +50,9 @@ public class LoginController extends HttpServlet {
         if (user instanceof Owner) {
             getServletContext().getRequestDispatcher("/owner/owner.jsp").forward(request, response);
         } else if (user instanceof Admin) {
-            getServletContext().getRequestDispatcher("/admin").forward(request, response);
+            getServletContext().getRequestDispatcher("/admin/admin.jsp").forward(request, response);
         } else {
-            out.print(user.userName + "    " + user.getEmail() + " " + user.getPhoneNumber());
+            out.print("RR" + user.userName + "    " + user.getEmail() + " " + user.getPhoneNumber());
         }
     }
 
