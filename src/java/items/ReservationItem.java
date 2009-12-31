@@ -17,11 +17,13 @@ public abstract class ReservationItem implements Hashable
 
     protected Double rating;      //the customer rating for this item
     protected int quantity;     //the orgin amount of the item
+    protected int reservedCount;            //number of times reserved
     protected ArrayList<Review> reviews;    // a list of reviews
     protected Admin provider;
 
     public ReservationItem()
     {
+        reservedCount = 0;
         quantity=0;
         rating=0.0;
         reviews=new ArrayList<Review>();
@@ -30,10 +32,19 @@ public abstract class ReservationItem implements Hashable
 
     public ReservationItem(int quantity,Admin provider)
     {
+        reservedCount = 0;
         this.quantity = quantity;            //added by admin
         rating=0.0;                         //added by customer
         reviews=new ArrayList<Review>();    //added by customer
         this.provider=provider;
+    }
+
+    public int getReservedCount() {
+        return reservedCount;
+    }
+
+    public void setReservedCount(int reservedCount) {
+        this.reservedCount = reservedCount;
     }
 
     public Admin getProvider()

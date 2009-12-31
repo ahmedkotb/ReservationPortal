@@ -5,6 +5,7 @@ import items.ReservationItem;
 import items.Review;
 import java.util.Collection;
 import java.util.HashMap;
+import javax.jdo.Query;
 
 /**
  * Manages All item operations in the repository
@@ -18,12 +19,24 @@ public class ReservationItemManager implements IAdminReservationItemManager , IC
         
     }
 
+
+    /**
+     * returns a list of all car agencies in the system
+     * @return car agency collection
+     */
+    public Collection<CarAgency> getAllCarAgencies(){
+        Query query = ReservationPortalSystem.getInstance().getConnection().newQuery(CarAgency.class);
+        Collection result = (Collection) query.execute();
+        return result;
+    }
+
+
     public void addCarAgency(CarAgency agency){
         ReservationPortalSystem.getInstance().save(agency);
     }
 
     public void addItem(ReservationItem item) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        ReservationPortalSystem.getInstance().save(item);
     }
 
     public Collection<ReservationItem> search(HashMap info) {
@@ -37,6 +50,18 @@ public class ReservationItemManager implements IAdminReservationItemManager , IC
 
     public void addReview(ReservationItem item, Review review) {
         item.AddReview(review);
+    }
+
+    /**
+     * returns a car Agency object given a specific name
+     * @param name the name of the car agency
+     * @return the car agency object
+     */
+    public CarAgency getCarAgency(String name) {
+        Query query = ReservationPortalSystem.getInstance().getConnection().newQuery(CarAgency.class , "this.name == name");
+        query.declareParameters("String name");
+        Collection result = (Collection) query.execute(name);
+        return (CarAgency)result.toArray()[0];
     }
 
 }

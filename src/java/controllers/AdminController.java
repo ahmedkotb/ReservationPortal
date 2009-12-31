@@ -5,7 +5,9 @@
 
 package controllers;
 
+import items.Car;
 import items.CarAgency;
+import items.CarType;
 import items.Location;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import reservationPortalSystem.Admin;
 import reservationPortalSystem.IAdminReservationItemManager;
 import reservationPortalSystem.ReservationPortalSystem;
 
@@ -46,10 +49,34 @@ public class AdminController extends HttpServlet {
         }else if(req.equals("addCarPage")){
             request.setAttribute("mode", "addCarPage");
             getServletContext().getRequestDispatcher("/admin/admin.jsp").forward(request, response);
+        }else if (req.equals("addCar")){
+            addCar(request);
+            getServletContext().getRequestDispatcher("/admin/admin.jsp").forward(request, response);
         }
     } 
 
 
+    /**
+     * get car parameters from request and adds it to the repository of cars
+     * @param request the http request
+     */
+    private void addCar(HttpServletRequest request){
+        IAdminReservationItemManager manager= ReservationPortalSystem.getInstance().getItemManager();
+        Car newCar = new Car();
+        newCar.setCarModel((String)request.getParameter("carModel"));
+        newCar.setRentPrice(Double.parseDouble((String)request.getParameter("price")));
+        newCar.setQuantity(Integer.parseInt((String)request.getParameter("quantity")));
+        newCar.setCarType(CarType.valueOf((String)request.getParameter("carType")));
+        newCar.setMyAgency(manager.getCarAgency((String)request.getParameter("carAgency")));
+        newCar.setProvider((Admin)request.getSession().getAttribute("user"));
+        manager.addItem(newCar);
+    }
+
+    
+    /**
+     * get car agency parameters from request and adds it to the repository of car agencyies
+     * @param request the http request
+     */
     private void addCarAgency(HttpServletRequest request){
         IAdminReservationItemManager manager= ReservationPortalSystem.getInstance().getItemManager();
         CarAgency agency = new CarAgency();

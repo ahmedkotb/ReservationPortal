@@ -23,6 +23,19 @@ public interface IAdminReservationItemManager {
      */
     public void addCarAgency(CarAgency agency);
 
+
+    /**
+     * returns a car agency object given its name
+     * @param name the name of the car agency
+     * @return the car agency
+     */
+    public CarAgency getCarAgency(String name);
+    /**
+     * returns a list of all car agencies in the system
+     * @return car agency collection
+     */
+    public Collection<CarAgency> getAllCarAgencies();
+
     /**
      * search for item that satisfies the given criteria in the hashmap
      * @param info the search criteria

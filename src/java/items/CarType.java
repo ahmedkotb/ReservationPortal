@@ -11,6 +11,6 @@ package items;
  */
 public enum CarType {
 
-    Economy,Luxury,Business
+    Economy,Luxury,Business,premium,sportscar,convertible
 
 }
