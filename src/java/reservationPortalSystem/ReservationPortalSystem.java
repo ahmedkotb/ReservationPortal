@@ -10,6 +10,7 @@ import javax.jdo.*;
 import com.objectdb.Utilities;
 import items.*;
 import java.io.File;
+import records.BankDraft;
 import records.CarReservation;
 import records.ReservationMonitor;
 import records.ReservationRecord;
@@ -18,23 +19,20 @@ import records.ReservationRecord;
  *
  * @author ahmed
  */
-public class ReservationPortalSystem
-{
+public class ReservationPortalSystem {
 
     private static ReservationPortalSystem systemInstance;
     //private PersistenceManager databaseConnector = Utilities.getPersistenceManager("database" + File.separator + "database.odb");
     private PersistenceManager databaseConnector = Utilities.getPersistenceManager("/home/ahmed/database/database.odb");
     private ReservationItemManager itemManager;
 
-    private ReservationPortalSystem()
-    {
+    private ReservationPortalSystem() {
     }
 
     /**
      * init the Reservation Portal System
      */
-    private void initSystem()
-    {
+    private void initSystem() {
         itemManager = new ReservationItemManager();
     }
 
@@ -45,8 +43,7 @@ public class ReservationPortalSystem
      * @see ICustomerReservationItemManager
      * @see IAdminReservationItemManager
      */
-    public ReservationItemManager getItemManager()
-    {
+    public ReservationItemManager getItemManager() {
         return itemManager;
     }
 
@@ -54,10 +51,8 @@ public class ReservationPortalSystem
         return databaseConnector;
     }
 
-    public static ReservationPortalSystem getInstance()
-    {
-        if (systemInstance == null)
-        {
+    public static ReservationPortalSystem getInstance() {
+        if (systemInstance == null) {
             systemInstance = new ReservationPortalSystem();
             systemInstance.initSystem();
         }
@@ -71,8 +66,7 @@ public class ReservationPortalSystem
      * @param password the password entered in the login form
      * @return a user object or userNotfoundException if the user doesn't exit
      */
-    public User login(String userName, String password) throws Exception
-    {
+    public User login(String userName, String password) throws Exception {
 
         Query query = databaseConnector.newQuery(User.class, "this.userName == userName");
         query.declareParameters("String userName");
@@ -80,8 +74,7 @@ public class ReservationPortalSystem
         Iterator itr = result.iterator();
 
         //check if the user is found in the users database
-        if (itr.hasNext() == false)
-        {
+        if (itr.hasNext() == false) {
             throw new Exception("UserNotFoundException");
         }
 
@@ -89,28 +82,24 @@ public class ReservationPortalSystem
         User user = (User) itr.next();
 
         //check if the admin was activated
-        if (user instanceof Admin && !((Admin) user).isActivated())
-        {
+        if (user instanceof Admin && !((Admin) user).isActivated()) {
             throw new Exception("NotActivatedException");
         }
 
         //compare given password with the hash generated
-        if (MD5HashGenerator.generateHash(password).equals(user.getPassword()))
-        {
+        if (MD5HashGenerator.generateHash(password).equals(user.getPassword())) {
             databaseConnector.currentTransaction().begin();
             user.setLoggedIn(true);
             user.setLastLoginDate(new Date());
             databaseConnector.currentTransaction().commit();
             return user;
-        } else
-        {
+        } else {
             throw new Exception("UserNotFoundException");
         }
 
     }
 
-    public void logout(User user)
-    {
+    public void logout(User user) {
         databaseConnector.currentTransaction().begin();
         user.setLoggedIn(false);
         databaseConnector.currentTransaction().commit();
@@ -120,32 +109,24 @@ public class ReservationPortalSystem
      * registers a new user
      * @param user the user to be registerd
      */
-    public void register(User user)
-    {
+    public void register(User user) {
         save(user);
     }
 
-    synchronized public void save(Object presistantObject)
-    {
-        try
-        {
+    synchronized public void save(Object presistantObject) {
+        try {
             //databaseConnector = Utilities.getPersistenceManager("database" + File.separator + "database.odb");
             databaseConnector.currentTransaction().begin();  //start transiction
             databaseConnector.makePersistent(presistantObject);
             databaseConnector.currentTransaction().commit();    //end transiction
-        } finally
-        {
+        } finally {
             // Close the database and active transaction:
-            if (databaseConnector.currentTransaction().isActive())
-            {
+            if (databaseConnector.currentTransaction().isActive()) {
                 databaseConnector.currentTransaction().rollback();
             }
-            if (!databaseConnector.isClosed())
-            {
+            if (!databaseConnector.isClosed()) {
                 //databaseConnector.close();
             }
-
-
         }
     }
 
@@ -153,8 +134,7 @@ public class ReservationPortalSystem
      * returns all admins in the system
      * @return collection of admins
      */
-    public Collection<Admin> getAllAdmins()
-    {
+    public Collection<Admin> getAllAdmins() {
         Query query = databaseConnector.newQuery(Admin.class);
         Collection result = (Collection) query.execute();
         return result;
@@ -164,8 +144,7 @@ public class ReservationPortalSystem
      * returns a list of new admin page
      * @return a collection of the admins that wasnt acctivated yet
      */
-    public Collection<Admin> getNewAdmins()
-    {
+    public Collection<Admin> getNewAdmins() {
         Query query = databaseConnector.newQuery(Admin.class, "this.lastLoginDate == null && this.activated == false");
         Collection result = (Collection) query.execute();
         return result;
@@ -176,8 +155,7 @@ public class ReservationPortalSystem
      * @param adminUserName the user name to be activated
      * @param value if true the admin will be activated else it will be disactivated and will not be allowed to login
      */
-    public void setAdminActivation(String adminUserName, boolean value)
-    {
+    public void setAdminActivation(String adminUserName, boolean value) {
         Query query = databaseConnector.newQuery(Admin.class, "this.userName == adminUserName");
         query.declareParameters("String adminUserName");
         Collection result = (Collection) query.execute(adminUserName);
@@ -186,16 +164,19 @@ public class ReservationPortalSystem
         databaseConnector.currentTransaction().begin();
         admin.setActivated(value);
         databaseConnector.currentTransaction().commit();
-
     }
 
-    public static void main(String[] args) throws Exception
-    {
+    public static void main(String[] args) throws Exception {
         //test method
+        
+        System.out.println("testing....");
+        com.objectdb.Enhancer.enhance("reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer , reservationPortalSystem.Owner,items.*,records.*");
+
+
+        //remove the system.exit0 to test any thing else
+        System.exit(0);
         ReservationPortalSystem systemInstance = getInstance();
         systemInstance.getConnection();
-        System.out.println("testing....");
-       // com.objectdb.Enhancer.enhance("reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer , reservationPortalSystem.Owner,items.*,records.*");
         Admin x = new Admin("toot", "toot", "toot", "teet", "@", "010", true, "good admin , worked in xyz for 3 days");
         //systemInstance.login("toot","toot");
         Location l = new Location("1", "1", "1");
@@ -214,26 +195,28 @@ public class ReservationPortalSystem
         //systemInstance.save(d);
         //x.setName("Ahmed Mohsen");
 
+        Payment p = new BankDraft();
+        systemInstance.save(p);
+
         HashMap<String, Object> fields = new HashMap<String, Object>();    //the hash map containig the fields of the object
         fields.put("carType", CarType.Economy.toString());
         fields.put("carModel", "Mercedes");
         //fields.put("pickupLocation", l);
         //fields.put("returnLocation", l2);
-       // CarReservation r=new CarReservation();
+        // CarReservation r=new CarReservation();
         //System.out.println(fields);
 
         SearchItemManager ss = new SearchItemManager(fields, searchType.CAR);
-        Collection<Car> result = ss.searchItems();
-        Iterator itr = result.iterator();
+        // Collection<Car> result = ss.searchItems();
+        //Iterator itr = result.iterator();
 
-        
-        while (itr.hasNext())
+
+        //while (itr.hasNext())
         {
             System.out.println("heeeeeereeeeee");
-            System.out.println(((Car)itr.next()).getCarType());
+            //  System.out.println(((Car)itr.next()).getCarType());
         }
 
         //DoubleDate interval = new DoubleDate(new Date(110, 0, 1), new Date(111, 1, 5));
-
     }
 }

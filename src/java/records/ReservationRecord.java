@@ -4,7 +4,8 @@
  */
 package records;
 
-import items.DateInformation;
+import reservationPortalSystem.Payment;
+import reservationPortalSystem.DateInformation;
 import items.ReservationItem;
 import items.SingleDate;
 import java.util.Date;

@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package items;
+package reservationPortalSystem;
 
 /**
  *the data holder for any dates in reservation items
