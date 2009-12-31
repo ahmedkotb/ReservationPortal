@@ -27,7 +27,7 @@ public class HotelReservation extends ReservationRecord
 
     public HotelReservation(int reservationID, ReservationItem myReservationItem, Payment mypayment, Customer reserve, DateInformation myDateInformation, int guestNumber, int roomNumber)
     {
-        super(reservationID, myReservationItem, mypayment, reserve, myDateInformation);
+        super(myReservationItem, mypayment, reserve, myDateInformation);
         this.guestNumber = guestNumber;
         this.roomNumber = roomNumber;
     }

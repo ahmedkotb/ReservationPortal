@@ -23,13 +23,12 @@ public class CarReservation extends ReservationRecord
         super();
         pickupLocation = new Location();
         returnLocation = new Location();
-        myDateInformation = new DoubleDate();
         myReservationItem = new Car();
     }
 
-    public CarReservation(int reservationID, Car myReservationItem, Payment mypayment, Customer reserve, DateInformation myDateInformation, Location pickupLocation, Location returnLocation)
+    public CarReservation(Car myReservationItem, Payment mypayment, Customer reserve, DateInformation myDateInformation, Location pickupLocation, Location returnLocation)
     {
-        super(reservationID, myReservationItem, mypayment, reserve, myDateInformation);
+        super(myReservationItem, mypayment, reserve, myDateInformation);
         this.pickupLocation = pickupLocation;
         this.returnLocation = returnLocation;
     }

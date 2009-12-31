@@ -4,10 +4,9 @@
  */
 package reservationPortalSystem;
 
+import records.AdminReservationManager;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -50,8 +49,10 @@ public class LoginController extends HttpServlet {
         if (user instanceof Owner) {
             getServletContext().getRequestDispatcher("/owner/owner.jsp").forward(request, response);
         } else if (user instanceof Admin) {
+            session.setAttribute("reservationManager", new AdminReservationManager((Admin)user));
             getServletContext().getRequestDispatcher("/admin/admin.jsp").forward(request, response);
         } else {
+            // TODO should create the customer manager and set it in the session
             out.print("RR" + user.userName + "    " + user.getEmail() + " " + user.getPhoneNumber());
         }
     }

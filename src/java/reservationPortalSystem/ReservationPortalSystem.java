@@ -10,6 +10,9 @@ import javax.jdo.*;
 import com.objectdb.Utilities;
 import items.*;
 import java.io.File;
+import records.CarReservation;
+import records.ReservationMonitor;
+import records.ReservationRecord;
 
 /**
  *
@@ -168,10 +171,11 @@ public class ReservationPortalSystem {
 
 
     public static void main(String[] args) throws Exception {
-        //test method
-//        ReservationPortalSystem systemInstance = getInstance();
-//        System.out.println("testing....");
-       com.objectdb.Enhancer.enhance("reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer , reservationPortalSystem.Owner,items.*,records.*");
+        //com.objectdb.Enhancer.enhance("reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer , reservationPortalSystem.Owner,items.*,records.*");
+
+        ReservationRecord x = new CarReservation();
+        //ReservationPortalSystem.getInstance().save(x);
+        
 //        User x = new Admin("toot", "toot", "toot", "teet", "@", "010", true, "good admin , worked in xyz for 3 days");
 //        //systemInstance.login("toot","toot");
 //        Location l=new Location("1", "1", "1");

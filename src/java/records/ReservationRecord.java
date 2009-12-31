@@ -6,18 +6,20 @@ package records;
 
 import items.DateInformation;
 import items.ReservationItem;
+import items.SingleDate;
 import java.util.Date;
 import java.util.HashMap;
 import reservationPortalSystem.Customer;
 
 /**
  *
- * @author ahmed
+ * @author Ahmed Mohsen and Ahmed Kotb :D
  */
 public abstract class ReservationRecord
 {
 
     protected int reservationID;    //may be removed from the constructor and become auto incremented
+    protected Date purchaseDate;
     protected double price;
     protected ReservationItem myReservationItem;
     protected Payment mypayment;
@@ -31,28 +33,43 @@ public abstract class ReservationRecord
         price = 0;
         reserver = new Customer();
         status = (ReservationStatus.ONHOLD).toString();
+        myDateInformation = new SingleDate(new Date());
     }
 
-    public ReservationRecord(int reservationID, ReservationItem myReservationItem, Payment mypayment, Customer reserve, DateInformation myDateInformation, ReservationStatus myReservationStatus)
+    public ReservationRecord(ReservationItem myReservationItem, Payment mypayment, Customer reserve, DateInformation myDateInformation, ReservationStatus myReservationStatus)
     {
-        this.reservationID = reservationID;
+        this.reservationID = 0;
         this.price = calculartePrice();
         this.myReservationItem = myReservationItem;
         this.mypayment = mypayment;
         this.reserver = reserve;
         this.myDateInformation = myDateInformation;
         this.status = myReservationStatus.toString();
+        purchaseDate = new Date();
     }
 
-    public ReservationRecord(int reservationID, ReservationItem myReservationItem, Payment mypayment, Customer reserve, DateInformation myDateInformation)
-    {
-        this.reservationID = reservationID;
-        this.myReservationItem = myReservationItem;
-        this.mypayment = mypayment;
-        this.reserver = reserve;
-        this.myDateInformation = myDateInformation;
-        this.price = calculartePrice();
-        this.status = (ReservationStatus.ONHOLD).toString();
+    public Date getPurchaseDate() {
+        return purchaseDate;
+    }
+
+    public void setPurchaseDate(Date purchaseDate) {
+        this.purchaseDate = purchaseDate;
+    }
+
+    public ReservationStatus getStatus() {
+        return ReservationStatus.valueOf(status);
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public ReservationRecord(ReservationItem myReservationItem, Payment mypayment, Customer reserver, DateInformation myDateInformation){
+        this(myReservationItem,
+        mypayment,
+        reserver,
+        myDateInformation,ReservationStatus.ONHOLD
+        );
     }
 
     public abstract HashMap getSearchCritria();
@@ -75,11 +92,6 @@ public abstract class ReservationRecord
     public void setMyReservationItem(ReservationItem myReservationItem)
     {
         this.myReservationItem = myReservationItem;
-    }
-
-    public ReservationStatus getStatus()
-    {
-        return ReservationStatus.valueOf(status);
     }
 
     public void setStatus(ReservationStatus myReservationStatus)

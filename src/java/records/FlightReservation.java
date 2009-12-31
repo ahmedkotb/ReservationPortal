@@ -28,9 +28,9 @@ public class FlightReservation extends ReservationRecord
         seats = new HashMap<String, HashMap<String, Integer>>();
     }
 
-    public FlightReservation(int reservationID, ReservationItem myReservationItem, Payment mypayment, Customer reserve, DateInformation myDateInformation, HashMap<String, HashMap<String, Integer>> seats)
+    public FlightReservation(ReservationItem myReservationItem, Payment mypayment, Customer reserve, DateInformation myDateInformation, HashMap<String, HashMap<String, Integer>> seats)
     {
-        super(reservationID, myReservationItem, mypayment, reserve, myDateInformation);
+        super(myReservationItem, mypayment, reserve, myDateInformation);
         this.seats = seats;
     }
 
