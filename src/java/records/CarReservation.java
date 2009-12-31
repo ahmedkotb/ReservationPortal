@@ -74,8 +74,8 @@ public class CarReservation extends ReservationRecord
         HashMap<String,Object> fields=new HashMap<String, Object>();    //the hash map containig the fields of the object
         fields.put("pickupLocation", pickupLocation);
         fields.put("returnLocation", returnLocation);
-        fields.put("carType", "");
-        fields.put("CarModel", "");
+        fields.put("carType", null);
+        fields.put("CarModel", null);
         return fields;
     }
 }
