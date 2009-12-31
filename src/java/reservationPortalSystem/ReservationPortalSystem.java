@@ -175,7 +175,7 @@ public class ReservationPortalSystem {
         //test method
 //        ReservationPortalSystem systemInstance = getInstance();
 //        System.out.println("testing....");
-       com.objectdb.Enhancer.enhance("items.*,reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer , reservationPortalSystem.Owner");
+       com.objectdb.Enhancer.enhance("reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer , reservationPortalSystem.Owner,items.*,records.*");
 //        User x = new Admin("toot", "toot", "toot", "teet", "@", "010", true, "good admin , worked in xyz for 3 days");
 //        //systemInstance.login("toot","toot");
 //        Location l=new Location("1", "1", "1");
