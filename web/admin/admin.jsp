@@ -19,7 +19,8 @@
         <a href="admin">home</a>
         <br>
         <a href="admin?req=addAgencyPage">Add a new car agency to the system</a>
-
+        <br>
+        <a href="admin?req=addCarPage">Add a new car to the system</a>
 
         <%
             String mode = (String)request.getAttribute("mode");
@@ -28,9 +29,9 @@
             }else if (mode.equals("addAgencyPage")){
          %>
             <jsp:include page="addagency.jsp"></jsp:include>
-         <%
-           }
-         %>
+         <%}else if (mode.equals("addCarPage")){%>
+            <jsp:include page="addcar.jsp"></jsp:include>
+         <%}%>
 
     </body>
 </html>

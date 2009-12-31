@@ -1,5 +1,6 @@
 package reservationPortalSystem;
 
+import items.CarAgency;
 import items.ReservationItem;
 import java.util.Collection;
 import java.util.HashMap;
@@ -15,6 +16,12 @@ public interface IAdminReservationItemManager {
      * @param item the new item to be added
      */
     public void addItem(ReservationItem item);
+
+    /**
+     * adds a new car agency to the system
+     * @param agency the car agencyto be added
+     */
+    public void addCarAgency(CarAgency agency);
 
     /**
      * search for item that satisfies the given criteria in the hashmap

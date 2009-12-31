@@ -35,12 +35,21 @@
             function addAgency(){
                 var tbl = document.getElementById("locationsTable");
                 var form = document.getElementById("addAgencyForm");
-                var fields = "";
-                for (var i=1;i< tbl.rows.length;i++){
-                    fields +="<input type='hidden' name='loc" +i + "' value='" +tbl.rows[i].cells[0].innerHTML + "' /> ";
-                }
-                alert(fields);
-                //document.getElementById("addAgencyForm").submit();
+                var namefield = document.getElementById("name");
+                var descriptionField = document.getElementById("description");
+                var fields = "<input type='hidden' name='req' value='addAgency' />";
+                
+                fields += "<input type='hidden' name='name' value='" + namefield.value + "' /> ";
+                fields += "<input type='hidden' name='description' value='" + descriptionField.value + "' /> ";
+
+                fields += "<input type='hidden' name='numberOfLocations' value='" + (tbl.rows.length-1) + "' /> ";
+                for (var i=1;i< tbl.rows.length;i++)
+                    fields +="\n<input type='hidden' name='loc" +i + "' value='" +tbl.rows[i].cells[0].innerHTML + "' /> ";
+                form.innerHTML = fields;
+                setTimeout("submitForm()", 100);
+            }
+            function submitForm(){
+                document.getElementById("addAgencyForm").submit();
             }
         </script>
     </head>
@@ -52,18 +61,18 @@
                 <tbody>
                     <tr>
                         <td>Agency Name :</td>
-                        <td><input type="text" name="name" value="" /> </td>
+                        <td><input id="name" type="text" name="name" value="" /> </td>
                     </tr>
                     <tr>
                         <td>Agency Description :</td>
-                        <td><textarea name="description" rows="4" cols="20"></textarea></td>
+                        <td><textarea id ="description" name="description" rows="4" cols="20"></textarea></td>
                     </tr>
                 </tbody>
             </table>
         </form>
         <br>
         Supported Locations : <input type="button" value="Add Location" onclick="showHide()"/>
-        <div id="newLocationDiv">
+        <div id="newLocationDiv" style="display:none">
             <table border="1">
                 <tr>
                     <td>country :</td>

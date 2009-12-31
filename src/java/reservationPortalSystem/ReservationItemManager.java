@@ -1,5 +1,6 @@
 package reservationPortalSystem;
 
+import items.CarAgency;
 import items.ReservationItem;
 import items.Review;
 import java.util.Collection;
@@ -15,6 +16,10 @@ public class ReservationItemManager implements IAdminReservationItemManager , IC
 
     public ReservationItemManager() {
         
+    }
+
+    public void addCarAgency(CarAgency agency){
+        ReservationPortalSystem.getInstance().save(agency);
     }
 
     public void addItem(ReservationItem item) {
