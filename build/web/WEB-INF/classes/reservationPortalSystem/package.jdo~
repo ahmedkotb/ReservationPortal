@@ -7,6 +7,6 @@
         <class name="User"/>
 	<class name="Customer"  persistence-capable-superclass="User"  />
 	<class name="Admin"  persistence-capable-superclass="User"  />
-	<class name="Owner"  persistence-capable-superclass="User"  />  
+	
     </package>
 </jdo> 
