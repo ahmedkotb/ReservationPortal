@@ -10,6 +10,7 @@ import javax.jdo.*;
 import com.objectdb.Utilities;
 import items.*;
 import java.io.File;
+import records.BankDraft;
 import records.CarReservation;
 import records.ReservationMonitor;
 import records.ReservationRecord;
@@ -35,6 +36,10 @@ public class ReservationPortalSystem
      */
     private void initSystem()
     {
+        com.objectdb.Enhancer.enhance("reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer , reservationPortalSystem.Owner," +
+                "items.*" +
+                ",records.*");
+
         itemManager = new ReservationItemManager();
     }
 
@@ -195,7 +200,7 @@ public class ReservationPortalSystem
         ReservationPortalSystem systemInstance = getInstance();
         systemInstance.getConnection();
         System.out.println("testing....");
-       // com.objectdb.Enhancer.enhance("reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer , reservationPortalSystem.Owner,items.*,records.*");
+        //com.objectdb.Enhancer.enhance("reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer , reservationPortalSystem.Owner,items.*,records.*");
         Admin x = new Admin("toot", "toot", "toot", "teet", "@", "010", true, "good admin , worked in xyz for 3 days");
         //systemInstance.login("toot","toot");
         Location l = new Location("1", "1", "1");
@@ -214,6 +219,9 @@ public class ReservationPortalSystem
         //systemInstance.save(d);
         //x.setName("Ahmed Mohsen");
 
+        Payment p=new BankDraft();
+        systemInstance.save(p);
+
         HashMap<String, Object> fields = new HashMap<String, Object>();    //the hash map containig the fields of the object
         fields.put("carType", CarType.Economy.toString());
         fields.put("carModel", "Mercedes");
@@ -223,14 +231,14 @@ public class ReservationPortalSystem
         //System.out.println(fields);
 
         SearchItemManager ss = new SearchItemManager(fields, searchType.CAR);
-        Collection<Car> result = ss.searchItems();
-        Iterator itr = result.iterator();
+       // Collection<Car> result = ss.searchItems();
+        //Iterator itr = result.iterator();
 
         
-        while (itr.hasNext())
+        //while (itr.hasNext())
         {
             System.out.println("heeeeeereeeeee");
-            System.out.println(((Car)itr.next()).getCarType());
+          //  System.out.println(((Car)itr.next()).getCarType());
         }
 
         //DoubleDate interval = new DoubleDate(new Date(110, 0, 1), new Date(111, 1, 5));

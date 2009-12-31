@@ -4,6 +4,7 @@
  */
 package records;
 
+import reservationPortalSystem.Payment;
 import java.util.HashMap;
 
 /**

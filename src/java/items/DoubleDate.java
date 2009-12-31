@@ -5,6 +5,7 @@
 
 package items;
 
+import reservationPortalSystem.DateInformation;
 import java.util.Date;
 
 /**
