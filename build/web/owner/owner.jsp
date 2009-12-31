@@ -14,17 +14,18 @@
         <title>Portal Owner Page</title>
     </head>
     <body>
+        <jsp:include page="../header.jsp"></jsp:include>
         <a href="owner?req=allAdmins">Display All Admins</a> <br>
         <a href="owner?req=newAdmins">Display new Registered Admins</a>
 
         <div>
             <%
-            String mode = (String) session.getAttribute("mode");
+            String mode = (String) request.getAttribute("mode");
             if (mode == null) {
                 out.println("welcome");
             } else if (mode.equals("allAdmins") || mode.equals("newAdmins")) {
                 out.println(mode + "<br>");
-                Collection<Admin> admins = (Collection<Admin>) session.getAttribute("result");
+                Collection<Admin> admins = (Collection<Admin>) request.getAttribute("result");
 
                 if (admins == null) {
                     out.println("nothing found");
@@ -36,32 +37,35 @@
             <div style="background-color:orange">
                 <table>
                     <tr>
-                        <td> Name : </td> <td> <%=admin.getName() %> </td>
+                        <td> Name : </td> <td> <%=admin.getName()%> </td>
                     </tr>
                     <tr>
-                        <td> UserName : </td> <td> <%=admin.getUserName() %> </td>
+                        <td> UserName : </td> <td> <%=admin.getUserName()%> </td>
                     </tr>
                     <tr>
-                        <td> Address : </td> <td> <%=admin.getAddress() %> </td>
+                        <td> Address : </td> <td> <%=admin.getAddress()%> </td>
                     </tr>
                     <tr>
-                        <td> Email : </td> <td> <%=admin.getEmail() %> </td>
+                        <td> Email : </td> <td> <%=admin.getEmail()%> </td>
                     </tr>
                     <tr>
-                        <td> Phone Number : </td> <td> <%=admin.getPhoneNumber() %> </td>
+                        <td> Phone Number : </td> <td> <%=admin.getPhoneNumber()%> </td>
                     </tr>
 
                     <tr>
-                        <td> Qualifications : </td> <td> <%=admin.getQualifications() %> </td>
+                        <td> Qualifications : </td> <td> <%=admin.getQualifications()%> </td>
                     </tr>
                     <tr>
-                        <td> lastLoginDate : </td> <td> <%=admin.getLastLoginDate() %> </td>
+                        <td> lastLoginDate : </td> <td> <%=admin.getLastLoginDate()%> </td>
                     </tr>
                     <tr>
-                        <td>
-                            <a href="owner?req=activate&userName=<%=admin.getUserName() %>"> activate</a>
-                        </td>
+                        <% if (admin.isActivated()) {%>
+                        <td><a href="owner?req=deactivate&userName=<%=admin.getUserName()%>">deactivate</a></td>
+                        <% } else {%>
+                        <td><a href="owner?req=activate&userName=<%=admin.getUserName()%>">activate</a></td>
+                        <% }%>
                     </tr>
+
                 </table>
 
             </div>

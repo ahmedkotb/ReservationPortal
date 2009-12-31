@@ -68,6 +68,8 @@ public class Hotel extends ReservationItem
 
     public void addRoom(Room room)
     {
+        //auto incrementing the room number
+        room.setRoomNumber(myRooms.size()+1);
         myRooms.add(room);
     }
 
@@ -90,7 +92,7 @@ public class Hotel extends ReservationItem
     public void reserve(HashMap<String, Integer> info)
     {
         //getting the number of the reserved room
-        int roomNumber = info.get("room number");
+        int roomNumber = info.get("roomNumber");
         //search for that room in the hotel
         for (Room room : myRooms)
         {
@@ -106,7 +108,7 @@ public class Hotel extends ReservationItem
     public void returnBack(HashMap<String, Integer> info)
     {
         //getting the number of the reserved room
-        int roomNumber = info.get("room number");
+        int roomNumber = info.get("roomNumber");
         //search for that room in the hotel
         for (Room room : myRooms)
         {

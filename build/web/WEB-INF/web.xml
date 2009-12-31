@@ -10,7 +10,11 @@
     </servlet>
     <servlet>
         <servlet-name>ownerController</servlet-name>
-        <servlet-class>controllers.ownerController</servlet-class>
+        <servlet-class>controllers.OwnerController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminController</servlet-name>
+        <servlet-class>controllers.AdminController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -24,11 +28,22 @@
         <servlet-name>ownerController</servlet-name>
         <url-pattern>/owner</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminController</servlet-name>
+        <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
+    <listener>
+	<description>sessionListener</description>
+	<listener-class>
+		reservationPortalSystem.SessionListener
+	</listener-class>
+    </listener>
+
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
         </welcome-file-list>

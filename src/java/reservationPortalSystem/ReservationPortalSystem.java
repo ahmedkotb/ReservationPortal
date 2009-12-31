@@ -8,9 +8,11 @@ import utilities.MD5HashGenerator;
 import java.util.*;
 import javax.jdo.*;
 import com.objectdb.Utilities;
+import items.*;
 import items.Car;
 import items.CarAgency;
 import items.CarType;
+import items.DoubleDate;
 import items.Location;
 import java.io.File;
 
@@ -48,6 +50,7 @@ public class ReservationPortalSystem {
     public static PersistenceManager getConnection() {
         return databaseConnector;
     }
+
 
     public static ReservationPortalSystem getInstance() {
         if (systemInstance == null) {
@@ -170,24 +173,28 @@ public class ReservationPortalSystem {
 
     public static void main(String[] args) throws Exception {
         //test method
-        ReservationPortalSystem systemInstance = getInstance();
-        System.out.println("testing....");
-        com.objectdb.Enhancer.enhance("items.*,reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer , reservationPortalSystem.Owner");
+//        ReservationPortalSystem systemInstance = getInstance();
+//        System.out.println("testing....");
+//       com.objectdb.Enhancer.enhance("items.*,reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer , reservationPortalSystem.Owner");
 //        User x = new Admin("toot", "toot", "toot", "teet", "@", "010", true, "good admin , worked in xyz for 3 days");
-//        systemInstance.login("toot","toot");
+//        //systemInstance.login("toot","toot");
 //        Location l=new Location("1", "1", "1");
 //        Location l2=new Location("2", "2", "2");
 //        ArrayList<Location> ll=new ArrayList<Location>();
 //        ll.add(l2);ll.add(l);
 //        CarAgency ag=new CarAgency("motor ride", ll);
-//      Car c=new Car(10, "Mercedes", CarType.Economy, 9, 150, ag);
+//        Car c=new Car(10, "Mercedes", CarType.Economy, 9, 150, ag);
 //        //ReservationPortalSystem systemInstance = getInstance();
-//        //systemInstance.getConnection();
-//        //systemInstance.initSystem();
-//        //systemInstance.save(c);
+        //systemInstance.getConnection();
+        //systemInstance.initSystem();
+       // systemInstance.save(c);
 //        Car d=new Car();
 //        d.setObjectData( c.getObjectData());
 //        //systemInstance.save(d);
 //        //x.setName("Ahmed Mohsen");
-    }
+
+
+      //DoubleDate interval = new DoubleDate(new Date(110, 0, 1), new Date(111, 1, 5));
+
+           }
 }
