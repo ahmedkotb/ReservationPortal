@@ -26,7 +26,7 @@
                 <td>car Type :</td>
                 <td>
                     <select name="carType">
-                    <option>available car models</option>
+                    <option></option>
                     <% 
                         for (CarType ct : CarType.values())
                             out.println("<option>" + ct + "</option>");
@@ -40,11 +40,20 @@
             </tr>
             <tr>
                 <td>pickup Location :</td>
-                <td><input type="text" name="pickupLocation" value="" /></td>
+                <td>
+                    country : <input type="text" name="pickupCountry" value="" /><br>
+                    city : <input type="text" name="pickupCity" value="" />   <br>
+                    street : <input type="text" name="pickupStreet" value="" /> <br>
+                </td>
             </tr>
             <tr>
                 <td>return Location :</td>
-                <td><input type="text" name="pickupLocation" value="" /></td>
+                <td>
+                    country : <input type="text" name="returnCountry" value="" /><br>
+                    city : <input type="text" name="returnCity" value="" />   <br>
+                    street : <input type="text" name="returnStreet" value="" /> <br>
+                </td>
+
             </tr>
             <tr>
                 <td>start date :</td>
