@@ -1,6 +1,6 @@
 <%-- 
-    Document   : index
-    Created on : Dec 24, 2009, 8:53:15 PM
+    Document   : customer
+    Created on : Dec 31, 2009, 11:51:00 PM
     Author     : ahmed
 --%>
 
@@ -14,7 +14,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-
-        <jsp:forward page="login.jsp"/>;
+        <h1>Hello World! Customer</h1>
     </body>
 </html>

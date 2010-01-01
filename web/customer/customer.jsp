@@ -14,15 +14,16 @@
         <title>Welcome</title>
     </head>
     <body>
+        <jsp:include page="../header.jsp"></jsp:include>
         <h1>Customer</h1>
-
+        <a href="customer?req=searchCarPage">reserve a car</a>
 
         <%
             String mode = (String)request.getAttribute("mode");
             if (mode == null){
                 //home page
-            }else if (mode.equals("searchCar")){%>
-            
+            }else if (mode.equals("searchCarPage")){%>
+                <jsp:include page="searchcar.jsp"></jsp:include>
             <%}%>
     </body>
 </html>
