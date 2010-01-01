@@ -73,4 +73,12 @@ public class CarAgency {
     {
         supportedLocations.remove(oldLocation);
     }
+
+    public boolean hasSupport(Location myLocation)
+    {
+        if(supportedLocations.contains(myLocation))
+            return true;
+        else
+            return false;
+    }
 }
