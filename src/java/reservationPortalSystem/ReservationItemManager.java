@@ -3,6 +3,8 @@ package reservationPortalSystem;
 import items.CarAgency;
 import items.ReservationItem;
 import items.Review;
+import items.SearchItemManager;
+import items.searchType;
 import java.util.Collection;
 import java.util.HashMap;
 import javax.jdo.Query;
@@ -15,8 +17,9 @@ public class ReservationItemManager implements IAdminReservationItemManager , IC
 
     //still needs the search manager class to be implemented
 
+    SearchItemManager searchManager;
     public ReservationItemManager() {
-        
+        searchManager = new SearchItemManager(null);
     }
 
 
@@ -40,7 +43,9 @@ public class ReservationItemManager implements IAdminReservationItemManager , IC
     }
 
     public Collection<ReservationItem> search(HashMap info) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        searchManager.setSearchCriteria(info);
+        searchManager.setType(searchType.CAR);
+        return searchManager.searchItems();
     }
 
 

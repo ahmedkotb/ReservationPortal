@@ -4,9 +4,9 @@
     Author     : ahmed
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" import="reservationPortalSystem.* , java.util.* , items.*"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
+    "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
     <head>
@@ -19,11 +19,25 @@
         <a href="customer?req=searchCarPage">reserve a car</a>
 
         <%
-            String mode = (String)request.getAttribute("mode");
-            if (mode == null){
+            String mode = (String) request.getAttribute("mode");
+            if (mode == null) {
                 //home page
-            }else if (mode.equals("searchCarPage")){%>
-                <jsp:include page="searchcar.jsp"></jsp:include>
-            <%}%>
+            } else if (mode.equals("searchCarPage")) {%>
+        <jsp:include page="searchcar.jsp"></jsp:include>
+        <%} else if (mode.equals("searchCar")) {
+            Collection<ReservationItem> items = (Collection<ReservationItem>) request.getAttribute("result");
+            if (items == null) {
+                out.println("nothing found");
+                return;
+            }
+
+            for (ReservationItem item : items) {
+        %>
+        <br>
+        car
+        <%=((Car) item).getCarModel()%>
+        <br>
+        <%}%>
+
     </body>
 </html>

@@ -5,12 +5,15 @@
 
 package controllers;
 
+import items.Location;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import reservationPortalSystem.ReservationPortalSystem;
 
 /**
  *
@@ -36,9 +39,32 @@ public class customerController extends HttpServlet {
         }else if (req.equals("searchCarPage")){
             request.setAttribute("mode", "searchCarPage");
             getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);
+        }else if (req.equals("searchCar")){
+            request.setAttribute("mode", "searchCar");
+            request.setAttribute("result", ReservationPortalSystem.getInstance().getItemManager().search(getSearchParameters(request)));
+            getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);
         }
     } 
 
+
+    private HashMap getSearchParameters(HttpServletRequest request){
+        String req = (String)request.getParameter("req");
+        HashMap<String,Object> info = new HashMap();
+        if (req.equals("searchCar")){
+           info.put("carModel", (String)request.getParameter("carModel"));
+           info.put("carType", (String)request.getParameter("carType"));
+           Location pickyupLocation = new Location();
+           pickyupLocation.setCity((String)request.getParameter("pickupCity"));
+           pickyupLocation.setStreet((String)request.getParameter("pickupStreet"));
+           pickyupLocation.setCountry((String)request.getParameter("pickupCountry"));
+
+           Location returnLocation = new Location();
+           returnLocation.setCity((String)request.getParameter("returnCity"));
+           returnLocation.setStreet((String)request.getParameter("returnStreet"));
+           returnLocation.setCountry((String)request.getParameter("returnCountry"));
+        }
+        return info;
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.
