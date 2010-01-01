@@ -51,8 +51,13 @@ public class customerController extends HttpServlet {
         String req = (String)request.getParameter("req");
         HashMap<String,Object> info = new HashMap();
         if (req.equals("searchCar")){
-           info.put("carModel", (String)request.getParameter("carModel"));
-           info.put("carType", (String)request.getParameter("carType"));
+           String carModel = (String)request.getParameter("carModel");
+           String carType = (String)request.getParameter("carType");
+
+           info.put("carModel",carModel.equals("") ? null : carModel);
+           info.put("carType", carType.equals("") ? null : carType);
+           
+           
            Location pickyupLocation = new Location();
            pickyupLocation.setCity((String)request.getParameter("pickupCity"));
            pickyupLocation.setStreet((String)request.getParameter("pickupStreet"));
@@ -62,6 +67,9 @@ public class customerController extends HttpServlet {
            returnLocation.setCity((String)request.getParameter("returnCity"));
            returnLocation.setStreet((String)request.getParameter("returnStreet"));
            returnLocation.setCountry((String)request.getParameter("returnCountry"));
+
+           info.put("pickupLocation", pickyupLocation);
+           info.put("returnLocation", returnLocation);
         }
         return info;
     }

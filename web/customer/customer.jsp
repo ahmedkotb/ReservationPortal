@@ -16,6 +16,7 @@
     <body>
         <jsp:include page="../header.jsp"></jsp:include>
         <h1>Customer</h1>
+        <a href="customer">home</a>
         <a href="customer?req=searchCarPage">reserve a car</a>
 
         <%
@@ -23,21 +24,24 @@
             if (mode == null) {
                 //home page
             } else if (mode.equals("searchCarPage")) {%>
-        <jsp:include page="searchcar.jsp"></jsp:include>
+            <form action="customer" method="post">
+                <input type="hidden" name="req" value="searchCar" />
+                <jsp:include page="searchcar.jsp"></jsp:include>
+                <input type="submit" value="search" />
+            </form>
         <%} else if (mode.equals("searchCar")) {
-            Collection<ReservationItem> items = (Collection<ReservationItem>) request.getAttribute("result");
-            if (items == null) {
-                out.println("nothing found");
-                return;
+                out.print("searching....");
+                Collection<ReservationItem> items = (Collection<ReservationItem>) request.getAttribute("result");
+                if (items.size() == 0) {
+                    out.println("nothing found");
+                    return;
+                }
+                out.print(items.size());
+
+                for (ReservationItem item : items) {
+                    out.print(((Car)item).getCarModel());
+                }
             }
-
-            for (ReservationItem item : items) {
-        %>
-        <br>
-        car
-        <%=((Car) item).getCarModel()%>
-        <br>
-        <%}%>
-
+           %>
     </body>
 </html>
