@@ -30,6 +30,7 @@ public abstract class ReservationRecord
 
     public ReservationRecord()
     {
+        purchaseDate = new Date();
         reservationID = 0;
         price = 0;
         reserver = new Customer();

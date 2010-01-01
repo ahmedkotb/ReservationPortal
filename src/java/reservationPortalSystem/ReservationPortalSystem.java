@@ -105,6 +105,20 @@ public class ReservationPortalSystem {
         databaseConnector.currentTransaction().commit();
     }
 
+
+    /**
+     * make sure that user exists
+     * @param userName the user name
+     * @return true if exists , false if not
+     */
+    public boolean isUserExists(String userName){
+        Query query = databaseConnector.newQuery(User.class, "this.userName == userName");
+        query.declareParameters("String userName");
+        Collection result = (Collection) query.execute(userName);
+        if (result.size() != 0)
+            return true;
+        return false;
+    }
     /**
      * registers a new user
      * @param user the user to be registerd

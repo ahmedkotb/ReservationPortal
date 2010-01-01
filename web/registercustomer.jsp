@@ -17,6 +17,10 @@
         <jsp:include page="header.jsp"/>
         <h3>Register a New Customer</h3>
 
+
+        <%if (request.getAttribute("error") != null){%>
+        <div> error : <%=(String)request.getAttribute("error")%> </div>
+        <%}%>
         <form action="register" method="POST">
             <jsp:include page="registeruser.jsp"/>
             <input type="hidden" name="req" value="registerCustomer" />

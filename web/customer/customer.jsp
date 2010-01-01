@@ -11,9 +11,18 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Welcome</title>
     </head>
     <body>
-        <h1>Hello World! Customer</h1>
+        <h1>Customer</h1>
+
+
+        <%
+            String mode = (String)request.getAttribute("mode");
+            if (mode == null){
+                //home page
+            }else if (mode.equals("searchCar")){%>
+            
+            <%}%>
     </body>
 </html>
