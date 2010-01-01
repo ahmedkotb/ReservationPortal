@@ -115,7 +115,6 @@ public class ReservationPortalSystem {
 
     synchronized public void save(Object presistantObject) {
         try {
-            //databaseConnector = Utilities.getPersistenceManager("database" + File.separator + "database.odb");
             databaseConnector.currentTransaction().begin();  //start transiction
             databaseConnector.makePersistent(presistantObject);
             databaseConnector.currentTransaction().commit();    //end transiction
@@ -170,11 +169,9 @@ public class ReservationPortalSystem {
         //test method
         
         System.out.println("testing....");
-        com.objectdb.Enhancer.enhance("reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer , reservationPortalSystem.Owner,items.*,records.*");
+        //com.objectdb.Enhancer.enhance("reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer , reservationPortalSystem.Owner,items.*,records.*");
+        //System.exit(0);
 
-
-        //remove the system.exit0 to test any thing else
-        System.exit(0);
         ReservationPortalSystem systemInstance = getInstance();
         systemInstance.getConnection();
         Admin x = new Admin("toot", "toot", "toot", "teet", "@", "010", true, "good admin , worked in xyz for 3 days");
@@ -185,36 +182,54 @@ public class ReservationPortalSystem {
         ll.add(l2);
         ll.add(l);
         CarAgency ag = new CarAgency("motor ride", ll);
-        Car c = new Car(10, "Mercedes", CarType.Economy, 9, 150, ag, x);
+        Car c = new Car(10, "BMW", CarType.Economy, 9, 150, ag, x);
         //ReservationPortalSystem systemInstance = getInstance();
         //systemInstance.save(x);
         systemInstance.initSystem();
-        //systemInstance.save(c);
+        systemInstance.save(c);
         Car d = new Car();
         d.setObjectData(c.getObjectData());
         //systemInstance.save(d);
         //x.setName("Ahmed Mohsen");
 
-        Payment p = new BankDraft();
-        systemInstance.save(p);
+        Room r1= new Room(150.0, 5, 12);
+        Room r2= new Room(200.0, 3, 10);
+
+        ArrayList<Room> r=new ArrayList<Room>();
+        r.add(r1);r.add(r2);
+
+
+
+        Hotel h =new Hotel(3, l, 4, null, r, x);
+        systemInstance.save(h);
 
         HashMap<String, Object> fields = new HashMap<String, Object>();    //the hash map containig the fields of the object
-        fields.put("carType", CarType.Economy.toString());
-        fields.put("carModel", "Mercedes");
-        //fields.put("pickupLocation", l);
-        //fields.put("returnLocation", l2);
-        // CarReservation r=new CarReservation();
+//        fields.put("carType", CarType.Economy.toString());
+//        fields.put("carModel", "BMW");
+//        fields.put("pickupLocation", l);
+//        fields.put("returnLocation", l2);
+
+        fields.put("location", l);
+        fields.put("stars", 4);
+        fields.put("guestNumber", 5);
+
+//        // CarReservation r=new CarReservation();
         //System.out.println(fields);
+//         Query query = ReservationPortalSystem.getInstance().getConnection().newQuery(Car.class);
+//         Collection  result2 = (Collection ) query.execute();
+//         //System.out.println(result2);
 
-        SearchItemManager ss = new SearchItemManager(fields, searchType.CAR);
-        // Collection<Car> result = ss.searchItems();
-        //Iterator itr = result.iterator();
 
 
-        //while (itr.hasNext())
+        SearchItemManager ss = new SearchItemManager(fields, searchType.HOTEL);
+        Collection result = ss.searchItems();
+        Iterator itr = result.iterator();
+
+        System.out.println(result);
+        while (itr.hasNext())
         {
-            System.out.println("heeeeeereeeeee");
-            //  System.out.println(((Car)itr.next()).getCarType());
+            System.out.println("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");
+            System.out.println((itr.next()));
         }
 
         //DoubleDate interval = new DoubleDate(new Date(110, 0, 1), new Date(111, 1, 5));

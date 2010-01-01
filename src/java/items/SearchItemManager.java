@@ -93,42 +93,36 @@ public class SearchItemManager
             parameters += "String carModel , ";
         }
         filter += "this.myAgency.supportedLocations.contains(pickupLocation) == true && this.myAgency.supportedLocations.contains(returnLocation) == true";
-       // filter+="this.myAgency.hasSupport( pickupLocation ) && this.myAgency.hasSupport( returnLocation )";
         parameters += "Location pickupLocation , Location returnLocation";
-        //query.declareImports("import items.*");
         query.declareParameters(parameters);
         query.setFilter(filter);
         System.out.println(filter);
         System.out.println(parameters);
-        //System.out.println(searchCriteria.containsKey("pickupLocation"));
         Collection<Car> result = (Collection<Car>) query.executeWithMap(searchCriteria);
-        return result;
-    }
-
-    public Collection searchtest()
-    {
-        Query query = ReservationPortalSystem.getInstance().getConnection().newQuery(Car.class);
-        String filter = "";
-        String parameters = "";
-
-
-        filter = "this.myAgency.supportedLocations.contains(pickupLocation) == true";
-        //filter="this.myAgency.hasSupport(l) == true" ;
-        parameters = "Location pickupLocation ";
-        //query.declareImports("import items.*");
-        //query.declareVariables("Location pickupLoc");
-        //query.declareVariables("Location returnLoc");
-        query.declareParameters(parameters);
-        query.setFilter(filter);
-        System.out.println(filter);
-        System.out.println(parameters);
-        //System.out.println(searchCriteria.containsKey("pickupLocation"));
-        Collection  result = (Collection ) query.executeWithMap(searchCriteria);
         return result;
     }
 
     private Collection<Hotel> searchHotels()
     {
-        return null;
+        Query query = ReservationPortalSystem.getInstance().getConnection().newQuery(Hotel.class);
+        String filter = "";
+        String parameters = "";
+
+        if (searchCriteria.containsKey("stars") && (Integer) searchCriteria.get("stars") != 0)
+        {
+            filter += "this.stars == stars && ";
+            parameters += "int stars , ";
+        }
+        filter += "this.location.equals(location) && ";
+        filter += "this.myRooms.contains(room) && room.guestNumber == guestNumber";
+        parameters += "int guestNumber , Location location";
+        query.declareParameters(parameters);
+        query.declareVariables("Room room");
+        query.setFilter(filter);
+        System.out.println(filter);
+        System.out.println(parameters);
+        Collection<Hotel> result = (Collection<Hotel>) query.executeWithMap(searchCriteria);
+        return result;
+
     }
 }
