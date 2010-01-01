@@ -24,7 +24,7 @@ public class Room
         reserved = false;
     }
 
-    public Room(int pricePerDay, int guestNumber, int roomNumber)
+    public Room(double  pricePerDay, int guestNumber, int roomNumber)
     {
         this.pricePerDay = pricePerDay;
         this.guestNumber = guestNumber;
@@ -37,7 +37,7 @@ public class Room
      * @param pricePerDay
      * @param guestNumber
      */
-    public Room(int pricePerDay, int guestNumber)
+    public Room(double pricePerDay, int guestNumber)
     {
         this.pricePerDay = pricePerDay;
         this.guestNumber = guestNumber;

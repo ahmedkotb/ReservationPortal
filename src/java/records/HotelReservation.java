@@ -58,7 +58,7 @@ public class HotelReservation extends ReservationRecord
     public HashMap getSearchCritria()
     {
         HashMap<String, Object> fields = new HashMap<String, Object>();    //the hash map containig the fields of the object
-        fields.put("Location", new Location());
+        fields.put("location", new Location());
         fields.put("stars", 0);
         fields.put("guestNumber", guestNumber);
         return fields;
