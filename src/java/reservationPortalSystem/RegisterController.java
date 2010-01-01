@@ -40,12 +40,29 @@ public class RegisterController extends HttpServlet {
         }else if (requestStr.equals("registerCustomer")){
             //register the customer
             User x = getUserFromRequest(request);
+            String validation = validateUserInfo(x);
+
+            if (validation != null){
+                //invalid user Data
+                request.setAttribute("error", validation);
+                getServletContext().getRequestDispatcher("/registercustomer.jsp").forward(request, response);
+                return;
+            }
+
             ReservationPortalSystem.getInstance().register(x);
             getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
         }else if (requestStr.equals("registerAdmin")){
             //register the user information
-            //should get all the user info and create an admin object and save it to database
             User x = getUserFromRequest(request);
+            String validation = validateUserInfo(x);
+
+            if (validation != null){
+                //invalid user Data
+                request.setAttribute("error", validation);
+                getServletContext().getRequestDispatcher("/registeradmin.jsp").forward(request, response);
+                return;
+            }
+
             ReservationPortalSystem.getInstance().register(x);
             getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
         }else{
@@ -54,6 +71,42 @@ public class RegisterController extends HttpServlet {
 
     } 
 
+
+
+    /**
+     *
+     * @return null if no errors is found , else returns a string having the error message
+     */
+    private String validateUserInfo(User user){
+        if (user == null)
+            return null;
+
+        if (user.name == null || user.name.equals(""))
+            return "Name Field is Missing";
+
+        if (user.userName == null || user.userName.equals(""))
+            return "User Name Field is Missing";
+
+        if (user.userName == null || user.userName.length() < 5)
+            return "User Name must be bigger than 5 characters";
+
+        if (ReservationPortalSystem.getInstance().isUserExists(user.userName))
+            return "User Name already exists please choose another one";
+
+        if (user.address == null || user.address.length() == 0)
+            return "address field is misssig";
+
+        if (user.phoneNumber == null || user.phoneNumber.length() == 0)
+            return "address field is misssig";
+
+        if (user.phoneNumber == null || user.phoneNumber.length() == 0)
+            return "phone number field is misssig";
+
+        if (user instanceof  Admin && (((Admin)user).getQualifications() == null || ((Admin)user).getQualifications().length() == 0))
+            return "qualification field is misssig";
+
+        return null;
+    }
     private User getUserFromRequest(HttpServletRequest request){
         String reqStr = (String)request.getParameter("req");
         if (reqStr.equals("registerAdmin")){

@@ -19,6 +19,9 @@ public class ReservationMonitor {
     private static ReservationMonitor monitor;
 
 
+    //constant on hold time in Mins
+    private final int ON_HOLD_TIME = 1;
+
     private ReservationMonitor() {
         //load all the onhold reservations
         recordsQueue = new LinkedList();
@@ -55,14 +58,28 @@ public class ReservationMonitor {
      * refresh the queue by removing onhold reservations that passed an hour
      */
     public void refresh(){
+        System.out.println("here");
         Date now = new Date();
         ReservationRecord record;
-        while (!recordsQueue.isEmpty() && recordsQueue.peek().purchaseDate.after(now)){
+        while (!recordsQueue.isEmpty() && dateDiff(recordsQueue.peek().purchaseDate, now)){
             record = recordsQueue.remove();
             if (record.getStatus().equals(ReservationStatus.ONHOLD))
                 record.setStatus(ReservationStatus.CANCELED);
+            System.out.println("removed + " + record.getPurchaseDate());
         }
     }
 
+    /**
+     * make sure that the difference between the two dates is equal to or larger than the onhold time
+     * @param d1 first date
+     * @param d2 second date
+     * @return true if it is bigger , false if not
+     */
+    private boolean dateDiff(Date d1,Date d2){
+        long diff = (d2.getTime() -d1.getTime())/1000/60;
+        if (diff >= ON_HOLD_TIME)
+            return true;
+        return false;
+    }
 
 }
