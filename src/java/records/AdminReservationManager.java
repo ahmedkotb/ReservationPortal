@@ -3,7 +3,6 @@ package records;
 import java.util.Collection;
 import java.util.Date;
 import javax.jdo.Query;
-import javax.xml.crypto.Data;
 import reservationPortalSystem.Admin;
 import reservationPortalSystem.ReservationPortalSystem;
 
@@ -28,7 +27,7 @@ public class AdminReservationManager
     public void clearRecord(ReservationRecord record)
     {
         record.setStatus(ReservationStatus.DONE);
-        record.getMyReservationItem().reserve(record.getInfo());
+        record.getMyReservationItem().returnBack(record.getInfo());
     }
 
     /**
