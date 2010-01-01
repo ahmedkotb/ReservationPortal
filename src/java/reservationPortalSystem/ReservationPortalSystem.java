@@ -10,6 +10,8 @@ import javax.jdo.*;
 import com.objectdb.Utilities;
 import items.*;
 import java.io.File;
+import javax.xml.crypto.Data;
+import records.AdminReservationManager;
 import records.BankDraft;
 import records.CarReservation;
 import records.ReservationMonitor;
@@ -223,9 +225,9 @@ public class ReservationPortalSystem {
 //        fields.put("pickupLocation", l);
 //        fields.put("returnLocation", l2);
 
-        fields.put("location", l);
-        fields.put("stars", 4);
-        fields.put("guestNumber", 5);
+//        fields.put("location", l);
+//        fields.put("stars", 4);
+//        fields.put("guestNumber", 5);
 
 //        // CarReservation r=new CarReservation();
         //System.out.println(fields);
@@ -235,17 +237,21 @@ public class ReservationPortalSystem {
 
 
 
-        SearchItemManager ss = new SearchItemManager(fields, searchType.HOTEL);
-        Collection result = ss.searchItems();
-        Iterator itr = result.iterator();
-
-        System.out.println(result);
-        while (itr.hasNext())
-        {
-            System.out.println("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");
-            System.out.println((itr.next()));
-        }
+//        SearchItemManager ss = new SearchItemManager(fields, searchType.HOTEL);
+//        Collection result = ss.searchItems();
+//        Iterator itr = result.iterator();
+//
+//        System.out.println(result);
+//        while (itr.hasNext())
+//        {
+//            System.out.println("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");
+//            System.out.println((itr.next()));
+//        }
 
         //DoubleDate interval = new DoubleDate(new Date(110, 0, 1), new Date(111, 1, 5));
+
+        AdminReservationManager man=new AdminReservationManager(x);
+        //System.out.println(man.getAllRecords(new Date(),new Date()));
+        System.out.println(man.getUnClearedRecords());
     }
 }

@@ -88,4 +88,12 @@ public class HotelReservation extends ReservationRecord
         price = days * pricePerDay;
         return price;
     }
+
+    @Override
+    public HashMap getInfo()
+    {
+        HashMap<String ,Integer> info=new HashMap<String, Integer>();
+        info.put("roomNumber", roomNumber);
+        return info;
+    }
 }

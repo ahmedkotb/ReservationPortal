@@ -90,10 +90,10 @@ public class Hotel extends ReservationItem
     }
 
     @Override
-    public void reserve(HashMap<String, Integer> info)
+    public void reserve(HashMap<String, Object> info)
     {
         //getting the number of the reserved room
-        int roomNumber = info.get("roomNumber");
+        int roomNumber = (Integer)info.get("roomNumber");
         //search for that room in the hotel
         for (Room room : myRooms)
         {
@@ -106,10 +106,10 @@ public class Hotel extends ReservationItem
     }
 
     @Override
-    public void returnBack(HashMap<String, Integer> info)
+    public void returnBack(HashMap<String, Object> info)
     {
         //getting the number of the reserved room
-        int roomNumber = info.get("roomNumber");
+        int roomNumber = (Integer) info.get("roomNumber");
         //search for that room in the hotel
         for (Room room : myRooms)
         {

@@ -95,4 +95,10 @@ public class FlightReservation extends ReservationRecord
 
         return price;
     }
+
+    @Override
+    public HashMap getInfo()
+    {
+       return seats;
+    }
 }

@@ -151,11 +151,16 @@ public abstract class ReservationRecord
         this.reserver = reserver;
     }
 
+    /**
+     * return a hashmap representing the info which will be used to reserve or set free a reservation
+     * @return
+     */
+    public abstract HashMap getInfo();
 
-
-
-
-
+    /**
+     * calculate the price of a record
+     * @return the price of the reservation
+     */
     public abstract Double calculartePrice();
 
     public static ReservationRecord createRecord(String type)

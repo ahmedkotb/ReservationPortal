@@ -92,14 +92,14 @@ public class Car extends ReservationItem
     }
 
     @Override
-    public void reserve(HashMap<String, Integer> info)
+    public void reserve(HashMap<String, Object> info)
     {
         //the parameter will be ignored as there is only one available number for car
         availableNumber--;
     }
 
     @Override
-    public void returnBack(HashMap<String, Integer> info)
+    public void returnBack(HashMap<String, Object> info)
     {
         //the parameter will be ignored as there is only one available number for car
         availableNumber++;

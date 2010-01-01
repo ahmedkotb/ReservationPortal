@@ -76,4 +76,10 @@ public class CarReservation extends ReservationRecord
         fields.put("CarModel", null);
         return fields;
     }
+
+    @Override
+    public HashMap getInfo()
+    {
+        return null;    //no need to make it as car has only one attribute
+    }
 }

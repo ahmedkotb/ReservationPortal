@@ -4,6 +4,7 @@
  */
 package items;
 
+import java.lang.Integer;
 import reservationPortalSystem.DateInformation;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -161,29 +162,45 @@ public abstract class Flight extends ReservationItem
         return false;
 
     }
-
-    @Override
-    public void reserve(HashMap<String, Integer> info)
+    /**
+     * used to decrement the number of chairs with in an age group
+     * @param info
+     */
+    public void clearChairs(HashMap<String, Integer> info)
     {
-        //setting availableFirstSeats
-        availableFirstSeats = availableFirstSeats - info.get("FirstSeats");
-        //setting availableBussinessSeats
-        availableBussinessSeats = availableBussinessSeats - info.get("BussinessSeats");
-        //setting availableEconomySeats
-        availableEconomySeats = availableEconomySeats - info.get("EconomySeats");
-
-
+            //setting availableFirstSeats
+            if(info.containsKey("FirstSeats"))
+                availableFirstSeats = availableFirstSeats - info.get("FirstSeats");
+            //setting availableBussinessSeats
+            if(info.containsKey("BussinessSeats"))
+                availableBussinessSeats = availableBussinessSeats - info.get("BussinessSeats");
+            //setting availableEconomySeats
+            if(info.containsKey("EconomySeats"))
+                availableEconomySeats = availableEconomySeats - info.get("EconomySeats");
     }
 
     @Override
-    public void returnBack(HashMap<String, Integer> info)
+    public void reserve(HashMap<String, Object> info)
+    {
+        for (AgeGroup myGroup : myAgeGroup)     //search the entire age groups
+        {
+            if(info.containsKey(myGroup.getName()))
+            {
+                HashMap<String, Integer> classes =(HashMap<String, Integer>)info.get(myGroup.getName());
+                clearChairs(classes);
+            }
+        }
+    }
+
+    @Override
+    public void returnBack(HashMap<String, Object> info)
     {
         //setting availableFirstSeats
-        availableFirstSeats = availableFirstSeats + info.get("FirstSeats");
+        availableFirstSeats = availableFirstSeats + (Integer)info.get("FirstSeats");
         //setting availableBussinessSeats
-        availableBussinessSeats = availableBussinessSeats + info.get("BussinessSeats");
+        availableBussinessSeats = availableBussinessSeats + (Integer)info.get("BussinessSeats");
         //setting availableEconomySeats
-        availableEconomySeats = availableEconomySeats + info.get("EconomySeats");
+        availableEconomySeats = availableEconomySeats + (Integer)info.get("EconomySeats");
 
     }
 

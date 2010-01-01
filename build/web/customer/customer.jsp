@@ -11,9 +11,19 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Welcome</title>
     </head>
     <body>
-        <h1>Hello World! Customer</h1>
+        <jsp:include page="../header.jsp"></jsp:include>
+        <h1>Customer</h1>
+        <a href="customer?req=searchCarPage">reserve a car</a>
+
+        <%
+            String mode = (String)request.getAttribute("mode");
+            if (mode == null){
+                //home page
+            }else if (mode.equals("searchCarPage")){%>
+                <jsp:include page="searchcar.jsp"></jsp:include>
+            <%}%>
     </body>
 </html>
