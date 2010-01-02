@@ -9,13 +9,7 @@ import java.util.*;
 import javax.jdo.*;
 import com.objectdb.Utilities;
 import items.*;
-import java.io.File;
-import javax.xml.crypto.Data;
-import records.AdminReservationManager;
-import records.BankDraft;
-import records.CarReservation;
-import records.ReservationMonitor;
-import records.ReservationRecord;
+import records.*;
 
 /**
  *
@@ -190,7 +184,7 @@ public class ReservationPortalSystem {
         //ReservationPortalSystem.getInstance().save(o);
         //car
         //Car rrr = new Car(1, "fiat", CarType.Economy, 14, 14, null, null)
-        System.exit(0);
+       // System.exit(0);
 
         ReservationPortalSystem systemInstance = getInstance();
         systemInstance.getConnection();
@@ -206,7 +200,7 @@ public class ReservationPortalSystem {
         //ReservationPortalSystem systemInstance = getInstance();
         //systemInstance.save(x);
         systemInstance.initSystem();
-        systemInstance.save(c);
+        //systemInstance.save(c);
         Car d = new Car();
         d.setObjectData(c.getObjectData());
         //systemInstance.save(d);
@@ -221,7 +215,7 @@ public class ReservationPortalSystem {
 
 
         Hotel h =new Hotel(3, l, 4, null, r, x);
-        systemInstance.save(h);
+       // systemInstance.save(h);
 
         HashMap<String, Object> fields = new HashMap<String, Object>();    //the hash map containig the fields of the object
 //        fields.put("carType", CarType.Economy.toString());
@@ -257,5 +251,8 @@ public class ReservationPortalSystem {
         AdminReservationManager man=new AdminReservationManager(x);
         //System.out.println(man.getAllRecords(new Date(),new Date()));
         System.out.println(man.getUnClearedRecords());
+
+        CustomerReservationManager cm= new CustomerReservationManager(new Customer());
+
     }
 }

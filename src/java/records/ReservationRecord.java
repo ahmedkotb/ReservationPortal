@@ -65,11 +65,7 @@ public abstract class ReservationRecord
         return ReservationStatus.valueOf(status);
     }
 
-    public void setStatus(String status)
-    {
-        this.status = status;
-    }
-
+    
     public ReservationRecord(ReservationItem myReservationItem, Payment mypayment, Customer reserver, DateInformation myDateInformation)
     {
         this(myReservationItem,
@@ -113,6 +109,7 @@ public abstract class ReservationRecord
     public void setMypayment(Payment mypayment)
     {
         this.mypayment = mypayment;
+        setStatus(ReservationStatus.PAYED);     //setting the status of the record as payed
     }
 
     public double getPrice()
