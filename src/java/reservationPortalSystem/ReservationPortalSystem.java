@@ -185,7 +185,7 @@ public class ReservationPortalSystem {
         //test method
         
         System.out.println("testing....");
-        //com.objectdb.Enhancer.enhance("reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer , reservationPortalSystem.Owner,items.*,records.*");
+        com.objectdb.Enhancer.enhance("reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer , reservationPortalSystem.Owner,items.*,records.*");
         //Owner o = new Owner("ahmed", "root", "root", null, null, null);
         //ReservationPortalSystem.getInstance().save(o);
         //car

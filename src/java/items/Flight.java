@@ -166,7 +166,7 @@ public abstract class Flight extends ReservationItem
      * used to decrement the number of chairs with in an age group
      * @param info
      */
-    public void clearChairs(HashMap<String, Integer> info)
+    private void clearChairs(HashMap<String, Integer> info)
     {
             //setting availableFirstSeats
             if(info.containsKey("FirstSeats"))

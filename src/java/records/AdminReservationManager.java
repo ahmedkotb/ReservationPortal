@@ -27,7 +27,7 @@ public class AdminReservationManager
     public void clearRecord(ReservationRecord record)
     {
         record.setStatus(ReservationStatus.DONE);
-        record.getMyReservationItem().returnBack(record.getInfo());
+        record.returnItem();
     }
 
     /**

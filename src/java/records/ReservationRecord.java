@@ -6,8 +6,7 @@ package records;
 
 import reservationPortalSystem.Payment;
 import reservationPortalSystem.DateInformation;
-import items.ReservationItem;
-import items.SingleDate;
+import items.*;
 import java.util.Date;
 import java.util.HashMap;
 import reservationPortalSystem.Customer;
@@ -48,30 +47,35 @@ public abstract class ReservationRecord
         this.myDateInformation = myDateInformation;
         this.status = myReservationStatus.toString();
         purchaseDate = new Date();
+        pickItem();     //capture the item
     }
 
-    public Date getPurchaseDate() {
+    public Date getPurchaseDate()
+    {
         return purchaseDate;
     }
 
-    public void setPurchaseDate(Date purchaseDate) {
+    public void setPurchaseDate(Date purchaseDate)
+    {
         this.purchaseDate = purchaseDate;
     }
 
-    public ReservationStatus getStatus() {
+    public ReservationStatus getStatus()
+    {
         return ReservationStatus.valueOf(status);
     }
 
-    public void setStatus(String status) {
+    public void setStatus(String status)
+    {
         this.status = status;
     }
 
-    public ReservationRecord(ReservationItem myReservationItem, Payment mypayment, Customer reserver, DateInformation myDateInformation){
+    public ReservationRecord(ReservationItem myReservationItem, Payment mypayment, Customer reserver, DateInformation myDateInformation)
+    {
         this(myReservationItem,
-        mypayment,
-        reserver,
-        myDateInformation,ReservationStatus.ONHOLD
-        );
+                mypayment,
+                reserver,
+                myDateInformation, ReservationStatus.ONHOLD);
     }
 
     public abstract HashMap getSearchCritria();
@@ -163,8 +167,42 @@ public abstract class ReservationRecord
      */
     public abstract Double calculartePrice();
 
-    public static ReservationRecord createRecord(String type)
+    /**
+     * a factory method to create a record with specified type
+     * @param type the type of the record car , hotel , flight ,etc..
+     * @return the wanted concrete class but warraped under the abstract class 
+     */
+    public static ReservationRecord createRecord(TYPE type)
     {
+        if (type == TYPE.CAR)
+        {
+            return new CarReservation();
+        }
+        if (type == TYPE.FLIGHT || type == TYPE.ONEWAYFLIGHT || type == TYPE.TwoWayFlight)
+        {
+            return new FlightReservation();
+        }
+        if (type == TYPE.HOTEL)
+        {
+            return new HotelReservation();
+        }
+        // not supported yet...
         return null;
+    }
+
+    /**
+     * decreasing the reserved item resources like available number
+     */
+    public void pickItem()
+    {
+        myReservationItem.reserve(getInfo());
+    }
+
+    /**
+     * increasing the reserved item resources like available number
+     */
+    public void returnItem()
+    {
+        myReservationItem.returnBack(getInfo());
     }
 }

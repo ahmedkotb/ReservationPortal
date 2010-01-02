@@ -110,8 +110,25 @@ public abstract class ReservationItem implements Hashable
      * @param type the type of the item to be created
      * @return the created item
      */
-    public static ReservationItem createItem(String type)
+    public static ReservationItem createItem(TYPE type)
     {
+        if (type == TYPE.CAR)
+        {
+            return new Car();
+        }
+        if (type == TYPE.FLIGHT || type == TYPE.ONEWAYFLIGHT)
+        {
+            return new OneWayFlight();
+        }
+        if (type == TYPE.TwoWayFlight)
+        {
+            return new TwoWayFlight();
+        }
+        if (type == TYPE.HOTEL)
+        {
+            return new Hotel();
+        }
+        //not supported yet...
         return null;
     }
 

@@ -5,10 +5,10 @@
 package items;
 
 /**
- *this class is used in determining the type of search in search manager
+ *this class is used in determining the type of concrete objects
  * @author ahmed
  */
-public enum searchType
+public enum TYPE
 {
-    CAR,HOTEL,FLIGHT
+    CAR,HOTEL,FLIGHT,ONEWAYFLIGHT,TwoWayFlight
 }

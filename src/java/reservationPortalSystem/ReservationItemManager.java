@@ -4,7 +4,7 @@ import items.CarAgency;
 import items.ReservationItem;
 import items.Review;
 import items.SearchItemManager;
-import items.searchType;
+import items.TYPE;
 import java.util.Collection;
 import java.util.HashMap;
 import javax.jdo.Query;
@@ -44,7 +44,7 @@ public class ReservationItemManager implements IAdminReservationItemManager , IC
 
     public Collection<ReservationItem> search(HashMap info) {
         searchManager.setSearchCriteria(info);
-        searchManager.setType(searchType.CAR);
+        searchManager.setType(TYPE.CAR);
         return searchManager.searchItems();
     }
 

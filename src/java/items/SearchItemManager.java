@@ -19,14 +19,14 @@ public class SearchItemManager
 {
 
     HashMap<String, Object> searchCriteria;   //the properties of the wanted item
-    searchType type;                            //the type of the wanted item
+    TYPE type;                            //the type of the wanted item
 
     public SearchItemManager(HashMap<String, Object> searchCriteria)
     {
         this.searchCriteria = searchCriteria;
     }
 
-    public SearchItemManager(HashMap<String, Object> searchCriteria, searchType type)
+    public SearchItemManager(HashMap<String, Object> searchCriteria, TYPE type)
     {
         this.searchCriteria = searchCriteria;
         this.type = type;
@@ -42,25 +42,25 @@ public class SearchItemManager
         this.searchCriteria = searchCriteria;
     }
 
-    public searchType getType()
+    public TYPE getType()
     {
         return type;
     }
 
-    public void setType(searchType type)
+    public void setType(TYPE type)
     {
         this.type = type;
     }
 
     public Collection searchItems()
     {
-        if (type == searchType.CAR)
+        if (type == TYPE.CAR)
         {
             return searchCars();
-        } else if (type == searchType.FLIGHT)
+        } else if (type == TYPE.FLIGHT)
         {
             return searchFlights();
-        } else if (type == searchType.HOTEL)
+        } else if (type == TYPE.HOTEL)
         {
             return searchHotels();
         } else
