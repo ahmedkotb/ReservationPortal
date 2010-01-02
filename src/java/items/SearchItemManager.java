@@ -81,17 +81,21 @@ public class SearchItemManager
         String filter = "";
         String parameters = "";
 
-        if (searchCriteria.containsKey("carType") && searchCriteria.get("carType") != null)
+        if (searchCriteria.containsKey("carType") && searchCriteria.get("carType") != null && !((String)searchCriteria.get("carType")).equals(""))
         {
             filter += "this.carType == carType && ";
             parameters += "String carType , ";
-        }
+        }else
+            searchCriteria.remove("carType");
 
-        if (searchCriteria.containsKey("carModel") && searchCriteria.get("carModel") != null)
+        if (searchCriteria.containsKey("carModel") && searchCriteria.get("carModel") != null && !((String)searchCriteria.get("carModel")).equals(""))
         {
             filter += "this.carModel == carModel && ";
             parameters += "String carModel , ";
         }
+        else
+            searchCriteria.remove("carModel");
+        System.out.println(searchCriteria);
         filter += "this.myAgency.supportedLocations.contains(pickupLocation) == true && this.myAgency.supportedLocations.contains(returnLocation) == true";
         parameters += "Location pickupLocation , Location returnLocation";
         query.declareParameters(parameters);
