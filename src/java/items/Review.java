@@ -4,6 +4,7 @@
  */
 package items;
 
+import java.util.Date;
 import reservationPortalSystem.User;
 
 /**
@@ -15,14 +16,17 @@ public class Review
 
     private String comment;
     private User user;
-
+    private Date date;
 
     public Review(){
+        user = null;
         comment="";
+        date = new Date();
     }
 
-    public Review(String comment){
+    public Review(User user,String comment){
         this.comment = comment;
+        date = new Date();
     }
 
     public String getComment(){
@@ -40,4 +44,9 @@ public class Review
     public void setUser(User user) {
         this.user = user;
     }
+
+    public Date getDate() {
+        return date;
+    }
+
 }
