@@ -71,5 +71,13 @@ private Date endDate;
         return true;
     }
 
+    public boolean isInBetween(Date myDate)
+    {
+        //check that the given date is in between the start and end dates
+        if((StartDate.equals(myDate) || myDate.after(myDate)) && (endDate.equals(myDate) ||myDate.before(endDate) ))
+            return true;
+        return false;
+    }
+
 
 }

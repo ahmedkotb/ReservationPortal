@@ -59,6 +59,44 @@ public class Airport
     {
         this.name = name;
     }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null)
+        {
+            return false;
+        }
+        if (getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final Airport other = (Airport) obj;
+        if ((this.code == null) ? (other.code != null) : !this.code.equals(other.code))
+        {
+            return false;
+        }
+        if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name))
+        {
+            return false;
+        }
+        if (this.myLocation != other.myLocation && (this.myLocation == null || !this.myLocation.equals(other.myLocation)))
+        {
+            return false;
+        }
+        return true;
+    }
+
+    
+    @Override
+    public int hashCode()
+    {
+        int hash = 7;
+        hash = 59 * hash + (this.code != null ? this.code.hashCode() : 0);
+        hash = 59 * hash + (this.name != null ? this.name.hashCode() : 0);
+        hash = 59 * hash + (this.myLocation != null ? this.myLocation.hashCode() : 0);
+        return hash;
+    }
     
 
 }

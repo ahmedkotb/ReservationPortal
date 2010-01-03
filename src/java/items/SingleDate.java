@@ -54,4 +54,13 @@ public class SingleDate implements DateInformation
 
 
     }
+
+    public boolean isInBetween(Date myDate)
+    {
+        //test if the given date is equal to start date
+        if(StartDate.equals(myDate))
+            return true;
+        else
+            return false;
+    }
 }

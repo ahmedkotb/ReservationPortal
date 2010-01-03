@@ -52,10 +52,10 @@ public class FlightReservation extends ReservationRecord
         HashMap<String, Object> fields = new HashMap<String, Object>();    //the hash map containig the fields of the object
         fields.put("sourceAirport", new Airport());
         fields.put("destinationAirport", new Airport());
-        fields.put("StartDate", new Date());
+        fields.put("startDate", new Date());
         if (myReservationItem instanceof TwoWayFlight)
         {
-            fields.put("EndDate", new Date());
+            fields.put("endDate", null);
         }
         return fields;
     }

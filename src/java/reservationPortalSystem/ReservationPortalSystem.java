@@ -179,7 +179,7 @@ public class ReservationPortalSystem {
         //test method
         
         System.out.println("testing....");
-        com.objectdb.Enhancer.enhance("reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer , reservationPortalSystem.Owner,items.*,records.*");
+       com.objectdb.Enhancer.enhance("reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer , reservationPortalSystem.Owner,items.*,records.*");
         //Owner o = new Owner("ahmed", "root", "root", null, null, null);
         //ReservationPortalSystem.getInstance().save(o);
         //car
@@ -227,6 +227,13 @@ public class ReservationPortalSystem {
 //        fields.put("stars", 4);
 //        fields.put("guestNumber", 5);
 
+        
+        //fields.put("endDate", new Date());
+        //fields.put("startDate", new Date());
+        //fields.put("sourceAirport", new Airport());
+        //fields.put("destinationAirport", new Airport());
+
+       
 //        // CarReservation r=new CarReservation();
         //System.out.println(fields);
 //         Query query = ReservationPortalSystem.getInstance().getConnection().newQuery(Car.class);
@@ -235,11 +242,11 @@ public class ReservationPortalSystem {
 
 
 
-//        SearchItemManager ss = new SearchItemManager(fields, searchType.HOTEL);
-//        Collection result = ss.searchItems();
-//        Iterator itr = result.iterator();
-//
-//        System.out.println(result);
+        SearchItemManager ss = new SearchItemManager(fields, TYPE.FLIGHT);
+        Collection result = ss.searchItems();
+        Iterator itr = result.iterator();
+
+        System.out.println(result);
 //        while (itr.hasNext())
 //        {
 //            System.out.println("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");
