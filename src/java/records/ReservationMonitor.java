@@ -63,8 +63,11 @@ public class ReservationMonitor {
         ReservationRecord record;
         while (!recordsQueue.isEmpty() && dateDiff(recordsQueue.peek().purchaseDate, now)){
             record = recordsQueue.remove();
-            if (record.getStatus().equals(ReservationStatus.ONHOLD))
+            if (record.getStatus().equals(ReservationStatus.ONHOLD)){
+                ReservationPortalSystem.getInstance().getConnection().currentTransaction().begin();
                 record.setStatus(ReservationStatus.CANCELED);
+                ReservationPortalSystem.getInstance().getConnection().currentTransaction().commit();
+            }
             System.out.println("removed + " + record.getPurchaseDate());
         }
     }

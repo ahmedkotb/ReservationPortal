@@ -96,7 +96,7 @@ public class SearchItemManager
         else
             searchCriteria.remove("carModel");
         System.out.println(searchCriteria);
-        filter += "this.myAgency.supportedLocations.contains(pickupLocation) == true && this.myAgency.supportedLocations.contains(returnLocation) == true";
+        filter += "this.myAgency.supportedLocations.contains(pickupLocation) == true && this.myAgency.supportedLocations.contains(returnLocation) == true && this.availableNumber > 0";
         parameters += "Location pickupLocation , Location returnLocation";
         query.declareParameters(parameters);
         query.setFilter(filter);

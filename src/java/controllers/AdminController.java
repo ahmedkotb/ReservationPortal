@@ -39,19 +39,19 @@ public class AdminController extends HttpServlet {
         String req = (String)request.getParameter("req");
 
         if (req == null){
-            getServletContext().getRequestDispatcher("/admin/admin.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/admin/adminhome.jsp").forward(request, response);
         }else if (req.equals("addAgencyPage")){
             request.setAttribute("mode", "addAgencyPage");
-            getServletContext().getRequestDispatcher("/admin/admin.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/admin/adminhome.jsp").forward(request, response);
         }else if (req.equals("addAgency")){
             addCarAgency(request);
-            getServletContext().getRequestDispatcher("/admin/admin.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/admin/adminhome.jsp").forward(request, response);
         }else if(req.equals("addCarPage")){
             request.setAttribute("mode", "addCarPage");
-            getServletContext().getRequestDispatcher("/admin/admin.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/admin/adminhome.jsp").forward(request, response);
         }else if (req.equals("addCar")){
             addCar(request);
-            getServletContext().getRequestDispatcher("/admin/admin.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/admin/adminhome.jsp").forward(request, response);
         }
     } 
 

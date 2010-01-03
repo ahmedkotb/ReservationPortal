@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package items;
 
 import java.util.ArrayList;
@@ -50,6 +46,13 @@ public class Car extends ReservationItem
     {
         this.availableNumber = availableNumber;
     }
+
+    @Override
+    public void setQuantity(int newQuantity ){
+        super.setQuantity(newQuantity);
+        this.availableNumber = newQuantity;
+    }
+
 
     public String getCarModel()
     {
