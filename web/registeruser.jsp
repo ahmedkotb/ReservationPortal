@@ -12,42 +12,29 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link href="styles/style.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
         <h3>main info</h3>
-        <table border="0">
-            <tbody>
-                <tr>
-                    <td>Your full name : </td>
-                    <td><input type="text" name="name" value="" /></td>
-                </tr>
-                <tr>
-                    <td>User Name : </td>
-                    <td><input type="text" name="userName" value="" /></td>
-                </tr>
-                <tr>
-                    <td>Password : </td>
-                    <td><input type="password" name="password" value="" /></td>
-                </tr>
-                <tr>
-                    <td>Confirm Password : </td>
-                    <td><input type="password" value="" /></td>
-                </tr>
-                <tr>
-                    <td>Address : </td>
-                    <td><input type="text" name="address" value="" /></td>
-                </tr>
-                <tr>
-                    <td>Email : </td>
-                    <td><input type="text" name="email" value="" /></td>
-                </tr>
-                <tr>
-                    <td>phone number : </td>
-                    <td><input type="text" name="phone" value="" /></td>
-                </tr>
-            </tbody>
-        </table>
+            <label for="name">your full name :</label>
+            <input class="textfield" id="name" type="text" name="name" value="" />
+            <label for="uname">user name :</label>
+            <input class="textfield" name="userName" id="uname" type="text" />
 
+            <label for="password">password:</label>
+            <input class="textfield" id="password" name="password" type="password" />
+
+            <label for="cpassword">confirm password:</label>
+            <input class="textfield" id="cpassword" type="password" />
+
+            <label for="address">address :</label>
+            <input class="textfield" id="address" name="address" type="text" />
+
+            <label for="email">email:</label>
+            <input class="textfield" id="email" name="email" type="text" />
+
+            <label for="pnum">phone number:</label>
+            <input class="textfield" id="pnum" name="phone" type="text" />
 
     </body>
 </html>

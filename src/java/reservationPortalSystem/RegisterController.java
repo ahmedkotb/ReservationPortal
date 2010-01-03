@@ -45,7 +45,8 @@ public class RegisterController extends HttpServlet {
             if (validation != null){
                 //invalid user Data
                 request.setAttribute("error", validation);
-                getServletContext().getRequestDispatcher("/registercustomer.jsp").forward(request, response);
+                //getServletContext().getRequestDispatcher("/registercustomer.jsp").forward(request, response);
+                getServletContext().getRequestDispatcher("/home.jsp?req=registerCustomer").forward(request, response);
                 return;
             }
 
@@ -59,7 +60,8 @@ public class RegisterController extends HttpServlet {
             if (validation != null){
                 //invalid user Data
                 request.setAttribute("error", validation);
-                getServletContext().getRequestDispatcher("/registeradmin.jsp").forward(request, response);
+                //getServletContext().getRequestDispatcher("/registeradmin.jsp").forward(request, response);
+                getServletContext().getRequestDispatcher("/home.jsp?req=registerAdmin").forward(request, response);
                 return;
             }
 

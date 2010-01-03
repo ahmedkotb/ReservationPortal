@@ -16,7 +16,7 @@
     <body>
         <jsp:include page="../header.jsp"></jsp:include>
         <h1>Customer</h1>
-        <a href="customer">home</a>
+        <a href="customer">home</a> <br>
         <a href="customer?req=searchCarPage">reserve a car</a>
 
         <%
@@ -24,24 +24,49 @@
             if (mode == null) {
                 //home page
             } else if (mode.equals("searchCarPage")) {%>
-            <form action="customer" method="post">
-                <input type="hidden" name="req" value="searchCar" />
-                <jsp:include page="searchcar.jsp"></jsp:include>
-                <input type="submit" value="search" />
-            </form>
+        <form action="customer" method="post">
+            <input type="hidden" name="req" value="searchCar" />
+            <jsp:include page="searchcar.jsp"></jsp:include>
+            <input type="submit" value="search" />
+        </form>
         <%} else if (mode.equals("searchCar")) {
-                out.print("searching....");
+                out.print("search Results : <br>");
                 Collection<ReservationItem> items = (Collection<ReservationItem>) request.getAttribute("result");
                 if (items.size() == 0) {
                     out.println("nothing found");
                     return;
                 }
-                out.print(items.size());
-
+                out.print("found : " + items.size());
                 for (ReservationItem item : items) {
-                    out.print(((Car)item).getCarModel());
-                }
-            }
-           %>
+        %>
+        <br>
+        <div>
+            <table>
+                    <tr>
+                        <td>car model :</td>
+                        <td><%=((Car) item).getCarModel()%></td>
+                    </tr>
+                    <tr>
+                        <td>car type :</td>
+                        <td><%=((Car) item).getCarType()%></td>
+                    </tr>
+                    <tr>
+                        <td>car agency :</td>
+                        <td><%=((Car) item).getMyAgency().getName()%></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="customer?req=reserve&id=<%=item.getId()%>">Reserve</a>
+                        </td>
+                        <td>Reserve and pay</td>
+                    </tr>
+            </table>
+
+
+            <%
+                   }
+               }
+            %>
+        </div>
     </body>
 </html>

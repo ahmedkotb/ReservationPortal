@@ -19,6 +19,6 @@
                 ReservationPortalSystem.getInstance().logout((User)session.getAttribute("user"));
             session.invalidate();
         %>
-        <h1>hope to see u soon...</h1>
+        <jsp:forward page="home.jsp" />
     </body>
 </html>

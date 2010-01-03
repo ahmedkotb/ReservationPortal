@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import records.CustomerReservationManager;
 import reservationPortalSystem.ReservationPortalSystem;
 
 /**
@@ -43,6 +44,10 @@ public class customerController extends HttpServlet {
             request.setAttribute("mode", "searchCar");
             request.setAttribute("result", ReservationPortalSystem.getInstance().getItemManager().search(getSearchParameters(request)));
             getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);
+        }else if (req.equals("reserve")){
+            String id = (String)request.getAttribute("id");
+            if (id == null)return;
+            CustomerReservationManager manager = (CustomerReservationManager)request.getSession().getAttribute("reservationManager");
         }
     } 
 

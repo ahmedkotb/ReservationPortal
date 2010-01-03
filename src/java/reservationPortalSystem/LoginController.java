@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import records.CustomerReservationManager;
 
 /**
  *
@@ -47,12 +48,12 @@ public class LoginController extends HttpServlet {
 
         session.setAttribute("user", user);
         if (user instanceof Owner) {
-            getServletContext().getRequestDispatcher("/owner/owner.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/owner/ownerhome.jsp").forward(request, response);
         } else if (user instanceof Admin) {
             session.setAttribute("reservationManager", new AdminReservationManager((Admin)user));
             getServletContext().getRequestDispatcher("/admin/admin.jsp").forward(request, response);
         } else {
-            // TODO should create the customer manager and set it in the session
+            session.setAttribute("reservationManager", new CustomerReservationManager((Customer)user));
             getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);
         }
     }

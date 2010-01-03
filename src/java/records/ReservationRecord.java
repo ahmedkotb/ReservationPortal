@@ -18,7 +18,8 @@ import reservationPortalSystem.Customer;
 public abstract class ReservationRecord
 {
 
-    protected int reservationID;    //may be removed from the constructor and become auto incremented
+
+    protected String reservationID;    //may be removed from the constructor and become auto incremented
     protected Date purchaseDate;
     protected double price;
     protected ReservationItem myReservationItem;
@@ -30,7 +31,7 @@ public abstract class ReservationRecord
     public ReservationRecord()
     {
         purchaseDate = new Date();
-        reservationID = 0;
+        reservationID = generateUniqueId();
         price = 0;
         reserver = new Customer();
         status = (ReservationStatus.ONHOLD).toString();
@@ -39,7 +40,7 @@ public abstract class ReservationRecord
 
     public ReservationRecord(ReservationItem myReservationItem, Payment mypayment, Customer reserve, DateInformation myDateInformation, ReservationStatus myReservationStatus)
     {
-        this.reservationID = 0;
+        
         this.price = calculartePrice();
         this.myReservationItem = myReservationItem;
         this.mypayment = mypayment;
@@ -47,25 +48,10 @@ public abstract class ReservationRecord
         this.myDateInformation = myDateInformation;
         this.status = myReservationStatus.toString();
         purchaseDate = new Date();
+        this.reservationID = generateUniqueId();
         pickItem();     //capture the item
     }
-
-    public Date getPurchaseDate()
-    {
-        return purchaseDate;
-    }
-
-    public void setPurchaseDate(Date purchaseDate)
-    {
-        this.purchaseDate = purchaseDate;
-    }
-
-    public ReservationStatus getStatus()
-    {
-        return ReservationStatus.valueOf(status);
-    }
-
-    
+  
     public ReservationRecord(ReservationItem myReservationItem, Payment mypayment, Customer reserver, DateInformation myDateInformation)
     {
         this(myReservationItem,
@@ -75,6 +61,25 @@ public abstract class ReservationRecord
     }
 
     public abstract HashMap getSearchCritria();
+
+
+
+    public Date getPurchaseDate(){
+        return purchaseDate;
+    }
+
+    public void setPurchaseDate(Date purchaseDate){
+        this.purchaseDate = purchaseDate;
+    }
+
+    public ReservationStatus getStatus(){
+        return ReservationStatus.valueOf(status);
+    }
+
+    public String getReservationID() {
+        return reservationID;
+    }
+
 
     public DateInformation getMyDateInformation()
     {
@@ -122,16 +127,6 @@ public abstract class ReservationRecord
         this.price = price;
     }
 
-    public int getReservationID()
-    {
-        return reservationID;
-    }
-
-    public void setReservationID(int reservationID)
-    {
-        this.reservationID = reservationID;
-    }
-
     public Customer getReserve()
     {
         return reserver;
@@ -152,6 +147,14 @@ public abstract class ReservationRecord
         this.reserver = reserver;
     }
 
+
+    /**
+     * generates a new unique id
+     * @return string that represents a unique item id
+     */
+    private String generateUniqueId(){
+        return (Long.toHexString(new Date().getTime()));
+    }
     /**
      * return a hashmap representing the info which will be used to reserve or set free a reservation
      * @return
