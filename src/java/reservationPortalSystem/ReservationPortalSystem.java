@@ -180,11 +180,15 @@ public class ReservationPortalSystem {
         
         System.out.println("testing....");
         com.objectdb.Enhancer.enhance("reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer , reservationPortalSystem.Owner,items.*,records.*");
+        //ReservationItem rrr = new Car();
+        //System.out.println(rrr.getId());
+        //ReservationRecord f = new CarReservation();
+        //System.out.println(f.getReservationID());
         //Owner o = new Owner("ahmed", "root", "root", null, null, null);
         //ReservationPortalSystem.getInstance().save(o);
         //car
         //Car rrr = new Car(1, "fiat", CarType.Economy, 14, 14, null, null)
-       // System.exit(0);
+        System.exit(0);
 
         ReservationPortalSystem systemInstance = getInstance();
         systemInstance.getConnection();

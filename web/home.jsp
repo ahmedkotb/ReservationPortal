@@ -4,7 +4,7 @@
     Author     : Ahmed Kotb
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" import="reservationPortalSystem.User ,reservationPortalSystem.Admin , reservationPortalSystem.Owner "%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -18,6 +18,11 @@
     <h1 id="sitename"><a href="home.jsp"><span class="blue">Km</span>Portal</a><span class="caption">Reliable Reservation Portal</span></h1>
     <div id="nav">
         <div id="search">
+            <% if (session.getAttribute("user")==null){ %>
+            <a href="home.jsp?req=login"> login</a>
+            <% }else {%>
+            <a href="logout.jsp" > logout </a>
+            <%}%>
         </div>
       <div id="topmenu">
         <ul>
@@ -44,30 +49,57 @@
         <h2>post 1<span class="description">a new post</span></h2>
         this is post 1
       </div>
-        <%}else if (req.equals("login")){ %>
+      <%}else if (req.equals("login")){
+         if (session.getAttribute("user") !=null){
+             User user =(User) session.getAttribute("user");
+             if (user instanceof Owner)
+                 getServletContext().getRequestDispatcher("/owner/ownerhome.jsp").forward(request, response);
+             else if (user instanceof Admin)
+                 getServletContext().getRequestDispatcher("/admin/admin.jsp").forward(request, response);
+             else
+                 getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);
+         }else{
+    %>
         <form action="login" method="post">
-          <div class="contactform">
+          <div>
             <label for="name">user name:</label>
             <input class="textfield" name="userName" id="name" type="text" />
             <label for="password">password:</label>
-            <input class="textfield" id="password" name="password" type="text" />
+            <input class="textfield" id="password" name="password" type="password" />
             <label for="Submit"><span class="hide">Submit</span></label>
             <!--<input name="Submit" type="button" id="Submit" class="button" value="login" />-->
-            <input name="Submit" type="button" id="Submit"  value="login" />
+            <input name="Submit" type="submit" id="Submit"  value="login" />
           </div>
         </form>
-        <%}else if (req.equals("registerCustomer")){%>
-                <h3>Register a New Customer</h3>
+        <%}}else if (req.equals("registerCustomer")){%>
+            <h3>Register a New Customer</h3>
 
 
-        <%if (request.getAttribute("error") != null){%>
-        <div> error : <%=(String)request.getAttribute("error")%> </div>
-        <%}%>
-        <form action="register" method="POST">
-            <jsp:include page="registeruser.jsp"/>
-            <input type="hidden" name="req" value="registerCustomer" />
-            <input type="submit" value="register" />
-        </form>
+            <%if (request.getAttribute("error") != null){%>
+                <div> error : <%=(String)request.getAttribute("error")%> </div>
+            <%}%>
+            <form action="register" method="POST">
+                <jsp:include page="registeruser.jsp"/>
+                <div>
+                    <input type="hidden" name="req" value="registerCustomer" />
+                    <input type="submit" value="register" />
+                </div>
+            </form>
+        <%}else if (req.equals("registerAdmin")){%>
+            <h3>join km-portal Admins ...</h3>
+
+            <%if (request.getAttribute("error") != null){%>
+                <div> error : <%=(String)request.getAttribute("error")%> </div>
+            <%}%>
+
+            <form action="register" method="POST">
+                <jsp:include page="registeruser.jsp"/>
+                <input type="hidden" name="req" value="registerAdmin" />
+                <h3>Other Info</h3>
+                Qualifications and Previous jobs: <br>
+                <textarea class="textfield" name="qualifications" rows="4" cols="40"></textarea><br>
+                <input type="submit" value="register" />
+            </form>
         <%}%>
     </div>
     <div id="sidebar">
@@ -88,7 +120,7 @@
     <div class="clear"></div>
     <div id="bottom">
         <p>Copyright &copy; 2010 kotbcorp & A2ME</p>
-      <!--<p><a href="http://www.free-css.com/">You</a> | <a href="http://www.free-css.com/">Can</a> | <a href="http://www.free-css.com/">Put</a> | <a href="http://www.free-css.com/">Some</a> | <a href="http://www.free-css.com/">Links</a> | <a href="http://www.free-css.com/">Here</a></p>-->
+      <p><a href="home.jsp">Home</a> | <a href="about.jsp">About</a> | <a href="home.jsp?req=registerAdmin">Join !</a></p>
     </div>
   </div>
   <div id="footer">

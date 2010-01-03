@@ -150,7 +150,7 @@ h1 a, h2 a, h3 a, h4 a {text-decoration:none; border:none!important;}
 
 /*tables and Forms */
 
-#right table {
+/*#right table {
 	width:90%;
 	border:1px solid #0075A4;
 	margin-bottom:20px;
@@ -170,8 +170,30 @@ h1 a, h2 a, h3 a, h4 a {text-decoration:none; border:none!important;}
 	border-bottom:1px solid #0075A4;
 	padding:5px 15px 5px 15px;
 	border-right:1px solid #0075A4;
-}
+}*/
 
+
+.newtable {
+	width:90%;
+	border:1px solid #0075A4;
+	margin-bottom:20px;
+	background: #E3F6FF;
+	margin-top: 15px;
+}
+.newth {
+	background:#0075A4;
+	padding:5px 15px 5px 15px;
+	color:#8ADBFF;
+	text-align:center;
+	border-bottom:1px solid #000000;
+	font: bold 16px "Trebuchet MS", Verdana, sans-serif;
+	text-transform: uppercase;
+}
+.newtd {
+	border-bottom:1px solid #0075A4;
+	padding:5px 15px 5px 15px;
+	border-right:1px solid #0075A4;
+}
 
 .textfield {
 	display: block;

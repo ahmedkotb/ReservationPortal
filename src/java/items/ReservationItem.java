@@ -5,6 +5,7 @@
 package items;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import reservationPortalSystem.Admin;
 
@@ -21,6 +22,10 @@ public abstract class ReservationItem implements Hashable
     protected ArrayList<Review> reviews;    // a list of reviews
     protected Admin provider;
 
+
+    protected Date creationDate;
+    protected String id;        // a unique identifier to the item
+
     public ReservationItem()
     {
         reservedCount = 0;
@@ -28,6 +33,7 @@ public abstract class ReservationItem implements Hashable
         rating=0.0;
         reviews=new ArrayList<Review>();
         provider=new Admin();
+        id = generateUniqueId();
     }
 
     public ReservationItem(int quantity,Admin provider)
@@ -37,14 +43,21 @@ public abstract class ReservationItem implements Hashable
         rating=0.0;                         //added by customer
         reviews=new ArrayList<Review>();    //added by customer
         this.provider=provider;
+        id = generateUniqueId();
     }
 
+
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public String getId() {
+        return id;
+    }
+    
     public int getReservedCount() {
         return reservedCount;
-    }
-
-    public void setReservedCount(int reservedCount) {
-        this.reservedCount = reservedCount;
     }
 
     public Admin getProvider()
@@ -87,6 +100,14 @@ public abstract class ReservationItem implements Hashable
         this.reviews = reviews;
     }
 
+
+    /**
+     * generates a new unique id
+     * @return string that represents a unique item id
+     */
+    private String generateUniqueId(){
+        return ( Long.toHexString(new Date().getTime()));
+    }
 
     /**
      * used to decrement the number of availabe items

@@ -38,23 +38,28 @@ public class OwnerController extends HttpServlet {
 
         String req = (String)request.getParameter("req");
         if (req == null){
-            getServletContext().getRequestDispatcher("/owner/owner.jsp").forward(request, response);
+            //getServletContext().getRequestDispatcher("/owner/owner.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/owner/ownerhome.jsp").forward(request, response);
         }else if (req.equals("allAdmins")) {
             request.setAttribute("mode", "allAdmins");
             request.setAttribute("result", ReservationPortalSystem.getInstance().getAllAdmins());
-            getServletContext().getRequestDispatcher("/owner/owner.jsp").forward(request, response);
+            //getServletContext().getRequestDispatcher("/owner/owner.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/owner/ownerhome.jsp").forward(request, response);
         }else if (req.equals("newAdmins")){
             request.setAttribute("mode", "newAdmins");
             request.setAttribute("result", ReservationPortalSystem.getInstance().getNewAdmins());
-            getServletContext().getRequestDispatcher("/owner/owner.jsp").forward(request, response);
+            //getServletContext().getRequestDispatcher("/owner/owner.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/owner/ownerhome.jsp").forward(request, response);
         }else if (req.equals("activate")) {
             String userName = (String)request.getParameter("userName");
             ReservationPortalSystem.getInstance().setAdminActivation(userName, true);
-            getServletContext().getRequestDispatcher("/owner/owner.jsp").forward(request, response);
+            //getServletContext().getRequestDispatcher("/owner/owner.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/owner/ownerhome.jsp").forward(request, response);
         }else if (req.equals("deactivate")){
             String userName = (String)request.getParameter("userName");
             ReservationPortalSystem.getInstance().setAdminActivation(userName, false);
-            getServletContext().getRequestDispatcher("/owner/owner.jsp").forward(request, response);
+            //getServletContext().getRequestDispatcher("/owner/owner.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/owner/ownerhome.jsp").forward(request, response);
         }
     } 
 
