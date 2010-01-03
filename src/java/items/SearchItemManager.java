@@ -6,6 +6,7 @@ package items;
 
 import java.util.Collection;
 import items.*;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Queue;
 import javax.jdo.Query;
@@ -79,16 +80,16 @@ public class SearchItemManager
         //two way flight
         if (searchCriteria.containsKey("endDate") && searchCriteria.get("endDate") != null )
         {
-            filter += "this.myDateInformation.isInBetwen(endDate)  ";
-            parameters += "java.util.Date endDate ";
+            filter += "this.myDateInformation.isInBetween(endDate) && ";
+            parameters += "java.util.Date endDate , ";
         }else
             searchCriteria.remove("endDate");
 
-       // filter +="this.myDateInformation.isInBetwen(startDate) && this.sourceAirport.equals(sourceAirport) && this.destinationAirport.equals(destinationAirport)";
-        //parameters +="java.util.Date startDate , Airport sourceAirport , Airport destinationAirport";
-        System.out.println(filter);
-        System.out.println(parameters);
-        System.out.println(searchCriteria);
+        filter +="this.myDateInformation.isInBetween(startDate) && this.sourceAirport.equals(sourceAirport) && this.destinationAirport.equals(destinationAirport)";
+        parameters +="java.util.Date startDate , Airport sourceAirport , Airport destinationAirport";
+        query.declareParameters(parameters);
+        query.setFilter(filter);
+
         Collection<Flight> result = (Collection<Flight>) query.executeWithMap(searchCriteria);
         return result;
     }
@@ -145,4 +146,5 @@ public class SearchItemManager
         return result;
 
     }
+    
 }
