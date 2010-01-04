@@ -5,15 +5,23 @@
 
 package controllers;
 
+import items.DoubleDate;
 import items.Location;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import records.CarReservation;
 import records.CustomerReservationManager;
+import records.ReservationRecord;
+import reservationPortalSystem.Customer;
+import reservationPortalSystem.ICustomerReservationItemManager;
 import reservationPortalSystem.ReservationPortalSystem;
 
 /**
@@ -42,12 +50,33 @@ public class customerController extends HttpServlet {
             getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);
         }else if (req.equals("searchCar")){
             request.setAttribute("mode", "searchCar");
-            request.setAttribute("result", ReservationPortalSystem.getInstance().getItemManager().search(getSearchParameters(request)));
+            HashMap hm = getSearchParameters(request);
+            if (hm == null){
+                getServletContext().getRequestDispatcher("/customer/customer.jsp?req=searchCarPage&error=invaledData").forward(request, response);
+            }
+            request.setAttribute("result", ReservationPortalSystem.getInstance().getItemManager().search(hm));
             getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);
         }else if (req.equals("reserve")){
-            String id = (String)request.getAttribute("id");
-            if (id == null)return;
-            CustomerReservationManager manager = (CustomerReservationManager)request.getSession().getAttribute("reservationManager");
+            String id = (String)request.getParameter("id");
+            if (id == null){
+                out.print("null id");
+                return;
+            }
+            CustomerReservationManager reserveManager = (CustomerReservationManager)request.getSession().getAttribute("reservationManager");
+            ICustomerReservationItemManager itemManager = ReservationPortalSystem.getInstance().getItemManager();
+            ReservationRecord record = (ReservationRecord)request.getSession().getAttribute("record");
+            if (record== null){
+                out.print("null record");
+                return;
+            }
+            record.setMyReservationItem(itemManager.getItem(id));
+            reserveManager.reserve(record);
+            getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);
+        }else if (req.equals("onHoldReservations")){
+            CustomerReservationManager reserveManager = (CustomerReservationManager)request.getSession().getAttribute("reservationManager");
+            request.setAttribute("mode", "onHoldReservations");
+            request.setAttribute("onHoldReservations",reserveManager.getOnHoldReservations());
+            getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);
         }
     } 
 
@@ -75,6 +104,24 @@ public class customerController extends HttpServlet {
 
            info.put("pickupLocation", pickyupLocation);
            info.put("returnLocation", returnLocation);
+
+           //put the reservation extra info in the session in case the user decided to reserve an item
+           ReservationRecord record = new CarReservation();
+           SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+           Date startDate;
+           Date endDate;
+           try {
+                startDate = sdf.parse((String) request.getParameter("startDate"));
+                endDate = sdf.parse((String)request.getParameter("endDate"));
+            } catch (ParseException ex) {
+                return null;
+            }
+
+            record.setMyDateInformation(new DoubleDate(startDate,endDate));
+            record.setReserver((Customer)request.getSession().getAttribute("user"));
+            ((CarReservation)record).setPickupLocation(pickyupLocation);
+            ((CarReservation)record).setPickupLocation(returnLocation);
+            request.getSession().setAttribute("record", record);
         }
         return info;
     }

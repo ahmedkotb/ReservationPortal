@@ -11,6 +11,13 @@ import java.util.HashMap;
  */
 public interface ICustomerReservationItemManager {
 
+
+    /**
+     * returns an item with the specified id
+     * @param id the item id
+     * @return the item
+     */
+    public ReservationItem getItem (String id);
     /**
      * search for item that satisfies the given criteria in the hashmap
      * @param info the search criteria

@@ -10,6 +10,7 @@ import items.*;
 import java.util.Date;
 import java.util.HashMap;
 import reservationPortalSystem.Customer;
+import reservationPortalSystem.ReservationPortalSystem;
 
 /**
  *
@@ -132,11 +133,6 @@ public abstract class ReservationRecord
         return reserver;
     }
 
-    public void setReserve(Customer reserve)
-    {
-        this.reserver = reserve;
-    }
-
     public Customer getReserver()
     {
         return reserver;
@@ -195,7 +191,9 @@ public abstract class ReservationRecord
      */
     public void pickItem()
     {
+        ReservationPortalSystem.getInstance().getConnection().currentTransaction().begin();
         myReservationItem.reserve(getInfo());
+        ReservationPortalSystem.getInstance().getConnection().currentTransaction().commit();
     }
 
     /**
@@ -203,6 +201,8 @@ public abstract class ReservationRecord
      */
     public void returnItem()
     {
+        ReservationPortalSystem.getInstance().getConnection().currentTransaction().begin();
         myReservationItem.returnBack(getInfo());
+        ReservationPortalSystem.getInstance().getConnection().currentTransaction().commit();
     }
 }

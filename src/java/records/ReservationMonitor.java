@@ -20,7 +20,8 @@ public class ReservationMonitor {
 
 
     //constant on hold time in Mins
-    private final int ON_HOLD_TIME = 1;
+    private final int ON_HOLD_TIME = 10;
+
 
     private ReservationMonitor() {
         //load all the onhold reservations
@@ -44,6 +45,11 @@ public class ReservationMonitor {
         return monitor;
     }
 
+
+    public int getON_HOLD_TIME() {
+        return ON_HOLD_TIME;
+    }
+
     /**
      * adds a new onhold record to the queue to be monitored
      * @param record the record to be added
@@ -63,8 +69,11 @@ public class ReservationMonitor {
         ReservationRecord record;
         while (!recordsQueue.isEmpty() && dateDiff(recordsQueue.peek().purchaseDate, now)){
             record = recordsQueue.remove();
-            if (record.getStatus().equals(ReservationStatus.ONHOLD))
+            if (record.getStatus().equals(ReservationStatus.ONHOLD)){
+                ReservationPortalSystem.getInstance().getConnection().currentTransaction().begin();
                 record.setStatus(ReservationStatus.CANCELED);
+                ReservationPortalSystem.getInstance().getConnection().currentTransaction().commit();
+            }
             System.out.println("removed + " + record.getPurchaseDate());
         }
     }

@@ -29,7 +29,10 @@ public class ReservationPortalSystem {
      * init the Reservation Portal System
      */
     private void initSystem() {
+        //load the item manager
         itemManager = new ReservationItemManager();
+        //load the moniter and refresh old records
+        ReservationMonitor.getInstance().refresh();
     }
 
     /**
@@ -84,6 +87,8 @@ public class ReservationPortalSystem {
 
         //compare given password with the hash generated
         if (MD5HashGenerator.generateHash(password).equals(user.getPassword())) {
+            //refresh the queue of reservations
+            ReservationMonitor.getInstance().refresh();
             databaseConnector.currentTransaction().begin();
             user.setLoggedIn(true);
             user.setLastLoginDate(new Date());

@@ -16,10 +16,17 @@ import javax.jdo.Query;
 public class ReservationItemManager implements IAdminReservationItemManager , ICustomerReservationItemManager {
 
     //still needs the search manager class to be implemented
-
     SearchItemManager searchManager;
     public ReservationItemManager() {
         searchManager = new SearchItemManager(null);
+    }
+
+    public ReservationItem getItem(String id) {
+        Query query = ReservationPortalSystem.getInstance().getConnection().newQuery(ReservationItem.class,"this.id == id");
+        query.declareParameters("String id");
+        Collection result = (Collection) query.execute(id);
+        if (result.size() == 0) return null;        
+        return (ReservationItem)result.toArray()[0];
     }
 
 
@@ -68,5 +75,7 @@ public class ReservationItemManager implements IAdminReservationItemManager , IC
         Collection result = (Collection) query.execute(name);
         return (CarAgency)result.toArray()[0];
     }
+
+
 
 }
