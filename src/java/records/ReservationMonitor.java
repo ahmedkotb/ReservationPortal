@@ -20,7 +20,8 @@ public class ReservationMonitor {
 
 
     //constant on hold time in Mins
-    private final int ON_HOLD_TIME = 1;
+    private final int ON_HOLD_TIME = 10;
+
 
     private ReservationMonitor() {
         //load all the onhold reservations
@@ -42,6 +43,11 @@ public class ReservationMonitor {
         if (monitor == null)
             monitor = new ReservationMonitor();
         return monitor;
+    }
+
+
+    public int getON_HOLD_TIME() {
+        return ON_HOLD_TIME;
     }
 
     /**

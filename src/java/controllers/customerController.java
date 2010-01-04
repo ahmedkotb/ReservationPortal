@@ -71,6 +71,12 @@ public class customerController extends HttpServlet {
             }
             record.setMyReservationItem(itemManager.getItem(id));
             reserveManager.reserve(record);
+            getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);
+        }else if (req.equals("onHoldReservations")){
+            CustomerReservationManager reserveManager = (CustomerReservationManager)request.getSession().getAttribute("reservationManager");
+            request.setAttribute("mode", "onHoldReservations");
+            request.setAttribute("onHoldReservations",reserveManager.getOnHoldReservations());
+            getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);
         }
     } 
 
