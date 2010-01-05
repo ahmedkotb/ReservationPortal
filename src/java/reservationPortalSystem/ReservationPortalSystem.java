@@ -186,7 +186,7 @@ public class ReservationPortalSystem {
         System.out.println("testing....");
        com.objectdb.Enhancer.enhance("reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer , reservationPortalSystem.Owner,items.*,records.*");
 
-        com.objectdb.Enhancer.enhance("reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer , reservationPortalSystem.Owner,items.*,records.*");
+       // com.objectdb.Enhancer.enhance("reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer , reservationPortalSystem.Owner,items.*,records.*");
         //ReservationItem rrr = new Car();
         //System.out.println(rrr.getId());
         //ReservationRecord f = new CarReservation();
@@ -204,13 +204,16 @@ public class ReservationPortalSystem {
         //systemInstance.login("toot","toot");
         Location l = new Location("1", "1", "1");
         Location l2 = new Location("2", "2", "2");
+        Airport air=new Airport("123", "test", l);
+
         ArrayList<Location> ll = new ArrayList<Location>();
         ll.add(l2);
         ll.add(l);
         CarAgency ag = new CarAgency("motor ride", ll);
         Car c = new Car(10, "BMW", CarType.Economy, 9, 150, ag, x);
         //ReservationPortalSystem systemInstance = getInstance();
-        //systemInstance.save(x);
+       // systemInstance.save(air);
+        System.out.println(l2.hasAirport());
         systemInstance.initSystem();
         //systemInstance.save(c);
         Car d = new Car();
@@ -255,10 +258,10 @@ public class ReservationPortalSystem {
 
 
         SearchItemManager ss = new SearchItemManager(fields, TYPE.FLIGHT);
-        Collection result = ss.searchItems();
-        Iterator itr = result.iterator();
+        //Collection result = ss.searchItems();
+        //Iterator itr = result.iterator();
 
-        System.out.println(result);
+       // System.out.println(result);
 //        while (itr.hasNext())
 //        {
 //            System.out.println("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");

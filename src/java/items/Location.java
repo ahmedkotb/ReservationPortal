@@ -4,6 +4,10 @@
  */
 package items;
 
+import java.util.Collection;
+import javax.jdo.Query;
+import reservationPortalSystem.ReservationPortalSystem;
+
 /**
  *
  * @author ahmed
@@ -65,6 +69,13 @@ public class Location
      */
     public boolean hasAirport()
     {//database lookup
+        Query query = ReservationPortalSystem.getInstance().getConnection().newQuery(Airport.class, "this.myLocation.equals(location)");
+        query.declareParameters("Location location");
+        Collection result = (Collection) query.execute(this);
+        if (result.size() > 0)
+        {   //one airport or more lie in this location
+            return true;
+        }
         return false;
     }
 
@@ -104,7 +115,4 @@ public class Location
         hash = 53 * hash + (this.street != null ? this.street.hashCode() : 0);
         return hash;
     }
-
-
-
 }
