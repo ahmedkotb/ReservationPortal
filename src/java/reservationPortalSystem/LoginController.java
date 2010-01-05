@@ -34,17 +34,20 @@ public class LoginController extends HttpServlet {
         //TODO replace the output stream with a display message
         HttpSession session = request.getSession(true);
 
-        User user;
+        User user = null;
         try {
-            user = ReservationPortalSystem.getInstance().login((String) request.getParameter("userName"), (String) request.getParameter("password"));
+             user = ReservationPortalSystem.getInstance().login((String) request.getParameter("userName"), (String) request.getParameter("password"));
         } catch (Exception ex) {
             if (ex.getMessage().equals("UserNotFoundException")) {
                 out.println("wrong password or username");
             } else if (ex.getMessage().equals("NotActivatedException")) {
                 out.print("you are not activated yet or have been deactivated by the owner of the portal");
+            }else{
+                ex.printStackTrace(out);
             }
-            return;
         }
+
+
 
         session.setAttribute("user", user);
         if (user instanceof Owner) {

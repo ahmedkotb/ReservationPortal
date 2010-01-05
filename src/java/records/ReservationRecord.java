@@ -201,8 +201,10 @@ public abstract class ReservationRecord
      */
     public void returnItem()
     {
-        ReservationPortalSystem.getInstance().getConnection().currentTransaction().begin();
+        if (!ReservationPortalSystem.getInstance().getConnection().currentTransaction().isActive())
+            ReservationPortalSystem.getInstance().getConnection().currentTransaction().begin();
         myReservationItem.returnBack(getInfo());
-        ReservationPortalSystem.getInstance().getConnection().currentTransaction().commit();
+        if (ReservationPortalSystem.getInstance().getConnection().currentTransaction().isActive())
+            ReservationPortalSystem.getInstance().getConnection().currentTransaction().commit();
     }
 }

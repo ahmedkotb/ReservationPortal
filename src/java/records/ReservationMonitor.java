@@ -20,7 +20,7 @@ public class ReservationMonitor {
 
 
     //constant on hold time in Mins
-    private final int ON_HOLD_TIME = 10;
+    private final int ON_HOLD_TIME = 5;
 
 
     private ReservationMonitor() {
@@ -73,6 +73,8 @@ public class ReservationMonitor {
                 ReservationPortalSystem.getInstance().getConnection().currentTransaction().begin();
                 record.setStatus(ReservationStatus.CANCELED);
                 ReservationPortalSystem.getInstance().getConnection().currentTransaction().commit();
+                record.returnItem();
+                
             }
             System.out.println("removed + " + record.getPurchaseDate());
         }

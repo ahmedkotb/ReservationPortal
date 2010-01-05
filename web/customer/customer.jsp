@@ -42,8 +42,8 @@
                 }
             }
 
-            function pay(){
-                alert("thank u");
+            function pay(recordId){
+                location.href="customer?req=payPage&id=" + recordId;
             }
         </script>
     </head>
@@ -122,11 +122,16 @@
                 <tr><td>Car Model :</td> <td><%=((Car)record.getMyReservationItem()).getCarModel()%></td></tr>
                 <tr><td>purchase date :</td> <td><%=record.getPurchaseDate()%></td></tr>
                 <tr><td>remaining Time till Cancelled :</td> <td id="rem<%=i%>"> </td></tr>
-                <tr><td>pay :</td> <td> <input type="button" id="button<%=i%>" value="Pay" onclick="pay()"/> </td></tr>
+                <tr><td>pay :</td> <td> <input type="button" id="button<%=i%>" value="Pay" onclick='pay("<%=record.getReservationID()%>")'/> </td></tr>
             </table>
-            <%
-               }}}
-            %>
+            <%}}}else if (mode.equals("payPage")){%>
+                <form action="customer" method="post">
+                    <input type="hidden" name="req" value="pay" />
+                    <jsp:include page="payment.jsp"></jsp:include>
+                    <input type="submit" value="Pay for item" />
+                </form>
+            <% }%>
+
         </div>
     </body>
 </html>

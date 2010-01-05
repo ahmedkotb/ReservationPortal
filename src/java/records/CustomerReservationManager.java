@@ -55,6 +55,21 @@ public class CustomerReservationManager {
         Collection result = (Collection) query.execute(customer);
         return result;
     }
+
+    /**
+     * gets a certain record from the data base
+     * @param id the record id
+     * @return reservation record
+     */
+    public ReservationRecord getRecord(String id){
+        ReservationMonitor.getInstance().refresh();
+        Query query = ReservationPortalSystem.getInstance().getConnection().newQuery(ReservationRecord.class);
+        query.declareParameters("String id");
+        query.setFilter("this.reservationID == id");
+        Collection result = (Collection) query.execute(id);
+        return (ReservationRecord)result.toArray()[0];
+    }
+
     public int getNumberOfSpotReservation() {
         return numberOfOnSpotReservation;
     }
@@ -105,7 +120,9 @@ public class CustomerReservationManager {
     public void pay(ReservationRecord record, Payment payment) {
         numberOfOnSpotReservation++;
         numberOfOnholdReservation--;
+        ReservationPortalSystem.getInstance().getConnection().currentTransaction().begin();
         record.setMypayment(payment);
+        ReservationPortalSystem.getInstance().getConnection().currentTransaction().commit();
         ReservationMonitor.getInstance().refresh();
 
     }

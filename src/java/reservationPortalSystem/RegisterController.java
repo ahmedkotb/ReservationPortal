@@ -66,9 +66,9 @@ public class RegisterController extends HttpServlet {
             }
 
             ReservationPortalSystem.getInstance().register(x);
-            getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
         }else{
-            getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
         }
 
     } 
