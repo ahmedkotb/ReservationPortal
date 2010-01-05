@@ -184,16 +184,19 @@ public class ReservationPortalSystem {
         //test method
         
         System.out.println("testing....");
-        com.objectdb.Enhancer.enhance("reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer , reservationPortalSystem.Owner,items.*,records.*");
+       com.objectdb.Enhancer.enhance("reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer , reservationPortalSystem.Owner,items.*,records.*");
+
+       // com.objectdb.Enhancer.enhance("reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer , reservationPortalSystem.Owner,items.*,records.*");
         //ReservationItem rrr = new Car();
         //System.out.println(rrr.getId());
         //ReservationRecord f = new CarReservation();
         //System.out.println(f.getReservationID());
+
         //Owner o = new Owner("ahmed", "root", "root", null, null, null);
         //ReservationPortalSystem.getInstance().save(o);
         //car
         //Car rrr = new Car(1, "fiat", CarType.Economy, 14, 14, null, null)
-        System.exit(0);
+        //System.exit(0);
 
         ReservationPortalSystem systemInstance = getInstance();
         systemInstance.getConnection();
@@ -201,13 +204,16 @@ public class ReservationPortalSystem {
         //systemInstance.login("toot","toot");
         Location l = new Location("1", "1", "1");
         Location l2 = new Location("2", "2", "2");
+        Airport air=new Airport("123", "test", l);
+
         ArrayList<Location> ll = new ArrayList<Location>();
         ll.add(l2);
         ll.add(l);
         CarAgency ag = new CarAgency("motor ride", ll);
         Car c = new Car(10, "BMW", CarType.Economy, 9, 150, ag, x);
         //ReservationPortalSystem systemInstance = getInstance();
-        //systemInstance.save(x);
+       // systemInstance.save(air);
+        System.out.println(l2.hasAirport());
         systemInstance.initSystem();
         //systemInstance.save(c);
         Car d = new Car();
@@ -236,6 +242,13 @@ public class ReservationPortalSystem {
 //        fields.put("stars", 4);
 //        fields.put("guestNumber", 5);
 
+        
+        //fields.put("endDate", new Date());
+        //fields.put("startDate", new Date());
+        //fields.put("sourceAirport", new Airport());
+        //fields.put("destinationAirport", new Airport());
+
+       
 //        // CarReservation r=new CarReservation();
         //System.out.println(fields);
 //         Query query = ReservationPortalSystem.getInstance().getConnection().newQuery(Car.class);
@@ -244,11 +257,11 @@ public class ReservationPortalSystem {
 
 
 
-//        SearchItemManager ss = new SearchItemManager(fields, searchType.HOTEL);
-//        Collection result = ss.searchItems();
-//        Iterator itr = result.iterator();
-//
-//        System.out.println(result);
+        SearchItemManager ss = new SearchItemManager(fields, TYPE.FLIGHT);
+        //Collection result = ss.searchItems();
+        //Iterator itr = result.iterator();
+
+       // System.out.println(result);
 //        while (itr.hasNext())
 //        {
 //            System.out.println("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_");

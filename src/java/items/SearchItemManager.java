@@ -6,6 +6,7 @@ package items;
 
 import java.util.Collection;
 import items.*;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Queue;
 import javax.jdo.Query;
@@ -72,7 +73,25 @@ public class SearchItemManager
 
     private Collection<Flight> searchFlights()
     {
-        return null;
+        Query query = ReservationPortalSystem.getInstance().getConnection().newQuery(Flight.class);
+        String filter = "";
+        String parameters = "";
+
+        //two way flight
+        if (searchCriteria.containsKey("endDate") && searchCriteria.get("endDate") != null )
+        {
+            filter += "this.myDateInformation.isInBetween(endDate) && ";
+            parameters += "java.util.Date endDate , ";
+        }else
+            searchCriteria.remove("endDate");
+
+        filter +="this.myDateInformation.isInBetween(startDate) && this.sourceAirport.equals(sourceAirport) && this.destinationAirport.equals(destinationAirport)";
+        parameters +="java.util.Date startDate , Airport sourceAirport , Airport destinationAirport";
+        query.declareParameters(parameters);
+        query.setFilter(filter);
+
+        Collection<Flight> result = (Collection<Flight>) query.executeWithMap(searchCriteria);
+        return result;
     }
 
     private Collection<Car> searchCars()
@@ -95,13 +114,13 @@ public class SearchItemManager
         }
         else
             searchCriteria.remove("carModel");
-        System.out.println(searchCriteria);
+    
+               
         filter += "this.myAgency.supportedLocations.contains(pickupLocation) == true && this.myAgency.supportedLocations.contains(returnLocation) == true && this.availableNumber > 0";
+
         parameters += "Location pickupLocation , Location returnLocation";
         query.declareParameters(parameters);
-        query.setFilter(filter);
-        System.out.println(filter);
-        System.out.println(parameters);
+        query.setFilter(filter);       
         Collection<Car> result = (Collection<Car>) query.executeWithMap(searchCriteria);
         return result;
     }
@@ -117,16 +136,17 @@ public class SearchItemManager
             filter += "this.stars == stars && ";
             parameters += "int stars , ";
         }
+        else
+            searchCriteria.remove("stars");
         filter += "this.location.equals(location) && ";
         filter += "this.myRooms.contains(room) && room.guestNumber == guestNumber";
         parameters += "int guestNumber , Location location";
         query.declareParameters(parameters);
         query.declareVariables("Room room");
         query.setFilter(filter);
-        System.out.println(filter);
-        System.out.println(parameters);
         Collection<Hotel> result = (Collection<Hotel>) query.executeWithMap(searchCriteria);
         return result;
 
     }
+    
 }
