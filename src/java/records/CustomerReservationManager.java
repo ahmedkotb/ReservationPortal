@@ -5,6 +5,7 @@
 package records;
 
 import java.util.Collection;
+import java.util.Date;
 import javax.jdo.Query;
 import reservationPortalSystem.Customer;
 import reservationPortalSystem.Payment;
@@ -55,7 +56,19 @@ public class CustomerReservationManager {
         Collection result = (Collection) query.execute(customer);
         return result;
     }
-
+    /**
+     * get the confirmed reservation records
+     * @return collection of confirmed reservations
+     */
+    public Collection<ReservationRecord> getConfirmedReservations(Date startDate , Date endDate){
+        ReservationMonitor.getInstance().refresh();
+        Query query = ReservationPortalSystem.getInstance().getConnection().newQuery(ReservationRecord.class);
+        query.declareParameters("reservationPortalSystem.Customer customer , java.util.Date startDate , java.util.Date endDate");
+        query.setFilter("(this.status== \"PAYED\" ||(this.status== \"DONE\" ) && this.reserver.getUserName() == customer.getUserName() && this.purchaseDate.after(startDate) && this.purchaseDate.before(endDate)");
+        query.setOrdering("this.purchaseDate descending");
+        Collection result = (Collection) query.execute(customer,startDate,endDate);
+        return result;
+    }
     /**
      * gets a certain record from the data base
      * @param id the record id

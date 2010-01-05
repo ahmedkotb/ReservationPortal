@@ -12,6 +12,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Welcome</title>
+        <script type="text/javascript" src="calender/calendar_us.js"></script>
+        <link rel="stylesheet" href="calender/calendar.css"/>
+
         <script type="text/javascript">
             var timer = false;
             setInterval("updateFields()",1000);
@@ -53,6 +56,7 @@
         <a href="customer">home</a> <br>
         <a href="customer?req=searchCarPage">reserve a car</a> <br>
         <a href="customer?req=onHoldReservations">onhold reservations</a> <br>
+        <a href="customer?req=historyPage">old reservations</a> <br>
 
         <%
             String mode = (String) request.getAttribute("mode");
@@ -77,61 +81,85 @@
         <br>
         <div>
             <table>
-                    <tr>
-                        <td>car model :</td>
-                        <td><%=((Car) item).getCarModel()%></td>
-                    </tr>
-                    <tr>
-                        <td>car type :</td>
-                        <td><%=((Car) item).getCarType()%></td>
-                    </tr>
-                    <tr>
-                        <td>car agency :</td>
-                        <td><%=((Car) item).getMyAgency().getName()%></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="customer?req=reserve&id=<%=item.getId()%>">Reserve</a>
-                        </td>
-                        <td>Reserve and pay</td>
-                    </tr>
+                <tr>
+                    <td>car model :</td>
+                    <td><%=((Car) item).getCarModel()%></td>
+                </tr>
+                <tr>
+                    <td>car type :</td>
+                    <td><%=((Car) item).getCarType()%></td>
+                </tr>
+                <tr>
+                    <td>car agency :</td>
+                    <td><%=((Car) item).getMyAgency().getName()%></td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="customer?req=reserve&id=<%=item.getId()%>">Reserve</a>
+                    </td>
+                    <td>Reserve and pay</td>
+                </tr>
             </table>
 
 
             <%
-                   }
-               }else if (mode.equals("onHoldReservations")){
-                   Collection<ReservationRecord> records = (Collection<ReservationRecord>) request.getAttribute("onHoldReservations");
-                   if (records == null){
-                       out.println("AAAA");return;
-                       }
-                    if (records.size() == 0) {
-                        out.println("nothing found");
-                        return;
-                    }
+                }
+            } else if (mode.equals("onHoldReservations")) {
+                Collection<ReservationRecord> records = (Collection<ReservationRecord>) request.getAttribute("onHoldReservations");
+                if (records == null) {
+                    out.println("AAAA");
+                    return;
+                }
+                if (records.size() == 0) {
+                    out.println("nothing found");
+                    return;
+                }
                 out.print("found : " + records.size() + "<br>");
-                int i=-1;
+                int i = -1;
                 for (ReservationRecord record : records) {
                     i++;
-                    if (record instanceof CarReservation){
+                    if (record instanceof CarReservation) {
             %>
 
-            <input type="hidden" id="datefield<%=i%>"  value="<%=(record.getPurchaseDate().getTime()+ (ReservationMonitor.getInstance().getON_HOLD_TIME()*60*1000))/1000 - (new Date()).getTime()/1000 %>" />
+            <input type="hidden" id="datefield<%=i%>"  value="<%=(record.getPurchaseDate().getTime() + (ReservationMonitor.getInstance().getON_HOLD_TIME() * 60 * 1000)) / 1000 - (new Date()).getTime() / 1000%>" />
             <table>
                 <tr><td>item :</td> <td>Car</td></tr>
-                <tr><td>Car Model :</td> <td><%=((Car)record.getMyReservationItem()).getCarModel()%></td></tr>
+                <tr><td>Car Model :</td> <td><%=((Car) record.getMyReservationItem()).getCarModel()%></td></tr>
                 <tr><td>purchase date :</td> <td><%=record.getPurchaseDate()%></td></tr>
                 <tr><td>remaining Time till Cancelled :</td> <td id="rem<%=i%>"> </td></tr>
                 <tr><td>pay :</td> <td> <input type="button" id="button<%=i%>" value="Pay" onclick='pay("<%=record.getReservationID()%>")'/> </td></tr>
             </table>
-            <%}}}else if (mode.equals("payPage")){%>
-                <form action="customer" method="post">
-                    <input type="hidden" name="req" value="pay" />
-                    <jsp:include page="payment.jsp"></jsp:include>
-                    <input type="submit" value="Pay for item" />
-                </form>
-            <% }%>
+            <%}
+                }
+            } else if (mode.equals("payPage")) {%>
+            <form action="customer" method="post">
+                <input type="hidden" name="req" value="pay" />
+                <jsp:include page="payment.jsp"></jsp:include>
+                <input type="submit" value="Pay for item" />
+            </form>
+            <% } else if (mode.equals("historyPage")) {%>
+            <form name ="historyForm" action="customer" method="post">
+                <input type="hidden" name="req" value="history" />
+                <jsp:include page="history.jsp"></jsp:include>
+                <input type="submit" value="view" />
+            </form>
+            <%} else if (mode.equals("history")){
+                Collection<ReservationRecord> records = (Collection<ReservationRecord>) request.getAttribute("result");
+                if (records.size() == 0) {
+                    out.println("nothing found");
+                    return;
+                }
+                out.print("found : " + records.size() + "<br>");
+                for (ReservationRecord record : records) {
+             %>
 
+             <table>
+                 <tr><td>purchase Date : </td> <td><%=record.getPurchaseDate()%> </td></tr>
+                 <tr><td>item : </td> <td><%if(record.getMyReservationItem() instanceof  Car ) out.print("car");%> </td></tr>
+                 <tr><td>price : </td> <td><%=record.getPrice()%> </td></tr>
+                 <tr><td>status : </td> <td><%=record.getStatus()%> </td></tr>
+             </table>
+            <%}}%>
         </div>
     </body>
 </html>

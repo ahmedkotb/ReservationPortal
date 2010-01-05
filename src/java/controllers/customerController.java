@@ -8,17 +8,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import records.BankDraft;
-import records.CarReservation;
-import records.CreditCard;
-import records.CustomerReservationManager;
-import records.ReservationRecord;
+import records.*;
 import reservationPortalSystem.Customer;
 import reservationPortalSystem.ICustomerReservationItemManager;
 import reservationPortalSystem.Payment;
@@ -92,8 +86,28 @@ public class customerController extends HttpServlet {
             if (newPayment == null){
                 //TODO handle payment errors
                 out.print("error in payment information");
+                return;
             }
             reserveManager.pay((ReservationRecord) request.getSession().getAttribute("record"), newPayment);
+            getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);
+        }else if (req.equals("historyPage")){
+            request.setAttribute("mode", req);
+            getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);
+        }else if (req.equals("history")){
+            CustomerReservationManager reserveManager = (CustomerReservationManager) request.getSession().getAttribute("reservationManager");
+
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
+            Date startDate;
+            Date endDate;
+            try {
+                startDate = sdf.parse((String) request.getParameter("startDate"));
+                endDate = sdf.parse((String)request.getParameter("endDate"));
+            } catch (ParseException ex) {
+                //send the error message here
+                return;
+            }
+            request.setAttribute("result", reserveManager.getConfirmedReservations(startDate, endDate));
+            request.setAttribute("mode", req);
             getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);
         }
     }
