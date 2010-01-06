@@ -32,15 +32,19 @@ public class AdminReservationManager
         query.declareParameters("String id");
         query.setFilter("this.reservationID == id");
         Collection<ReservationRecord> result = (Collection) query.execute(id);
-        
         if (result.size() == 0) return;
-        
         //set its status to done
-        ReservationPortalSystem.getInstance().getConnection().currentTransaction().begin();
-        ReservationRecord record  = (ReservationRecord)result.toArray()[0];
-        record.setStatus(ReservationStatus.DONE);
-        ReservationPortalSystem.getInstance().getConnection().currentTransaction().commit();
-        record.returnItem();
+
+        //the result collection have ONLY 1 record
+        //the next line was removed coz it make the jdo enhancer go CRAZY !!!!
+        //ReservationRecord record  = (ReservationRecord)result.toArray()[0];
+        for (ReservationRecord record : result){
+            ReservationPortalSystem.getInstance().getConnection().currentTransaction().begin();
+            record.setStatus(ReservationStatus.DONE);
+            ReservationPortalSystem.getInstance().getConnection().currentTransaction().commit();
+            record.returnItem();
+        }
+        
     }
 
     /**

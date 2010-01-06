@@ -82,23 +82,19 @@
         <div>
             <table>
                 <tr>
-                    <td>car model :</td>
-                    <td><%=((Car) item).getCarModel()%></td>
+                    <td>car model :</td><td><%=((Car) item).getCarModel()%></td>
                 </tr>
                 <tr>
-                    <td>car type :</td>
-                    <td><%=((Car) item).getCarType()%></td>
+                    <td>car type :</td><td><%=((Car) item).getCarType()%></td>
                 </tr>
                 <tr>
-                    <td>car agency :</td>
-                    <td><%=((Car) item).getMyAgency().getName()%></td>
+                    <td>car agency :</td><td><%=((Car) item).getMyAgency().getName()%></td>
                 </tr>
                 <tr>
-                    <td>
-                        <a href="customer?req=reserve&id=<%=item.getId()%>">Reserve</a>
-                    </td>
-                    <td>Reserve and pay</td>
+                    <td><a href="customer?req=reserve&id=<%=item.getId()%>">Reserve</a></td><td>Reserve and pay</td>
                 </tr>
+                <tr><td colspan=" 2" align="center"><a href="customer?req=view&id=<%=item.getId()%>">rating and reviews</a></td></tr>
+                <tr><td colspan="2"> <hr></td></tr>
             </table>
 
 
@@ -106,10 +102,6 @@
                 }
             } else if (mode.equals("onHoldReservations")) {
                 Collection<ReservationRecord> records = (Collection<ReservationRecord>) request.getAttribute("onHoldReservations");
-                if (records == null) {
-                    out.println("AAAA");
-                    return;
-                }
                 if (records.size() == 0) {
                     out.println("nothing found");
                     return;
@@ -159,7 +151,9 @@
                  <tr><td>price : </td> <td><%=record.getPrice()%> </td></tr>
                  <tr><td>status : </td> <td><%=record.getStatus()%> </td></tr>
              </table>
-            <%}}%>
+             <%}}else if (mode.equals("view")){%>
+                <jsp:include page="../itemview.jsp"></jsp:include>
+             <%}%>
         </div>
     </body>
 </html>

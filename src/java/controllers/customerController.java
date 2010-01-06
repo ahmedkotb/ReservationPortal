@@ -111,6 +111,12 @@ public class customerController extends HttpServlet {
             request.setAttribute("result", reserveManager.getConfirmedReservations(startDate, endDate));
             request.setAttribute("mode", req);
             getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);
+        }else if (req.equals("view")){
+            String id = (String)request.getParameter("id");
+            request.setAttribute("mode", "view");
+            request.setAttribute("enableReview", "true");
+            request.setAttribute("item", ReservationPortalSystem.getInstance().getItemManager().getItem(id));
+            getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);
         }
     }
 
