@@ -64,7 +64,7 @@ public class CustomerReservationManager {
         ReservationMonitor.getInstance().refresh();
         Query query = ReservationPortalSystem.getInstance().getConnection().newQuery(ReservationRecord.class);
         query.declareParameters("reservationPortalSystem.Customer customer , java.util.Date startDate , java.util.Date endDate");
-        query.setFilter("(this.status == \"PAYED\" || (this.status == \"DONE\" ) && this.reserver.getUserName() == customer.getUserName() && this.purchaseDate.after(startDate) && this.purchaseDate.before(endDate)");
+        query.setFilter("( ( (this.status == \"PAYED\") || (this.status == \"DONE\" ) )  && ( this.reserver.getUserName() == customer.getUserName() ) && ( this.purchaseDate.after(startDate)  &&  this.purchaseDate.before(endDate) ) )");
         query.setOrdering("this.purchaseDate descending");
         Collection result = (Collection) query.execute(customer,startDate,endDate);
         return result;

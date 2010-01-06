@@ -101,7 +101,7 @@ public class customerController extends HttpServlet {
         }else if (req.equals("history")){
             CustomerReservationManager reserveManager = (CustomerReservationManager) request.getSession().getAttribute("reservationManager");
 
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
             Date startDate;
             Date endDate;
 
