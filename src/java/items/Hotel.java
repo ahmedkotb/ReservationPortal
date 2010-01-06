@@ -103,6 +103,9 @@ public class Hotel extends ReservationItem
                 break;  //no need to continue
             }
         }
+        //incrementing the reserved counter
+        reservedCount++;
+
     }
 
     @Override

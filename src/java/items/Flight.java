@@ -190,6 +190,9 @@ public abstract class Flight extends ReservationItem
                 clearChairs(classes);
             }
         }
+        //incrementing the reserved counter
+        reservedCount++;
+
     }
 
     @Override

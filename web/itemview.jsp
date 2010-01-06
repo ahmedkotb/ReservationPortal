@@ -38,7 +38,7 @@
         <table>
             <tr><td>item id :</td><td><%=car.getId()%></td></tr>
             <tr><td>car Type :</td><td><%=car.getCarType()%></td></tr>
-            <tr><td>car model :</td><td><%=car.getCarModel()%></td></tr>
+            <tr><td>car Model :</td><td><%=car.getCarModel()%></td></tr>
             <tr><td>rent price per day :</td><td><%=car.getRentPrice()%></td></tr>
             <tr><td>number of reserved times :</td><td><%=item.getReservedCount()%></td></tr>
             <tr><td>currently available :</td><td><%=car.getAvailableNumber()%> of <%=item.getQuantity()%> cars</td></tr>
