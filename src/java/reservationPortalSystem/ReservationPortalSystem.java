@@ -205,40 +205,7 @@ public class ReservationPortalSystem
         databaseConnector.currentTransaction().commit();
     }
 
-    /**
-     * return the top 10 most reserved reservation item according to reserved counter
-     * @param type determine the rule bywhich the top 10 are chosen
-     * @return a collection of 10 items sorted according to thier reserved counter
-     */
-    public Collection<ReservationItem> getTop10(Top_10 type)
-    {
-        //get all items
-        Query query = databaseConnector.newQuery(ReservationItem.class);
-        if(type==Top_10.RESERVED_NUMBER)
-            query.setOrdering("this.reservedCount descending");
-        if(type==Top_10.RATING)
-            query.setOrdering("this.rating descending");
-
-        Collection<ReservationItem> result = (Collection<ReservationItem>) query.execute();
-        if (result.size() <= 10)
-        {
-            return result;
-        }
-        //adding the result to array list
-        ArrayList<ReservationItem> top_10 = new ArrayList<ReservationItem>();
-        int counter=0;  //counter to determine when to exit from loop
-        for (ReservationItem item : result)
-        {
-            counter++;
-            top_10.add(item);   //add top 10 item
-            if(counter==10)
-                break;
-        }
-        return top_10;
-
-
-    }
-
+   
     public static void main(String[] args) throws Exception
     {
         //test method
@@ -327,6 +294,6 @@ public class ReservationPortalSystem
 
         CustomerReservationManager cm = new CustomerReservationManager(new Customer());
 
-        System.out.println(ReservationPortalSystem.getInstance().getTop10(Top_10.RATING));
+       // System.out.println(ReservationPortalSystem.getInstance().getTop10(Top_10.RATING));
     }
 }
