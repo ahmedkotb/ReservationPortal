@@ -61,7 +61,7 @@ public class LoginController extends HttpServlet {
             getServletContext().getRequestDispatcher("/admin/adminhome.jsp").forward(request, response);
         } else {
             session.setAttribute("reservationManager", new CustomerReservationManager((Customer)user));
-            getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/customer/customerhome.jsp").forward(request, response);
         }
     }
 

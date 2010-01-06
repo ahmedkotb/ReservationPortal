@@ -17,27 +17,29 @@
 
     </head>
     <body>
-            <table border="0" cellspacing="" cellpadding="" align="left" width="1000" >
-                <tbody>
-                    <tr>
-                        <td>Start Date: <input type="text" name="startDate" id="sd" value="" />
-                            <script language="JavaScript">
-                                A_TCALDEF['imgpath'] = 'calender/img/';
-                                new tcal ({
-                                    // input name
-                                    'controlname': 'sd'
-                                });
-                            </script>
-                        </td>
-                        <td>End Date: <input type="text" name="endDate" id="ed" value=""  />
-                            <script language="JavaScript">
-                                new tcal ({
-                                    'controlname': 'ed'
-                                });
-                            </script>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <table border="0" cellspacing="" cellpadding="" align="left" width="1000" >
+            <tbody>
+                <tr>
+                    <td>Start Date: <input type="text" name="startDate" id="sd" value="" />
+                        <script language="JavaScript">
+                            A_TCALDEF['imgpath'] = 'calender/img/';
+                            new tcal ({
+                                // input name
+                                'controlname': 'sd'
+                            });
+                        </script>
+                    </td>
+                </tr>
+                <tr>
+                    <td>End Date: <input type="text" name="endDate" id="ed" value=""  />
+                        <script language="JavaScript">
+                            new tcal ({
+                                'controlname': 'ed'
+                            });
+                        </script>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </body>
 </html>

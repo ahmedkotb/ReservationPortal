@@ -41,18 +41,18 @@ public class customerController extends HttpServlet {
         String req = (String) request.getParameter("req");
 
         if (req == null) {
-            getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/customer/customerhome.jsp").forward(request, response);
         } else if (req.equals("searchCarPage")) {
             request.setAttribute("mode", "searchCarPage");
-            getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/customer/customerhome.jsp").forward(request, response);
         } else if (req.equals("searchCar")) {
             request.setAttribute("mode", "searchCar");
             HashMap hm = getSearchParameters(request);
             if (hm == null) {
-                getServletContext().getRequestDispatcher("/customer/customer.jsp?req=searchCarPage&error=invaledData").forward(request, response);
+                getServletContext().getRequestDispatcher("/customer/customerhome.jsp?req=searchCarPage&error=invaledData").forward(request, response);
             }
             request.setAttribute("result", ReservationPortalSystem.getInstance().getItemManager().search(hm));
-            getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/customer/customerhome.jsp").forward(request, response);
         } else if (req.equals("reserve")) {
             String id = (String) request.getParameter("id");
             if (id == null) {
@@ -68,18 +68,18 @@ public class customerController extends HttpServlet {
             }
             record.setMyReservationItem(itemManager.getItem(id));
             reserveManager.reserve(record);
-            getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/customer/customerhome.jsp").forward(request, response);
         } else if (req.equals("onHoldReservations")) {
             CustomerReservationManager reserveManager = (CustomerReservationManager) request.getSession().getAttribute("reservationManager");
             request.setAttribute("mode", "onHoldReservations");
             request.setAttribute("onHoldReservations", reserveManager.getOnHoldReservations());
-            getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/customer/customerhome.jsp").forward(request, response);
         } else if (req.equals("payPage")) {
             //get payment parameters
             request.setAttribute("mode", "payPage");
             CustomerReservationManager reserveManager = (CustomerReservationManager) request.getSession().getAttribute("reservationManager");
             request.getSession().setAttribute("record", reserveManager.getRecord((String) request.getParameter("id")));
-            getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/customer/customerhome.jsp").forward(request, response);
         } else if (req.equals("pay")) {
             //do the pay stuff here
             CustomerReservationManager reserveManager = (CustomerReservationManager) request.getSession().getAttribute("reservationManager");
@@ -92,10 +92,10 @@ public class customerController extends HttpServlet {
                 return;
             }
             reserveManager.pay((ReservationRecord) request.getSession().getAttribute("record"), newPayment);
-            getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/customer/customerhome.jsp").forward(request, response);
         }else if (req.equals("historyPage")){
             request.setAttribute("mode", req);
-            getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/customer/customerhome.jsp").forward(request, response);
         }else if (req.equals("history")){
             CustomerReservationManager reserveManager = (CustomerReservationManager) request.getSession().getAttribute("reservationManager");
 
@@ -113,13 +113,13 @@ public class customerController extends HttpServlet {
             }
             request.setAttribute("result", reserveManager.getConfirmedReservations(startDate, endDate));
             request.setAttribute("mode", req);
-            getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/customer/customerhome.jsp").forward(request, response);
         }else if (req.equals("view")){
             String id = (String)request.getParameter("id");
             request.setAttribute("mode", "view");
             request.setAttribute("enableReview", "true");
             request.setAttribute("item", ReservationPortalSystem.getInstance().getItemManager().getItem(id));
-            getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/customer/customerhome.jsp").forward(request, response);
         }else if (req.equals("rate")){
             String id = (String)request.getParameter("id");
             String comment = (String)request.getParameter("review");
@@ -134,7 +134,7 @@ public class customerController extends HttpServlet {
                 //the user didnt choose a rating
             }
             item.AddReview(review);
-            getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/customer/customerhome.jsp").forward(request, response);
         }
     }
 
