@@ -99,6 +99,9 @@ public class Car extends ReservationItem
     {
         //the parameter will be ignored as there is only one available number for car
         availableNumber--;
+        //incrementing the reserved counter
+        reservedCount++;
+
     }
 
     @Override

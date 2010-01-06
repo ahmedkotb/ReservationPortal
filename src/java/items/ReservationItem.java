@@ -100,6 +100,13 @@ public abstract class ReservationItem implements Hashable
         this.reviews = reviews;
     }
 
+    public void setReservedCount(int reservedCount)
+    {
+        this.reservedCount = reservedCount;
+    }
+
+
+
 
     /**
      * generates a new unique id
