@@ -135,6 +135,7 @@ public class CustomerReservationManager {
         numberOfOnholdReservation--;
         ReservationPortalSystem.getInstance().getConnection().currentTransaction().begin();
         record.setMypayment(payment);
+        record.setPrice(record.calculartePrice());
         ReservationPortalSystem.getInstance().getConnection().currentTransaction().commit();
         ReservationMonitor.getInstance().refresh();
 

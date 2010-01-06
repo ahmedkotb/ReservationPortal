@@ -24,9 +24,22 @@ public class AdminReservationManager
      * clear a record ,, make the item associated with the record available for being reserved again
      * @param record the record to be cleared
      */
-    public void clearRecord(ReservationRecord record)
+    public void clearRecord(String id)
     {
+        
+        //get the record
+        Query query = ReservationPortalSystem.getInstance().getConnection().newQuery(ReservationRecord.class);
+        query.declareParameters("String id");
+        query.setFilter("this.reservationID == id");
+        Collection<ReservationRecord> result = (Collection) query.execute(id);
+        
+        if (result.size() == 0) return;
+        
+        //set its status to done
+        ReservationPortalSystem.getInstance().getConnection().currentTransaction().begin();
+        ReservationRecord record  = (ReservationRecord)result.toArray()[0];
         record.setStatus(ReservationStatus.DONE);
+        ReservationPortalSystem.getInstance().getConnection().currentTransaction().commit();
         record.returnItem();
     }
 

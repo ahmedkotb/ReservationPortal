@@ -19,9 +19,9 @@
     <div id="nav">
         <div id="search">
             <% if (session.getAttribute("user")==null){ %>
-            <a href="home.jsp?req=login"> login</a>
+                <h3><a href="home.jsp?req=login"> login</a></h3>
             <% }else {%>
-            <a href="logout.jsp" > logout </a>
+                <h3><a href="logout.jsp" > logout </a></h3>
             <%}%>
         </div>
       <div id="topmenu">

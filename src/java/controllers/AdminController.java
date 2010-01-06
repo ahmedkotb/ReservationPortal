@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import records.AdminReservationManager;
 import reservationPortalSystem.Admin;
 import reservationPortalSystem.IAdminReservationItemManager;
 import reservationPortalSystem.ReservationPortalSystem;
@@ -51,6 +52,23 @@ public class AdminController extends HttpServlet {
             getServletContext().getRequestDispatcher("/admin/adminhome.jsp").forward(request, response);
         }else if (req.equals("addCar")){
             addCar(request);
+            getServletContext().getRequestDispatcher("/admin/adminhome.jsp").forward(request, response);
+        }else if (req.equals("unClearedRecords")){
+            AdminReservationManager manager = (AdminReservationManager)request.getSession().getAttribute("reservationManager");
+            request.setAttribute("mode", "unClearedRecords");
+            request.setAttribute("result", manager.getUnClearedRecords());
+            getServletContext().getRequestDispatcher("/admin/adminhome.jsp").forward(request, response);
+        }else if (req.equals("clear")){
+            AdminReservationManager manager = (AdminReservationManager)request.getSession().getAttribute("reservationManager");
+            String id = request.getParameter("id");
+            manager.clearRecord(id);
+            request.setAttribute("mode", "unClearedRecords");
+            request.setAttribute("result", manager.getUnClearedRecords());
+            getServletContext().getRequestDispatcher("/admin/adminhome.jsp").forward(request, response);
+        }else if (req.equals("overdueRecords")){
+            AdminReservationManager manager = (AdminReservationManager)request.getSession().getAttribute("reservationManager");
+            request.setAttribute("mode", req);
+            request.setAttribute("result", manager.getOverDueRecords());
             getServletContext().getRequestDispatcher("/admin/adminhome.jsp").forward(request, response);
         }
     } 

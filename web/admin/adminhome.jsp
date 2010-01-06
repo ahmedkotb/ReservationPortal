@@ -4,7 +4,7 @@
     Author     : Ahmed Kotb
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8" import="reservationPortalSystem.*"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" import="reservationPortalSystem.* ,records.ReservationRecord,java.util.*"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -21,9 +21,9 @@
     <div id="nav">
         <div id="search">
             <% if (session.getAttribute("user")==null){ %>
-                <a href="home.jsp?req=login"> login</a>
+                <h3> <a href="home.jsp?req=login"> login</a></h3>
             <% }else {%>
-                <a href="logout.jsp" > logout </a>
+            <h3><a href="logout.jsp" > logout </a></h3>
             <%}%>
         </div>
       <div id="topmenu">
@@ -48,7 +48,38 @@
             <jsp:include page="addagency.jsp"></jsp:include>
          <%}else if (mode.equals("addCarPage")){%>
             <jsp:include page="addcar.jsp"></jsp:include>
-         <%}%>
+            <%}else if (mode.equals("unClearedRecords")){
+                Collection <ReservationRecord> records = (Collection <ReservationRecord>) request.getAttribute("result");
+                for (ReservationRecord record : records){
+            %>
+            <form action="admin" method="post">
+                <input type="hidden" name="req" value="clear" />
+                <input type="hidden" name="id" value="<%=record.getReservationID()%>" />
+                <table>
+                    <tr><td>id :</td><td><%=record.getReservationID()%></td></tr>
+                    <tr><td>purchase date :</td><td><%=record.getPurchaseDate()%></td></tr>
+                    <tr><td>item id :</td><td><%=record.getMyReservationItem().getId()%></td></tr>
+                    <tr><td>customer :</td><td><%=record.getReserver().getUserName()%></td></tr>
+                    <tr><td>price :</td><td><%=record.getPrice()%></td></tr>
+                    <tr><td colspan="2" align="center"> <input type="submit" value="clear Record" /></td></tr>
+                    <tr><td colspan="2"> <hr></td></tr>
+                </table>
+            </form>
+           <%}}else if (mode.equals("overdueRecords")){
+               Collection <ReservationRecord> records = (Collection <ReservationRecord>) request.getAttribute("result");
+                for (ReservationRecord record : records){
+           %>
+                <table>
+                    <tr><td>id :</td><td><%=record.getReservationID()%></td></tr>
+                    <tr><td>purchase date :</td><td><%=record.getPurchaseDate()%></td></tr>
+                    <tr><td>item id :</td><td><%=record.getMyReservationItem().getId()%></td></tr>
+                    <tr><td>customer :</td><td><%=record.getReserver().getUserName()%></td></tr>
+                    <tr><td>price :</td><td><%=record.getPrice()%></td></tr>
+                    <tr><td colspan="2"> <hr></td></tr>
+                </table>
+           <%}  } %>
+
+
     </div>
     <div id="sidebar">
       <div id="sidebartop"></div>
@@ -57,6 +88,8 @@
         <li class="active"><a href="home.jsp">Home</a></li>
         <li><a href="admin?req=addAgencyPage">Add Car Agency</a></li>
         <li><a href="admin?req=addCarPage">Add New Car</a></li>
+        <li><a href="admin?req=unClearedRecords">Uncleared Records</a></li>
+        <li><a href="admin?req=overdueRecords">overdue Records</a></li>
       </ul>
       <div id="sidebarbtm"></div>
     </div>
