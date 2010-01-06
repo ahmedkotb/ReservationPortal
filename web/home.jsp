@@ -4,7 +4,7 @@
     Author     : Ahmed Kotb
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8" import="reservationPortalSystem.User ,reservationPortalSystem.Admin , reservationPortalSystem.Owner "%>
+<%@page contentType="text/html" pageEncoding="UTF-8" import="reservationPortalSystem.* , items.* , java.util.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -55,9 +55,9 @@
              if (user instanceof Owner)
                  getServletContext().getRequestDispatcher("/owner/ownerhome.jsp").forward(request, response);
              else if (user instanceof Admin)
-                 getServletContext().getRequestDispatcher("/admin/admin.jsp").forward(request, response);
+                 getServletContext().getRequestDispatcher("/admin/adminhome.jsp").forward(request, response);
              else
-                 getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);
+                 getServletContext().getRequestDispatcher("/customer/customerhome.jsp").forward(request, response);
          }else{
     %>
         <form action="login" method="post">
@@ -71,6 +71,56 @@
             <input name="Submit" type="submit" id="Submit"  value="login" />
           </div>
         </form>
+        <%}}else if (req.equals("mostPopular")){
+            ReservationItemManager manager = ReservationPortalSystem.getInstance().getItemManager();
+            Collection<ReservationItem> items = manager.getTop10(Top_10.RESERVED_NUMBER);
+            int i=0;
+            out.print("<h2> Most Popular Items </h2>");
+            for (ReservationItem item : items){
+                Car car = (Car)item;
+                i++;
+        %>
+        <div>
+            <h3>#<%=i%></h3>
+            <table>
+                <tr><td>item id :</td><td><%=car.getId()%></td></tr>
+                <tr><td>car Type :</td><td><%=car.getCarType()%></td></tr>
+                <tr><td>car Model :</td><td><%=car.getCarModel()%></td></tr>
+                <tr><td>rent price per day :</td><td><%=car.getRentPrice()%></td></tr>
+                <tr><td>number of times reserved :</td><td><%=item.getReservedCount()%></td></tr>
+                <tr><td>currently available :</td><td><%=car.getAvailableNumber()%> of <%=item.getQuantity()%> cars</td></tr>
+                <tr><td>rating :</td><td><%=item.getRating()%></td></tr>
+                <tr><td colspan="2"> <hr/></td></tr>
+            </table>
+        </div>
+        
+        
+        <%}}else if (req.equals("topRated")){
+            ReservationItemManager manager = ReservationPortalSystem.getInstance().getItemManager();
+            Collection<ReservationItem> items = manager.getTop10(Top_10.RATING);
+            int i=0;
+            out.print("<h2> Top Rated Items </h2>");
+            for (ReservationItem item : items){
+                Car car = (Car)item;
+                i++;
+        %>
+
+        <div>
+            <h3>#<%=i%></h3>
+            <table>
+                <tr><td>item id :</td><td><%=car.getId()%></td></tr>
+                <tr><td>car Type :</td><td><%=car.getCarType()%></td></tr>
+                <tr><td>car Model :</td><td><%=car.getCarModel()%></td></tr>
+                <tr><td>rent price per day :</td><td><%=car.getRentPrice()%></td></tr>
+                <tr><td>number of times reserved :</td><td><%=item.getReservedCount()%></td></tr>
+                <tr><td>currently available :</td><td><%=car.getAvailableNumber()%> of <%=item.getQuantity()%> cars</td></tr>
+                <tr><td>rating :</td><td><%=item.getRating()%></td></tr>
+                <tr><td colspan="2"> <hr/></td></tr>
+            </table>
+        </div>
+
+
+
         <%}}else if (req.equals("registerCustomer")){%>
             <h3>Register a New Customer</h3>
 
@@ -107,7 +157,8 @@
       <h2>options</h2>
       <ul>
         <li class="active"><a href="home.jsp">Main</a></li>
-        <li><a href="home.jsp">Featured Items</a></li>
+        <li><a href="home.jsp?req=mostPopular">most popular items</a></li>
+        <li><a href="home.jsp?req=topRated">top rated items</a></li>
         <li><a href="home.jsp?req=login">login</a></li>
         <li><a href="home.jsp?req=registerCustomer">Register</a></li>
       </ul>
