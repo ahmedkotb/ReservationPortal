@@ -20,12 +20,25 @@
                     document.images["star"+i].src= "off.png";
             }
             function changeImageBack(){
-                var rate =document.getElementById('rate').innerHTML;
-                changeImage(0);     //refresh all stars
-                changeImage(rate);
+                var rate = document.getElementById('rateLabel').innerHTML;
+                if (isNaN(rate)){
+                    changeImage(0);
+                }else{
+                    changeImage(0);     //refresh all stars
+                    changeImage(rate);
+                }
             }
             function setRate(rate){
-                document.getElementById('rate').innerHTML = rate;
+                document.getElementById('rateLabel').innerHTML = rate;
+                document.getElementById('rateInput').value = rate;
+            }
+            function showHide(){
+                if (document.getElementById("newReview").style.display == 'none'){
+                    document.getElementById("newReview").style.display = 'block';
+                }
+                else{
+                    document.getElementById("newReview").style.display = 'none';
+                }
             }
         </script>
     </head>
@@ -40,8 +53,9 @@
             <tr><td>car Type :</td><td><%=car.getCarType()%></td></tr>
             <tr><td>car Model :</td><td><%=car.getCarModel()%></td></tr>
             <tr><td>rent price per day :</td><td><%=car.getRentPrice()%></td></tr>
-            <tr><td>number of reserved times :</td><td><%=item.getReservedCount()%></td></tr>
+            <tr><td>number of times reserved :</td><td><%=item.getReservedCount()%></td></tr>
             <tr><td>currently available :</td><td><%=car.getAvailableNumber()%> of <%=item.getQuantity()%> cars</td></tr>
+            <tr><td>rating :</td><td><%=item.getRating()%></td></tr>
             <tr><td colspan="2"> <hr></td></tr>
         </table>
         <%}%>
@@ -51,12 +65,12 @@
             boolean review = Boolean.parseBoolean((String) request.getAttribute("enableReview"));
             if (review == true) {
         %>
-
-
-        <h3>your review</h3>
-        <textarea name="review" rows="4" cols="50">
-        </textarea>
-        <table border="0">
+        <div id="newReview">
+        <form action="customer" method="post">
+            <input type="hidden" name="req" value="rate" />
+            <input type="hidden" name="id" value="<%=(String)request.getParameter("id")%>" />
+            <h3>your review</h3>            
+            <table border="0">
                 <tr>
                     <td align="center">
                         <A href="#"
@@ -100,23 +114,40 @@
                         </A>
                     </td>
                 </tr>
-        </table>
-        Rating = <label id="rate" >0</label>
+            </table>
+            
+            Rating = <label id="rateLabel" >not rated yet</label>
+            <br>
+            <textarea name="review" rows="6" cols="30">
+            </textarea>
+            <input type="hidden" name="rateInput" id="rateInput" value =""/>
+            <br>
+            <input type="submit" value="Add Review" />
+        </form>
         <br>
         <%}%>
-
+        <hr>
+        </div>
 
 
         <%
             ArrayList<Review> reviews = item.getReviews();
             if (reviews.size() == 0) {
-                out.print("no reviews");
+                out.print("no reviews for this item");
             }
+            out.print("<h3>other reviews</h3>");
             for (int i = 0; i < reviews.size(); i++) {
-                out.println(reviews.get(i).getComment());
-            }
-
         %>
+        <div style="float:left">
+            <h4>#<%=i+1%></h4>
+        </div>
+        <table>
+            <tr><td>name :</td> <td> <%=reviews.get(i).getUser().getName()%> </td> </tr>
+            <tr><td>date :</td> <td> <%=reviews.get(i).getDate() %> </td> </tr>
+            <tr><td valign="top">review :</td> <td> <%=reviews.get(i).getComment().replaceAll("\n", "<br>") %> </td> </tr>
+            <tr><td colspan="2"><hr></td> </tr>
+        </table>
+       <%} %>
 
     </body>
 </html>

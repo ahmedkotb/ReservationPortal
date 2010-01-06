@@ -212,7 +212,7 @@ public class ReservationPortalSystem
 
         System.out.println("testing....");
         com.objectdb.Enhancer.enhance("reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer , reservationPortalSystem.Owner,items.*,records.*");
-        //System.exit(0);
+        System.exit(0);
 
         ReservationPortalSystem systemInstance = getInstance();
         systemInstance.getConnection();

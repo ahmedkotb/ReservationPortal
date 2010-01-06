@@ -26,6 +26,7 @@ public class Review
 
     public Review(User user,String comment){
         this.comment = comment;
+        this.user = user;
         date = new Date();
     }
 

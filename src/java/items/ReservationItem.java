@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import reservationPortalSystem.Admin;
+import reservationPortalSystem.ReservationPortalSystem;
 
 /**
  *
@@ -85,27 +86,19 @@ public abstract class ReservationItem implements Hashable
         return rating;
     }
 
-    public void setRating(Double rating)
-    {
+    public void setRating(Double rating){
+        ReservationPortalSystem.getInstance().getConnection().currentTransaction().begin();
         this.rating = rating;
+        ReservationPortalSystem.getInstance().getConnection().currentTransaction().commit();
     }
 
-    public ArrayList<Review> getReviews()
-    {
+    public ArrayList<Review> getReviews(){
         return reviews;
     }
 
-    public void setReviews(ArrayList<Review> reviews)
-    {
-        this.reviews = reviews;
-    }
-
-    public void setReservedCount(int reservedCount)
-    {
+    public void setReservedCount(int reservedCount){
         this.reservedCount = reservedCount;
     }
-
-
 
 
     /**
@@ -164,9 +157,10 @@ public abstract class ReservationItem implements Hashable
      * Add a new review to the item
      * @param review the review to be added
      */
-    public void AddReview(Review review)
-    {
+    public void AddReview(Review review){
+        ReservationPortalSystem.getInstance().getConnection().currentTransaction().begin();
         reviews.add(review);
+        ReservationPortalSystem.getInstance().getConnection().currentTransaction().commit();
     }
 
 

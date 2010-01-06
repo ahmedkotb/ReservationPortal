@@ -2,6 +2,8 @@ package controllers;
 
 import items.DoubleDate;
 import items.Location;
+import items.ReservationItem;
+import items.Review;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
@@ -17,6 +19,7 @@ import reservationPortalSystem.Customer;
 import reservationPortalSystem.ICustomerReservationItemManager;
 import reservationPortalSystem.Payment;
 import reservationPortalSystem.ReservationPortalSystem;
+import reservationPortalSystem.User;
 
 /**
  *
@@ -116,6 +119,21 @@ public class customerController extends HttpServlet {
             request.setAttribute("mode", "view");
             request.setAttribute("enableReview", "true");
             request.setAttribute("item", ReservationPortalSystem.getInstance().getItemManager().getItem(id));
+            getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);
+        }else if (req.equals("rate")){
+            String id = (String)request.getParameter("id");
+            String comment = (String)request.getParameter("review");
+            String rateString = (String)request.getParameter("rateInput");
+            //TODO handle exceptions and validations
+
+            Review review = new Review((User)request.getSession().getAttribute("user") , comment);
+            ReservationItem item = ReservationPortalSystem.getInstance().getItemManager().getItem(id);
+            try{
+                item.setRating(item.getRating() + Integer.parseInt(rateString));
+            }catch(NumberFormatException ex){
+                //the user didnt choose a rating
+            }
+            item.AddReview(review);
             getServletContext().getRequestDispatcher("/customer/customer.jsp").forward(request, response);
         }
     }
