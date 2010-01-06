@@ -45,7 +45,14 @@ public class AdminController extends HttpServlet {
             request.setAttribute("mode", "addAgencyPage");
             getServletContext().getRequestDispatcher("/admin/adminhome.jsp").forward(request, response);
         }else if (req.equals("addAgency")){
-            addCarAgency(request);
+            IAdminReservationItemManager manager= ReservationPortalSystem.getInstance().getItemManager();
+            CarAgency agency =  getCarAgencyInfo(request);
+
+            if (agency == null){
+                request.setAttribute("mode", "addAgencyPage");
+            } else{
+                manager.addCarAgency(agency);
+            }
             getServletContext().getRequestDispatcher("/admin/adminhome.jsp").forward(request, response);
         }else if(req.equals("addCarPage")){
             request.setAttribute("mode", "addCarPage");
@@ -95,8 +102,7 @@ public class AdminController extends HttpServlet {
      * get car agency parameters from request and adds it to the repository of car agencyies
      * @param request the http request
      */
-    private void addCarAgency(HttpServletRequest request){
-        IAdminReservationItemManager manager= ReservationPortalSystem.getInstance().getItemManager();
+    private CarAgency getCarAgencyInfo(HttpServletRequest request){
         CarAgency agency = new CarAgency();
         agency.setName((String)request.getParameter("name"));
         agency.setDescription((String)request.getParameter("description"));
@@ -111,8 +117,7 @@ public class AdminController extends HttpServlet {
             newLocation.setStreet(locTokens[2].trim());
             agency.addLocation(newLocation);
         }
-
-        manager.addCarAgency(agency);
+        return agency;
     }
 
 

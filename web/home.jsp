@@ -126,7 +126,7 @@
 
 
             <%if (request.getAttribute("error") != null){%>
-                <div> error : <%=(String)request.getAttribute("error")%> </div>
+                <div style="background-color:#fff5c3"> Error : <%=(String)request.getAttribute("error")%> </div>
             <%}%>
             <form action="register" method="POST">
                 <jsp:include page="registeruser.jsp"/>

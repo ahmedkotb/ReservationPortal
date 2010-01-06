@@ -54,10 +54,15 @@
         </script>
     </head>
     <body>
+        <h2>Add a new car agency</h2>
+        <%if (request.getAttribute("error") != null){%>
+            <div style="background-color:#fff5c3"> Error : <%=(String)request.getAttribute("error")%> </div>
+        <%}%>
+
         <form id="addAgencyForm" action="admin" method="POST">
             <input type="hidden" name="req" value="addAgency" />
 
-            <table border="1">
+            <table border="0">
                 <tbody>
                     <tr>
                         <td>Agency Name :</td>
@@ -72,8 +77,8 @@
         </form>
         <br>
         Supported Locations : <input type="button" value="Add Location" onclick="showHide()"/>
-        <div id="newLocationDiv" style="display:none">
-            <table border="1">
+        <div id="newLocationDiv" style="display:none" >
+            <table border="0">
                 <tr>
                     <td>country :</td>
                     <td><input type="text" id="country" value="" /></td>
@@ -86,8 +91,13 @@
                     <td>street :</td>
                     <td><input type="text" id="street" value="" /></td>
                 </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="button" value="Add" onclick="addLocation()" />
+                    </td>
+                </tr>
             </table>
-            <input type="button" value="Add" onclick="addLocation()" />
+            
 
         </div>
 
@@ -100,6 +110,8 @@
             </thead>
         </table>
 
-        <input type="button" value="ADD AGENCY" onclick="addAgency()" />
+        <div align="center">
+            <input type="button" value="ADD AGENCY" onclick="addAgency()"/>
+        </div>
     </body>
 </html>

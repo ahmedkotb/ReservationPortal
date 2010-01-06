@@ -49,7 +49,9 @@ public class customerController extends HttpServlet {
             request.setAttribute("mode", "searchCar");
             HashMap hm = getSearchParameters(request);
             if (hm == null) {
-                getServletContext().getRequestDispatcher("/customer/customerhome.jsp?req=searchCarPage&error=invaledData").forward(request, response);
+                request.setAttribute("mode", "searchCarPage");
+                getServletContext().getRequestDispatcher("/customer/customerhome.jsp").forward(request, response);
+                return;
             }
             request.setAttribute("result", ReservationPortalSystem.getInstance().getItemManager().search(hm));
             getServletContext().getRequestDispatcher("/customer/customerhome.jsp").forward(request, response);
@@ -197,9 +199,15 @@ public class customerController extends HttpServlet {
                 startDate = sdf.parse((String) request.getParameter("startDate"));
                 endDate = sdf.parse((String) request.getParameter("endDate"));
             } catch (ParseException ex) {
+                request.setAttribute("error", "invalid Date format");
                 return null;
             }
 
+            if (startDate.after(endDate)){
+                request.setAttribute("error", "start date is after end date !!");
+                return null;
+            }
+            
             record.setMyDateInformation(new DoubleDate(startDate, endDate));
             record.setReserver((Customer) request.getSession().getAttribute("user"));
             ((CarReservation) record).setPickupLocation(pickyupLocation);

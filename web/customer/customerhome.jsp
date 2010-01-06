@@ -92,9 +92,8 @@
                             Collection<ReservationItem> items = (Collection<ReservationItem>) request.getAttribute("result");
                             if (items.size() == 0) {
                                 out.println("nothing found");
-                                return;
                             }
-                            out.print("found : " + items.size());
+                            out.print("<br> found : " + items.size());
                             for (ReservationItem item : items) {
                     %>
                     <br>
@@ -124,7 +123,7 @@
                             if (records.size() == 0) {
                                 out.println("nothing found");
                             }
-                            out.print("found : " + records.size() + "<br>");
+                            out.print("<br>found : " + records.size() + "<br>");
                             int i = -1;
                             for (ReservationRecord record : records) {
                                 i++;

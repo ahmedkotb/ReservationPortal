@@ -15,12 +15,16 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>search for a car</title>
+        <script type="text/javascript" src="calender/calendar_us.js"></script>
+        <link rel="stylesheet" href="calender/calendar.css"/>
     </head>
     <body>
-        <h1>search for a car</h1>
+        <h2>search for a car</h2>
         <h4> you can leave some fields empty </h4>
-
+            <%if (request.getAttribute("error") != null){%>
+                <div style="background-color:#fff5c3"> Error : <%=(String)request.getAttribute("error")%> </div>
+            <%}%>
         <table>
             <tr>
                 <td>car Type :</td>
@@ -57,11 +61,27 @@
             </tr>
             <tr>
                 <td>start date :</td>
-                <td> <input type="text" name="startDate" value ="1/1/2009" />  </td>
+                <td> <input id="sd" type="text" name="startDate" value ="1/1/2010" />
+                     <script language="JavaScript">
+                            A_TCALDEF['imgpath'] = 'calender/img/';
+                            new tcal ({
+                                // input name
+                                'controlname': 'sd'
+                            });
+                     </script>
+                </td>
             </tr>
             <tr>
                 <td>end date :</td>
-                <td> <input type="text" name="endDate" value ="6/1/2009" /> </td>
+                <td> <input id ="ed" type="text" name="endDate" value ="6/1/2010" />
+                     <script language="JavaScript">
+                            A_TCALDEF['imgpath'] = 'calender/img/';
+                            new tcal ({
+                                // input name
+                                'controlname': 'ed'
+                            });
+                     </script>
+                </td>
             </tr>
         </table>
 

@@ -25,7 +25,7 @@
             <input class="textfield" id="password" name="password" type="password" />
 
             <label for="cpassword">confirm password:</label>
-            <input class="textfield" id="cpassword" type="password" />
+            <input class="textfield" id="cpassword" name="cpassword" type="password" />
 
             <label for="address">address :</label>
             <input class="textfield" id="address" name="address" type="text" />

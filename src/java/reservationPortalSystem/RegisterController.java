@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import utilities.MD5HashGenerator;
+import utilities.Validator;
 
 /**
  *
@@ -45,13 +46,12 @@ public class RegisterController extends HttpServlet {
             if (validation != null){
                 //invalid user Data
                 request.setAttribute("error", validation);
-                //getServletContext().getRequestDispatcher("/registercustomer.jsp").forward(request, response);
                 getServletContext().getRequestDispatcher("/home.jsp?req=registerCustomer").forward(request, response);
                 return;
             }
 
             ReservationPortalSystem.getInstance().register(x);
-            getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
         }else if (requestStr.equals("registerAdmin")){
             //register the user information
             User x = getUserFromRequest(request);
@@ -60,7 +60,6 @@ public class RegisterController extends HttpServlet {
             if (validation != null){
                 //invalid user Data
                 request.setAttribute("error", validation);
-                //getServletContext().getRequestDispatcher("/registeradmin.jsp").forward(request, response);
                 getServletContext().getRequestDispatcher("/home.jsp?req=registerAdmin").forward(request, response);
                 return;
             }
@@ -81,10 +80,13 @@ public class RegisterController extends HttpServlet {
      */
     private String validateUserInfo(User user){
         if (user == null)
-            return null;
+            return "please make sure that passwords match and are atleast 6 characters long";
 
         if (user.name == null || user.name.equals(""))
             return "Name Field is Missing";
+
+        if (user.name != null && user.name.length() < 5)
+            return "make sure that the name is atleast 5 characters long";
 
         if (user.userName == null || user.userName.equals(""))
             return "User Name Field is Missing";
@@ -99,10 +101,11 @@ public class RegisterController extends HttpServlet {
             return "address field is misssig";
 
         if (user.phoneNumber == null || user.phoneNumber.length() == 0)
-            return "address field is misssig";
-
-        if (user.phoneNumber == null || user.phoneNumber.length() == 0)
             return "phone number field is misssig";
+
+        Validator validator = new Validator();
+        if (!validator.isValidEmail(user.email))
+            return "please enter a valid email";
 
         if (user instanceof  Admin && (((Admin)user).getQualifications() == null || ((Admin)user).getQualifications().length() == 0))
             return "qualification field is misssig";
@@ -111,6 +114,9 @@ public class RegisterController extends HttpServlet {
     }
     private User getUserFromRequest(HttpServletRequest request){
         String reqStr = (String)request.getParameter("req");
+        if (!((String)request.getParameter("password")).equals((String)request.getParameter("cpassword")) || ((String)request.getParameter("password")).length() < 6){
+            return null;
+        }
         if (reqStr.equals("registerAdmin")){
             Admin newAdmin = new Admin();
             newAdmin.setName((String)request.getParameter("name"));
