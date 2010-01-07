@@ -133,23 +133,30 @@
                 <td>car Model</td>
                 <td><input type="text" name="carModel" value="" /></td>
             </tr>
+            <tr><td colspan="2"> <hr/></td></tr>
             <tr>
-                <td>pickup Location :</td>
+                <td>pickup Location</td>
                 <td>
-                    country : <select name="pickupCountry" id="country0" onchange="changeCountry(0)"></select> <br>
-                    city :    <select name="pickupCity" id="city0" onchange="changeCity(0)" onclick="changeCity(0)"></select> <br>
-                    street :  <select name="pickupStreet" id="street0"></select> <br>
+                    <table>
+                           <tr><td>country : </td>  <td><select name="pickupCountry" id="country0" onchange="changeCountry(0)"></select></td> </tr>
+                           <tr><td> city : </td>  <td><select name="pickupCity" id="city0" onchange="changeCity(0)" onclick="changeCity(0)"></select> </td> </tr>
+                           <tr><td>street : </td>  <td><select name="pickupStreet" id="street0"></select></td> </tr>
+                    </table>
                 </td>
             </tr>
+            <tr><td colspan="2"> <hr/></td></tr>
             <tr>
-                <td>return Location :</td>
+                <td >return Location</td>
                 <td>
-                    country : <select name="returnCountry" id="country1" onchange="changeCountry(1)"></select> <br>
-                    city :    <select name="returnCity"    id="city1" onchange="changeCity(1)" onclick="changeCity(1)">   </select> <br>
-                    street :  <select name="returnStreet" id="street1">  </select> <br>
+                    <table>
+                        <tr><td>country : </td><td><select name="returnCountry" id="country1" onchange="changeCountry(1)"></select> </td></tr>
+                        <tr><td>city :</td>  <td><select name="returnCity"    id="city1" onchange="changeCity(1)" onclick="changeCity(1)">   </select> </td> </tr>
+                        <tr><td>street :</td>  <td><select name="returnStreet" id="street1">  </select> </td> </tr>                     
+                    </table>
                 </td>
 
             </tr>
+            <tr><td colspan="2"> <hr/></td></tr>
             <tr>
                 <td>start date :</td>
                 <td> <input id="sd" type="text" name="startDate" value ="1/1/2010" />

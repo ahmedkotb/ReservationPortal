@@ -66,9 +66,9 @@
                     </div>
                     <div id="topmenu">
                         <ul>
-                            <li class="active"><a href="home.jsp">Home</a></li>
-                            <li><a href="about.jsp">About</a></li>
-                            <li><a href="contact.jsp">Contact us</a></li>
+                              <li class="active"><a href="home.jsp">Home</a></li>
+                              <li><a href="home.jsp?req=about">About</a></li>
+                              <li><a href="home.jsp?req=contact">Contact us</a></li>
                         </ul>
                     </div>
                 </div>
@@ -197,7 +197,7 @@
                     <div class="clear"></div>
                     <div id="bottom">
                         <p>Copyright &copy; 2010 kotbcorp & A2ME</p>
-                        <p><a href="home.jsp">Home</a> | <a href="about.jsp">About</a> | <a href="home.jsp?req=registerAdmin">Join !</a></p>
+                        <p><a href="home.jsp">Home</a> | <a href="home.jsp?req=about">About</a> | <a href="home.jsp?req=registerAdmin">Join !</a></p>
                     </div>
                 </div>
                 <div id="footer">

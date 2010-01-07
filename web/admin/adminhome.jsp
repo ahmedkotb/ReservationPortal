@@ -29,8 +29,8 @@
       <div id="topmenu">
         <ul>
           <li class="active"><a href="home.jsp">Home</a></li>
-          <li><a href="about.jsp">About</a></li>
-          <li><a href="contact.jsp">Contact us</a></li>
+          <li><a href="home.jsp?req=about">About</a></li>
+          <li><a href="home.jsp?req=contact">Contact us</a></li>
         </ul>
       </div>
     </div>

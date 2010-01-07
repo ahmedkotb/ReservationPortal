@@ -27,8 +27,8 @@
       <div id="topmenu">
         <ul>
           <li class="active"><a href="home.jsp">Home</a></li>
-          <li><a href="about.jsp">About</a></li>
-          <li><a href="contact.jsp">Contact us</a></li>
+          <li><a href="home.jsp?req=about">About</a></li>
+          <li><a href="home.jsp?req=contact">Contact us</a></li>
         </ul>
       </div>
     </div>
@@ -41,8 +41,8 @@
             String req = (String)request.getParameter("req");
         if (req == null || req.equals("home")) { %>
       <div class="post">
-        <h2>welcome to km reservation Portal<span class="description">the best portal ever</span></h2>
-        this is post 1
+        <h2>Welcome to km reservation Portal<span class="description">1/1/2010</span></h2>
+            Happy New Year !
       </div>
       <%}else if (req.equals("login")){
          if (session.getAttribute("user") !=null){
@@ -145,6 +145,21 @@
                 <textarea class="textfield" name="qualifications" rows="4" cols="40"></textarea><br>
                 <input type="submit" value="register" />
             </form>
+        <%}else if (req.equals("about")) {%>
+            <h2>About Reservation Portal</h2>
+            this is an oop course-project for the 2nd year at computer and systems engineering dept.
+            this is supposed to be a learning project to apply concepts of the oop and not for real-life use.
+            <h2>By:</h2>
+            <ul>
+                <li>Ahmed Kotb</li>
+                <li>Ahmed Mohamed Mohsen</li>
+            </ul>
+        <%}else if (req.equals("contact")) {%>
+            <h2>Contact Us</h2>
+                please dont hesitate to send us any feedbacks,questions,bugreports and/or comments.
+                <br/>
+                send your emails to : feedbacks@kmportal.com
+
         <%}%>
     </div>
     <div id="sidebar">
@@ -157,16 +172,12 @@
         <li><a href="home.jsp?req=login">login</a></li>
         <li><a href="home.jsp?req=registerCustomer">Register</a></li>
       </ul>
-      <h2>Links</h2>
-      <ul>
-        <li><a href="www.google.com">blah blah</a></li>
-      </ul>
       <div id="sidebarbtm"></div>
     </div>
     <div class="clear"></div>
     <div id="bottom">
         <p>Copyright &copy; 2010 kotbcorp & A2ME</p>
-      <p><a href="home.jsp">Home</a> | <a href="about.jsp">About</a> | <a href="home.jsp?req=registerAdmin">Join !</a></p>
+      <p><a href="home.jsp">Home</a> | <a href="home.jsp?req=about">About</a> | <a href="home.jsp?req=registerAdmin">Join !</a></p>
     </div>
   </div>
   <div id="footer">
