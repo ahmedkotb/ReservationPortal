@@ -144,11 +144,7 @@
                         <%}
                             }
                         } else if (mode.equals("payPage")) {%>
-                        <form action="customer" method="post">
-                            <input type="hidden" name="req" value="pay" />
                             <jsp:include page="payment.jsp"></jsp:include>
-                            <input type="submit" value="Pay for item" />
-                        </form>
                         <% } else if (mode.equals("historyPage")) {%>
                         <form name ="historyForm" action="customer" method="post">
                             <input type="hidden" name="req" value="history" />

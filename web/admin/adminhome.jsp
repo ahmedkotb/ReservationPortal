@@ -4,7 +4,7 @@
     Author     : Ahmed Kotb
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8" import="reservationPortalSystem.* ,records.ReservationRecord,java.util.*"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" import="reservationPortalSystem.* ,records.ReservationRecord , records.CarReservation ,items.* ,java.util.*"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -51,6 +51,7 @@
          <%}else if (mode.equals("addCarPage")){%>
             <jsp:include page="addcar.jsp"></jsp:include>
             <%}else if (mode.equals("unClearedRecords")){
+                out.println("<h2>current records</h2>");
                 Collection <ReservationRecord> records = (Collection <ReservationRecord>) request.getAttribute("result");
                 for (ReservationRecord record : records){
             %>
@@ -68,12 +69,15 @@
                 </table>
             </form>
            <%}}else if (mode.equals("overdueRecords")){
+               out.println("<h2>overdue Records </h2>");
                Collection <ReservationRecord> records = (Collection <ReservationRecord>) request.getAttribute("result");
                 for (ReservationRecord record : records){
            %>
                 <table>
                     <tr><td>id :</td><td><%=record.getReservationID()%></td></tr>
                     <tr><td>purchase date :</td><td><%=record.getPurchaseDate()%></td></tr>
+                    <tr><td>pickup date :</td><td><%=((DoubleDate)((CarReservation)record).getMyDateInformation()).getStartDate()%></td></tr>
+                    <tr><td>return date :</td><td><%=((DoubleDate)((CarReservation)record).getMyDateInformation()).getEndDate()%></td></tr>
                     <tr><td>item id :</td><td><%=record.getMyReservationItem().getId()%></td></tr>
                     <tr><td>customer :</td><td><%=record.getReserver().getUserName()%></td></tr>
                     <tr><td>price :</td><td><%=record.getPrice()%></td></tr>

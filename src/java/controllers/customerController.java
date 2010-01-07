@@ -91,8 +91,9 @@ public class customerController extends HttpServlet {
              
             Payment newPayment = getPaymentInfo(request);
             if (newPayment == null){
-                //TODO handle payment errors
-                out.print("error in payment information");
+                request.setAttribute("error", "error in payment information");
+                request.setAttribute("mode", "payPage");
+                getServletContext().getRequestDispatcher("/customer/customerhome.jsp").forward(request, response);
                 return;
             }
             reserveManager.pay((ReservationRecord) request.getSession().getAttribute("record"), newPayment);
