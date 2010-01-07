@@ -21,7 +21,9 @@ public class CustomerReservationManager {
     private int numberOfOnholdReservation;
     private int numberOfOnSpotReservation;
 
-    final private int MAX_ONHOLD_RESERVATIONS = 1;
+    final private int MAX_ONHOLD_RESERVATIONS = 3;
+    final private int MAX_WEEKLY_RESERVATIONS = 3;
+
     public CustomerReservationManager() {
         customer = new Customer();
         numberOfOnSpotReservation = 0;
@@ -84,6 +86,30 @@ public class CustomerReservationManager {
         return (ReservationRecord)result.toArray()[0];
     }
 
+    
+    /**
+     * make sure that the user didnt exceed his limit on weekly confirmed reservation
+     * @return true if the user didnt excced the limit , false otherwise
+     */
+    public boolean canMakeConfirmedReservation(){
+        ReservationMonitor.getInstance().refresh();
+        //a date that is a week behind
+        Date date = new Date((new Date()).getTime() - 7 * 24 * 60 * 60 * 1000);
+        Query query = ReservationPortalSystem.getInstance().getConnection().newQuery(ReservationRecord.class);
+        query.declareParameters("reservationPortalSystem.Customer customer , java.util.Date date");
+        query.setFilter("( ( (this.status == \"PAYED\") || (this.status == \"DONE\" ) )  && ( this.reserver.getUserName() == customer.getUserName() ) && ( this.purchaseDate.after(date) ) )");
+        query.setOrdering("this.purchaseDate descending");
+        Collection result = (Collection) query.execute(customer,date);
+        if (result.size() < MAX_WEEKLY_RESERVATIONS)
+            return true;
+        return false;
+    }
+
+    public int getMAX_WEEKLY_RESERVATIONS() {
+        return MAX_WEEKLY_RESERVATIONS;
+    }
+
+
     public int getNumberOfSpotReservation() {
         return numberOfOnSpotReservation;
     }
@@ -91,6 +117,7 @@ public class CustomerReservationManager {
     public void setNumberOfSpotReservation(int numberOfSpotReservation) {
         this.numberOfOnSpotReservation = numberOfSpotReservation;
     }
+
 
     public Customer getCustomer() {
         return customer;

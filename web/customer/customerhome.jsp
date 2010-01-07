@@ -120,6 +120,7 @@
                         <%
                             }
                         } else if (mode.equals("onHoldReservations")) {
+                            out.println("<h2>On Hold Reservations</h2>");
                             Collection<ReservationRecord> records = (Collection<ReservationRecord>) request.getAttribute("onHoldReservations");
                             if (records.size() == 0) {
                                 out.println("nothing found");

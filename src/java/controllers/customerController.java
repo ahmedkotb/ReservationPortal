@@ -88,7 +88,13 @@ public class customerController extends HttpServlet {
             //do the pay stuff here
             CustomerReservationManager reserveManager = (CustomerReservationManager) request.getSession().getAttribute("reservationManager");
 
-             
+            if (!reserveManager.canMakeConfirmedReservation()){
+                request.setAttribute("error", "you can't reserve more than " + reserveManager.getMAX_WEEKLY_RESERVATIONS() + " confirmed reservations weekly");
+                request.setAttribute("mode", "payPage");
+                getServletContext().getRequestDispatcher("/customer/customerhome.jsp").forward(request, response);
+                return;
+            }
+
             Payment newPayment = getPaymentInfo(request);
             if (newPayment == null){
                 request.setAttribute("error", "error in payment information");
