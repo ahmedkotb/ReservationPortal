@@ -74,6 +74,7 @@ public class ReservationItemManager implements IAdminReservationItemManager , IC
         Query query = ReservationPortalSystem.getInstance().getConnection().newQuery(CarAgency.class , "this.name == name");
         query.declareParameters("String name");
         Collection result = (Collection) query.execute(name);
+        if (result.size() ==0) return null;
         return (CarAgency)result.toArray()[0];
     }
 

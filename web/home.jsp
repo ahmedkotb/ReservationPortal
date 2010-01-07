@@ -40,13 +40,8 @@
         <%
             String req = (String)request.getParameter("req");
             if (req == null) { %>
-
-      <div id="featured">
-        <div> ClearPixels is a free CSS Template released under the Creative Commons Attribution 2.5 License by RamblingSoul. You can download other quality css templates from my profile or website.</div>
-        <span class="ftd_btm"><a href="home.jsp">Read More</a></span>
-      </div>
       <div class="post">
-        <h2>post 1<span class="description">a new post</span></h2>
+        <h2>welcome to km reservation Portal<span class="description">the best portal ever</span></h2>
         this is post 1
       </div>
       <%}else if (req.equals("login")){

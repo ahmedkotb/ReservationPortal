@@ -58,7 +58,15 @@ public class AdminController extends HttpServlet {
             request.setAttribute("mode", "addCarPage");
             getServletContext().getRequestDispatcher("/admin/adminhome.jsp").forward(request, response);
         }else if (req.equals("addCar")){
-            addCar(request);
+            IAdminReservationItemManager manager= ReservationPortalSystem.getInstance().getItemManager();
+            Car newCar = getCarInfo(request);
+
+            if (newCar == null){
+                request.setAttribute("mode", "addCarPage");
+            }else{
+                manager.addItem(newCar);
+            }
+            
             getServletContext().getRequestDispatcher("/admin/adminhome.jsp").forward(request, response);
         }else if (req.equals("unClearedRecords")){
             AdminReservationManager manager = (AdminReservationManager)request.getSession().getAttribute("reservationManager");
@@ -85,16 +93,59 @@ public class AdminController extends HttpServlet {
      * get car parameters from request and adds it to the repository of cars
      * @param request the http request
      */
-    private void addCar(HttpServletRequest request){
+    private Car getCarInfo(HttpServletRequest request){
         IAdminReservationItemManager manager= ReservationPortalSystem.getInstance().getItemManager();
         Car newCar = new Car();
+
+        if (request.getParameter("carModel")==null || ((String)request.getParameter("carModel")).length() == 0){
+            request.setAttribute("error", "car model is missing");
+            return null;
+        }
+
         newCar.setCarModel((String)request.getParameter("carModel"));
-        newCar.setRentPrice(Double.parseDouble((String)request.getParameter("price")));
-        newCar.setQuantity(Integer.parseInt((String)request.getParameter("quantity")));
+
+        if (request.getParameter("price")==null || ((String)request.getParameter("price")).length() == 0){
+            request.setAttribute("error", "price is missing");
+            return null;
+        }
+
+        double price = 0.0;
+        int quantity = 0;
+        try {
+            price = Double.parseDouble((String)request.getParameter("price"));
+            if (price <= 0) throw new Exception();
+        } catch (Exception e) {
+            request.setAttribute("error", "please check price field");
+            return null;
+        }
+
+        try {
+            quantity = Integer.parseInt((String)request.getParameter("quantity"));
+            if (quantity <= 0) throw new Exception();
+        } catch (Exception e) {
+            request.setAttribute("error", "please check quantity field");
+            return null;
+        }
+
+        try {
+            CarType.valueOf((String)request.getParameter("carType"));
+        } catch (Exception e) {
+            request.setAttribute("error", "please check car type");
+            return null;
+        }
+
+        CarAgency agency =manager.getCarAgency((String)request.getParameter("carAgency"));
+        if (agency == null){
+            request.setAttribute("error", "please check car agency");
+            return null;
+        }
+
+        newCar.setRentPrice(price);
+        newCar.setQuantity(quantity);
         newCar.setCarType(CarType.valueOf((String)request.getParameter("carType")));
-        newCar.setMyAgency(manager.getCarAgency((String)request.getParameter("carAgency")));
+        newCar.setMyAgency(agency);        
         newCar.setProvider((Admin)request.getSession().getAttribute("user"));
-        manager.addItem(newCar);
+        return newCar;
     }
 
     
@@ -104,9 +155,26 @@ public class AdminController extends HttpServlet {
      */
     private CarAgency getCarAgencyInfo(HttpServletRequest request){
         CarAgency agency = new CarAgency();
+
+        if ((String)request.getParameter("name")==null || ((String)request.getParameter("name")).length() == 0){
+            request.setAttribute("error", "agency name is missing");
+            return null;
+        }
         agency.setName((String)request.getParameter("name"));
+
+        if ((String)request.getParameter("description")==null || ((String)request.getParameter("description")).length() == 0){
+            request.setAttribute("error", "agency description is missing");
+            return null;
+        }
+
         agency.setDescription((String)request.getParameter("description"));
         int numberOfLocations = Integer.parseInt((String)request.getParameter("numberOfLocations"));
+
+        if (numberOfLocations == 0){
+            request.setAttribute("error", "please enter at least one supported location");
+            return null;
+        }
+        
         Location newLocation;
         String[] locTokens;
         for (int i=1;i<=numberOfLocations;i++){

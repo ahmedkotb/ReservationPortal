@@ -18,7 +18,10 @@
         <title>Add a new Car</title>
     </head>
     <body>
-        <h1>add a car</h1>
+        <h2>Add a New Car</h2>
+        <%if (request.getAttribute("error") != null){%>
+                <div style="background-color:#fff5c3"> Error : <%=(String)request.getAttribute("error")%> </div>
+        <%}%>
         <form action="admin" method="POST">
             <input type="hidden" name="req" value="addCar" />
             <table>
