@@ -9,6 +9,9 @@ import java.util.*;
 import javax.jdo.*;
 import com.objectdb.Utilities;
 import items.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import records.*;
 
 /**
@@ -205,6 +208,27 @@ public class ReservationPortalSystem
         databaseConnector.currentTransaction().commit();
     }
 
+
+    /**
+     * test methods to add locations
+     * REMEMBER TO CHMOD 777 the database first
+     * DONT ADD EMPTY LINES TO THE FILE
+     */
+    public static void addlocations(){
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(new File("locations")));
+            String line = "";
+            String[] tokens;
+            while (( line =  br.readLine()) !=null){
+                tokens = line.split(",");
+                Location newloc = new Location(tokens[0],tokens[1], tokens[2]);
+                ReservationPortalSystem.getInstance().save(newloc);
+            }
+
+        } catch (Exception ex) {
+
+        }
+    }
    
     public static void main(String[] args) throws Exception
     {
@@ -212,6 +236,7 @@ public class ReservationPortalSystem
 
         System.out.println("testing....");
         com.objectdb.Enhancer.enhance("reservationPortalSystem.User , reservationPortalSystem.Admin , reservationPortalSystem.Customer , reservationPortalSystem.Owner,items.*,records.*");
+        //addlocations();
         System.exit(0);
 
         ReservationPortalSystem systemInstance = getInstance();

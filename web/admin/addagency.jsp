@@ -14,6 +14,8 @@
         <title>Add a new agency</title>
         <script type="text/javascript">
             rowIDs = 0;
+            choosedCombo = 0;
+            init = 1;
             function addLocation(){
                 var row = document.getElementById("locationsTable").insertRow(1);
                 rowIDs+=1;
@@ -51,12 +53,77 @@
             function submitForm(){
                 document.getElementById("addAgencyForm").submit();
             }
+
+            //ajax libs
+            function GetXmlHttpObject(){
+                var xmlHttp = null;
+                try {
+                    // Firefox, Opera 8.0+, Safari
+                    xmlHttp = new XMLHttpRequest();
+                }
+                catch (e) {
+                    // Internet Explorer
+                    try {
+                        xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+                    }
+                    catch (e) {
+                        xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                }
+                return xmlHttp;
+            }
+
+            function stateChanged(){
+                if (xmlHttp.readyState == 4) {
+                    //alert(xmlHttp.responseText);
+                    if (choosedCombo == 0){
+                        document.getElementById("country").innerHTML = xmlHttp.responseText;
+                        changeCountry();
+                    }else if (choosedCombo ==1){
+                        document.getElementById("city").innerHTML = xmlHttp.responseText;
+                        changeCity();
+                    }else if (choosedCombo == 2){
+                        document.getElementById("street").innerHTML = xmlHttp.responseText;
+                    }
+                }
+            }
+
+
+
+
+            function run(scriptName){
+                xmlHttp = GetXmlHttpObject();
+                if (xmlHttp == null) {
+                    alert("Your browser does not support AJAX!");
+                    return;
+                }
+                var url = scriptName;
+                xmlHttp.onreadystatechange = stateChanged;
+                xmlHttp.open("GET", url, true);
+                xmlHttp.send(null);
+            }
+
+            function loadCountries(){
+                choosedCombo= 0;
+                run('location?req=countries');
+                document.getElementById("city").innerHTML = "";
+                document.getElementById("street").innerHTML = "";
+            }
+            function changeCountry(){
+                choosedCombo = 1;
+                run('location?req=cities&country=' + document.getElementById("country").value);
+                document.getElementById("street").innerHTML = ""
+            }
+            function changeCity(){
+                choosedCombo = 2;
+                run('location?req=streets&country=' + document.getElementById("country").value + "&city=" + document.getElementById("city").value);
+            }
         </script>
     </head>
-    <body>
+    <body onload="loadCountries()">
         <h2>Add a new car agency</h2>
-        <%if (request.getAttribute("error") != null){%>
-            <div style="background-color:#fff5c3"> Error : <%=(String)request.getAttribute("error")%> </div>
+        <%if (request.getAttribute("error") != null) {%>
+        <div style="background-color:#fff5c3"> Error : <%=(String) request.getAttribute("error")%> </div>
         <%}%>
 
         <form id="addAgencyForm" action="admin" method="POST">
@@ -76,20 +143,23 @@
             </table>
         </form>
         <br>
-        Supported Locations : <input type="button" value="Add Location" onclick="showHide()"/>
+        Supported Locations : <input type="button" value="Add Location" onclick="showHide()" on/>
         <div id="newLocationDiv" style="display:none" >
             <table border="0">
                 <tr>
                     <td>country :</td>
-                    <td><input type="text" id="country" value="" /></td>
+                    <%--<td><input type="text" id="country" value="" /></td>--%>
+                    <td><select id="country" onchange="changeCountry()"></select></td>
                 </tr>
                 <tr>
                     <td>city :</td>
-                    <td><input type="text" id="city" value="" /></td>
+                    <%--<td><input type="text" id="city" value="" /></td>--%>
+                    <td><select id="city" onchange="changeCity()" onclick="changeCity()"></select></td>
                 </tr>
                 <tr>
                     <td>street :</td>
-                    <td><input type="text" id="street" value="" /></td>
+                    <%--<td><input type="text" id="street" value="" /></td>--%>
+                    <td><select id="street"></select></td>
                 </tr>
                 <tr>
                     <td colspan="2" align="center">
@@ -97,7 +167,7 @@
                     </td>
                 </tr>
             </table>
-            
+
 
         </div>
 

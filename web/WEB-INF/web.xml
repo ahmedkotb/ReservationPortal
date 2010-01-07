@@ -20,6 +20,10 @@
         <servlet-name>customerController</servlet-name>
         <servlet-class>controllers.customerController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>locationController</servlet-name>
+        <servlet-class>controllers.locationController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>customerController</servlet-name>
         <url-pattern>/customer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>locationController</servlet-name>
+        <url-pattern>/location</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
