@@ -51,7 +51,7 @@ public class RegisterController extends HttpServlet {
             }
 
             ReservationPortalSystem.getInstance().register(x);
-            getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/home.jsp?req=home").forward(request, response);
         }else if (requestStr.equals("registerAdmin")){
             //register the user information
             User x = getUserFromRequest(request);
@@ -65,9 +65,9 @@ public class RegisterController extends HttpServlet {
             }
 
             ReservationPortalSystem.getInstance().register(x);
-            getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/home.jsp?req=home").forward(request, response);
         }else{
-            getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/home.jsp?req=home").forward(request, response);
         }
 
     } 

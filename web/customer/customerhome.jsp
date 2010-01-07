@@ -89,7 +89,7 @@
                         <input type="submit" value="search" />
                     </form>
                     <%} else if (mode.equals("searchCar")) {
-                            out.print("<br> search Results : <br>");
+                            out.print("<h2> search Results : </h2>");
                             Collection<ReservationItem> items = (Collection<ReservationItem>) request.getAttribute("result");
                             if (items.size() == 0) {
                                 out.println("nothing found");

@@ -39,7 +39,7 @@
     <div id="right">
         <%
             String req = (String)request.getParameter("req");
-            if (req == null) { %>
+        if (req == null || req.equals("home")) { %>
       <div class="post">
         <h2>welcome to km reservation Portal<span class="description">the best portal ever</span></h2>
         this is post 1
