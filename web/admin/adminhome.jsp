@@ -83,7 +83,35 @@
                     <tr><td>price :</td><td><%=record.getPrice()%></td></tr>
                     <tr><td colspan="2"> <hr></td></tr>
                 </table>
-           <%}  } %>
+           <%}  }else if (mode.equals("historyPage")){ %>
+               <form name ="historyForm" action="admin" method="post">
+                   <input type="hidden" name="req" value="history" />
+                   <jsp:include page="history.jsp"></jsp:include>
+                   <input type="submit" value="view" />
+               </form>
+           <%} else if (mode.equals("history")){ %>
+            <form name ="historyForm" action="admin" method="post">
+                <input type="hidden" name="req" value="history" />
+                <jsp:include page="history.jsp"></jsp:include>
+                <input type="submit" value="view" />
+            </form>
+            <hr/>
+            <%
+                Collection<ReservationRecord> records = (Collection<ReservationRecord>) request.getAttribute("result");
+                if (records.size() == 0) {
+                    out.println("nothing found");
+                }
+                out.print("<br>found : " + records.size() + "<br>");
+                           for (ReservationRecord record : records) {
+            %>
+            <table>
+                <tr><td>purchase Date : </td> <td><%=record.getPurchaseDate()%> </td></tr>
+                <tr><td>item : </td> <td><%if (record.getMyReservationItem() instanceof Car) {out.print("car");}%> </td></tr>
+                <tr><td>price : </td> <td><%=record.getPrice()%> </td></tr>
+                <tr><td>status : </td> <td><%=record.getStatus()%> </td></tr>
+                <tr><td colspan="2"><hr/></td></tr>
+            </table>
+           <%}} %>
 
 
     </div>
@@ -96,6 +124,7 @@
         <li><a href="admin?req=addCarPage">Add New Car</a></li>
         <li><a href="admin?req=unClearedRecords">Uncleared Records</a></li>
         <li><a href="admin?req=overdueRecords">overdue Records</a></li>
+        <li><a href="admin?req=historyPage">Report</a></li>
       </ul>
       <div id="sidebarbtm"></div>
     </div>

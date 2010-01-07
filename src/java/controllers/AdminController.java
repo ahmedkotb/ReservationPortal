@@ -11,6 +11,9 @@ import items.CarType;
 import items.Location;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -85,6 +88,31 @@ public class AdminController extends HttpServlet {
             request.setAttribute("mode", req);
             request.setAttribute("result", manager.getOverDueRecords());
             getServletContext().getRequestDispatcher("/admin/adminhome.jsp").forward(request, response);
+        }else if (req.equals("historyPage")){
+            request.setAttribute("mode", req);
+            getServletContext().getRequestDispatcher("/admin/adminhome.jsp").forward(request, response);
+        }else if (req.equals("history")){
+            AdminReservationManager reserveManager = (AdminReservationManager)request.getSession().getAttribute("reservationManager");
+
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+            Date startDate;
+            Date endDate;
+
+
+            try {
+                startDate = sdf.parse((String) request.getParameter("startDate"));
+                endDate = sdf.parse((String)request.getParameter("endDate"));
+            } catch (ParseException ex) {
+                //send the error message here
+                request.setAttribute("mode", "historyPage");
+                request.setAttribute("error", "invalid dates");
+                getServletContext().getRequestDispatcher("/admin/adminhome.jsp").forward(request, response);
+                return;
+            }
+            request.setAttribute("result", reserveManager.getAllRecords(startDate, endDate));
+            request.setAttribute("mode", req);
+            getServletContext().getRequestDispatcher("/admin/adminhome.jsp").forward(request, response);
+
         }
     } 
 

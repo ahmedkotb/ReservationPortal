@@ -175,6 +175,7 @@
                     }%> </td></tr>
                             <tr><td>price : </td> <td><%=record.getPrice()%> </td></tr>
                             <tr><td>status : </td> <td><%=record.getStatus()%> </td></tr>
+                            <tr><td colspan="2"><hr/></td></tr>
                         </table>
                         <%}
                     } else if (mode.equals("view")) {%>
