@@ -44,17 +44,16 @@
             if (mode == null) {
                 out.println("welcome");
             } else if (mode.equals("allAdmins") || mode.equals("newAdmins")) {
-                out.println(mode + "<br>");
+                out.println("<h2>" + mode + "</h2>");
                 Collection<Admin> admins = (Collection<Admin>) request.getAttribute("result");
 
-                if (admins == null) {
+                if (admins.size() == 0) {
                     out.println("nothing found");
-                    return;
                 }
 
                 for (Admin admin : admins) {
             %>
-            <div style="background-color:orange">
+            <div>
                 <table>
                     <tr>
                         <td> Name : </td> <td> <%=admin.getName()%> </td>
@@ -73,10 +72,17 @@
                     </tr>
 
                     <tr>
-                        <td> Qualifications : </td> <td> <%=admin.getQualifications()%> </td>
+                        <td valign="top"> Qualifications : </td> <td> <%=admin.getQualifications().replaceAll("\n", "<br>") %> </td>
                     </tr>
                     <tr>
-                        <td> lastLoginDate : </td> <td> <%=admin.getLastLoginDate()%> </td>
+                        <td> lastLoginDate : </td>
+                        <td> <%
+                                if (admin.getLastLoginDate() == null)
+                                    out.print("havent logged in before");
+                                else
+                                    out.print(admin.getLastLoginDate());
+                            %>
+                        </td>
                     </tr>
                     <tr>
                         <% if (admin.isActivated()) {%>
@@ -85,7 +91,7 @@
                         <td><a href="owner?req=activate&userName=<%=admin.getUserName()%>">activate</a></td>
                         <% }%>
                     </tr>
-
+                    <tr><td colspan="2"><hr/></td></tr>
                 </table>
 
             </div>
