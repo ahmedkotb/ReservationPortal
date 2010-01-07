@@ -58,13 +58,17 @@ public class ReservationMonitor {
         recordsQueue.add(record);
     }
 
-
-
+    /**
+     * returns the total number of onhold reservations
+     * @return the total number of onhold reservations in the records queue
+     */
+    public int getNumberOfOnHoldRecords(){
+        return recordsQueue.size();
+    }
     /**
      * refresh the queue by removing onhold reservations that passed an hour
      */
     public void refresh(){
-        System.out.println("here");
         Date now = new Date();
         ReservationRecord record;
         while (!recordsQueue.isEmpty() && dateDiff(recordsQueue.peek().purchaseDate, now)){
@@ -76,7 +80,6 @@ public class ReservationMonitor {
                 record.returnItem();
                 
             }
-            System.out.println("removed + " + record.getPurchaseDate());
         }
     }
 

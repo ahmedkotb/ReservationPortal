@@ -115,6 +115,7 @@ public class CustomerReservationManager {
         } else {
             numberOfOnholdReservation++;    //onHold
         }
+        ReservationMonitor.getInstance().addRecord(record);
         ReservationMonitor.getInstance().refresh();
     }
 

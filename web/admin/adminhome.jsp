@@ -43,6 +43,8 @@
             String mode = (String)request.getAttribute("mode");
             if (mode == null){
                 //do nothing or display statistics....
+                out.println("<h2>welcome " + ((User)session.getAttribute("user")).getName() + "</h2>");
+                
             }else if (mode.equals("addAgencyPage")){
          %>
             <jsp:include page="addagency.jsp"></jsp:include>
