@@ -12,6 +12,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Payment Info</title>
+        <script type="text/javascript" src="calender/calendar_us.js"></script>
+        <link rel="stylesheet" href="calender/calendar.css"/>
     </head>
     <body>
         <script type="text/javascript" language="JavaScript">
@@ -75,7 +77,13 @@
                 <br>
 
                 Expire Date :
-                <input name ="in0_2" type="text" value="1/1/2010" id="in0_2" />
+                <input name ="in0_2" type="text" value="" id="in0_2" />
+                    <script language="JavaScript">
+                            A_TCALDEF['imgpath'] = 'calender/img/';
+                            new tcal ({
+                                'controlname': 'in0_2'
+                            });
+                    </script>
                 <label id="ind0_2" ></label>
                 <br>
                 Billing Address:

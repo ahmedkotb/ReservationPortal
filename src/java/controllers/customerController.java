@@ -57,11 +57,13 @@ public class customerController extends HttpServlet {
             getServletContext().getRequestDispatcher("/customer/customerhome.jsp").forward(request, response);
         } else if (req.equals("reserve")) {
             String id = (String) request.getParameter("id");
-            if (id == null) {
-                out.print("null id");
+            CustomerReservationManager reserveManager = (CustomerReservationManager) request.getSession().getAttribute("reservationManager");
+            if (reserveManager.getNumberOfOnholdReservation() == reserveManager.getMAX_ONHOLD_RESERVATIONS()){
+                request.setAttribute("error", "you can't reserve more than " + reserveManager.getMAX_ONHOLD_RESERVATIONS() + " on hold reservations");
+                request.setAttribute("mode", "searchCarPage");
+                getServletContext().getRequestDispatcher("/customer/customerhome.jsp").forward(request, response);
                 return;
             }
-            CustomerReservationManager reserveManager = (CustomerReservationManager) request.getSession().getAttribute("reservationManager");
             ICustomerReservationItemManager itemManager = ReservationPortalSystem.getInstance().getItemManager();
             ReservationRecord record = (ReservationRecord) request.getSession().getAttribute("record");
             if (record == null) {
@@ -111,6 +113,9 @@ public class customerController extends HttpServlet {
                 endDate = sdf.parse((String)request.getParameter("endDate"));
             } catch (ParseException ex) {
                 //send the error message here
+                request.setAttribute("mode", "historyPage");
+                request.setAttribute("error", "invalid dates");
+                getServletContext().getRequestDispatcher("/customer/customerhome.jsp").forward(request, response);
                 return;
             }
             request.setAttribute("result", reserveManager.getConfirmedReservations(startDate, endDate));
@@ -142,7 +147,7 @@ public class customerController extends HttpServlet {
 
     private Payment getPaymentInfo(HttpServletRequest request){
         //credit card
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
         if (request.getParameter("type").equals("credit card")) {
             CreditCard cc = new CreditCard();
             try {
@@ -192,7 +197,7 @@ public class customerController extends HttpServlet {
 
             //put the reservation extra info in the session in case the user decided to reserve an item
             ReservationRecord record = new CarReservation();
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
             Date startDate;
             Date endDate;
             try {

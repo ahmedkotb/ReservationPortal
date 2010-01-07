@@ -17,7 +17,11 @@
 
     </head>
     <body>
-        <table border="0" cellspacing="" cellpadding="" align="left" width="1000" >
+        <h2>Reservations Archieve</h2>
+        <%if (request.getAttribute("error") != null){%>
+                <div style="background-color:#fff5c3"> Error : <%=(String)request.getAttribute("error")%> </div>
+        <%}%>
+        <table border="0">
             <tbody>
                 <tr>
                     <td>Start Date: <input type="text" name="startDate" id="sd" value="" />

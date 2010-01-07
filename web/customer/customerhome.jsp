@@ -81,6 +81,7 @@
                         String mode = (String) request.getAttribute("mode");
                         if (mode == null) {
                             //home page
+                            out.println("<h2>welcome " + ((User)session.getAttribute("user")).getName() + "</h2>");
                         } else if (mode.equals("searchCarPage")) {%>
                     <form action="customer" method="post">
                         <input type="hidden" name="req" value="searchCar" />
@@ -109,7 +110,7 @@
                                 <td>car agency :</td><td><%=((Car) item).getMyAgency().getName()%></td>
                             </tr>
                             <tr>
-                                <td><a href="customer?req=reserve&id=<%=item.getId()%>">Reserve</a></td><td>Reserve and pay</td>
+                                <td colspan="2" align="center"><a href="customer?req=reserve&id=<%=item.getId()%>">Reserve</a></td>
                             </tr>
                             <tr><td colspan=" 2" align="center"><a href="customer?req=view&id=<%=item.getId()%>">rating and reviews</a></td></tr>
                             <tr><td colspan="2"> <hr></td></tr>
@@ -161,14 +162,13 @@
                             <jsp:include page="history.jsp"></jsp:include>
                             <input type="submit" value="view" />
                         </form>
-                            <hr>
+                            <hr/>
                     <%
                             Collection<ReservationRecord> records = (Collection<ReservationRecord>) request.getAttribute("result");
                             if (records.size() == 0) {
                                 out.println("nothing found");
-                                return;
                             }
-                            out.print("found : " + records.size() + "<br>");
+                            out.print("<br>found : " + records.size() + "<br>");
                             for (ReservationRecord record : records) {
                         %>
 

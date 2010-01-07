@@ -21,6 +21,7 @@ public class CustomerReservationManager {
     private int numberOfOnholdReservation;
     private int numberOfOnSpotReservation;
 
+    final private int MAX_ONHOLD_RESERVATIONS = 1;
     public CustomerReservationManager() {
         customer = new Customer();
         numberOfOnSpotReservation = 0;
@@ -107,7 +108,7 @@ public class CustomerReservationManager {
         this.numberOfOnholdReservation = numberOfOnholdReservation;
     }
 
-    public void reserve(ReservationRecord record) {
+    public void reserve(ReservationRecord record){
         record.pickItem();
         ReservationPortalSystem.getInstance().save(record);
         if (record.getStatus() == ReservationStatus.PAYED) {
@@ -117,6 +118,10 @@ public class CustomerReservationManager {
         }
         ReservationMonitor.getInstance().addRecord(record);
         ReservationMonitor.getInstance().refresh();
+    }
+
+    public int getMAX_ONHOLD_RESERVATIONS() {
+        return MAX_ONHOLD_RESERVATIONS;
     }
 
     public void cancel(ReservationRecord record) {
