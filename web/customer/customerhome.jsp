@@ -82,6 +82,10 @@
                         if (mode == null) {
                             //home page
                             out.println("<h2>welcome " + ((User)session.getAttribute("user")).getName() + "</h2>");
+                            CustomerReservationManager reserveManager = (CustomerReservationManager) request.getSession().getAttribute("reservationManager");
+                            if (reserveManager.getNumberOfOnholdReservation() > 0)
+                                out.println("you have " + reserveManager.getNumberOfOnholdReservation() + " on hold reservations");
+
                         } else if (mode.equals("searchCarPage")) {%>
                     <form action="customer" method="post">
                         <input type="hidden" name="req" value="searchCar" />
@@ -176,6 +180,7 @@
                     }%> </td></tr>
                             <tr><td>price : </td> <td><%=record.getPrice()%> </td></tr>
                             <tr><td>status : </td> <td><%=record.getStatus()%> </td></tr>
+                             <tr><td colspan="2" align="center"><a href="customer?req=view&id=<%=record.getMyReservationItem().getId()%>">Add Review</a></td></tr>
                             <tr><td colspan="2"><hr/></td></tr>
                         </table>
                         <%}

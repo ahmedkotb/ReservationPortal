@@ -55,7 +55,10 @@
                  getServletContext().getRequestDispatcher("/customer/customerhome.jsp").forward(request, response);
          }else{
     %>
-        <form action="login" method="post">
+            <%if (request.getAttribute("error") != null){%>
+                <div style="background-color:#fff5c3"> Error : <%=(String)request.getAttribute("error")%> </div>
+            <%}%>
+    <form action="login" method="post">
           <div>
             <label for="name">user name:</label>
             <input class="textfield" name="userName" id="name" type="text" />
@@ -134,7 +137,7 @@
             <h3>join km-portal Admins ...</h3>
 
             <%if (request.getAttribute("error") != null){%>
-                <div> error : <%=(String)request.getAttribute("error")%> </div>
+                <div style="background-color:#fff5c3"> error : <%=(String)request.getAttribute("error")%> </div>
             <%}%>
 
             <form action="register" method="POST">

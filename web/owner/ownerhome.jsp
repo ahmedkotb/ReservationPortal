@@ -4,7 +4,7 @@
     Author     : ahmed
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8" import="java.util.* , reservationPortalSystem.Admin"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" import="java.util.* , reservationPortalSystem.Admin ,reservationPortalSystem.ReservationPortalSystem , reservationPortalSystem.User"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -42,7 +42,11 @@
                     <%
             String mode = (String) request.getAttribute("mode");
             if (mode == null) {
-                out.println("welcome");
+                out.println("<h2>welcome " + ((User)session.getAttribute("user")).getName() +"</h2>");
+
+                out.print("current week profit : " + ReservationPortalSystem.getInstance().getWeeklyProfit() + "<br>");
+                out.print("current year profit : " + ReservationPortalSystem.getInstance().getAnnualProfit() + "<br>");
+
             } else if (mode.equals("allAdmins") || mode.equals("newAdmins")) {
                 out.println("<h2>" + mode + "</h2>");
                 Collection<Admin> admins = (Collection<Admin>) request.getAttribute("result");

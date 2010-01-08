@@ -191,6 +191,42 @@ public class ReservationPortalSystem
         return result;
     }
 
+
+
+    /**
+     * returns the annual profit by the system
+     * @return ammount of profit the system had during this year
+     */
+    public double getAnnualProfit(){
+        double profit = 0.0;
+        //a date that is a week behind
+        Query query = ReservationPortalSystem.getInstance().getConnection().newQuery(ReservationRecord.class);
+        query.declareParameters("int currentYear");
+        query.setFilter("( ( (this.status == \"PAYED\") || (this.status == \"DONE\" ) ) && ( this.purchaseDate.getYear() == currentYear ) )");
+        Collection<ReservationRecord> result = (Collection<ReservationRecord>) query.execute(new Date().getYear());
+        for (ReservationRecord record : result)
+            profit+= record.getPrice();
+        return profit;
+
+    }
+
+    /**
+     * returns the weekly profit
+     * @return ammount of profit the system had during this year
+     */
+    public double getWeeklyProfit(){
+        double profit = 0.0;
+        //a date that is a week behind
+        Date date = new Date((new Date()).getTime() - 7 * 24 * 60 * 60 * 1000);
+        Query query = ReservationPortalSystem.getInstance().getConnection().newQuery(ReservationRecord.class);
+        query.declareParameters("java.util.Date date");
+        query.setFilter("( ( (this.status == \"PAYED\") || (this.status == \"DONE\" ) ) && ( this.purchaseDate.after(date) ) )");
+        Collection<ReservationRecord> result = (Collection<ReservationRecord>) query.execute(date);
+        for (ReservationRecord record : result)
+            profit+= record.getPrice();
+        return profit;
+    }
+
     /**
      * activate or deactivate an admin with a specific name according to the value given
      * @param adminUserName the user name to be activated

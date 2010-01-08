@@ -39,9 +39,11 @@ public class LoginController extends HttpServlet {
              user = ReservationPortalSystem.getInstance().login((String) request.getParameter("userName"), (String) request.getParameter("password"));
         } catch (Exception ex) {
             if (ex.getMessage().equals("UserNotFoundException")) {
-                out.println("wrong password or username");
-            } else if (ex.getMessage().equals("NotActivatedException")) {
-                out.print("you are not activated yet or have been deactivated by the owner of the portal");
+                request.setAttribute("error", "invalid user name or password");
+                getServletContext().getRequestDispatcher("/home.jsp?req=login").forward(request, response);
+            } else if (ex.getMessage().equals("NotActivatedException")) {                
+                request.setAttribute("error", "you are not activated yet or have been deactivated by the owner of the portal");
+                getServletContext().getRequestDispatcher("/home.jsp?req=login").forward(request, response);
             }else{
                 ex.printStackTrace(out);
             }
