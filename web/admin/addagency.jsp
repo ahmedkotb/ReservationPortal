@@ -17,12 +17,21 @@
             choosedCombo = 0;
             init = 1;
             function addLocation(){
-                var row = document.getElementById("locationsTable").insertRow(1);
+                var tbl = document.getElementById("locationsTable");
+                var newloc = document.getElementById("country").value + "," + document.getElementById("city").value + "," + document.getElementById("street").value;
+                for (var i =0;i<tbl.rows.length;i++){
+                    if (tbl.rows[i].cells[0].innerHTML == newloc){
+                        alert("location already exists");
+                        return;
+                    }
+                }
+
+                var row = tbl.insertRow(1);
                 rowIDs+=1;
                 row.id = rowIDs;
                 var cell1 = row.insertCell(0);
                 var cell2 = row.insertCell(1);
-                cell1.innerHTML = document.getElementById("country").value + "," + document.getElementById("city").value + "," + document.getElementById("street").value;
+                cell1.innerHTML = newloc;
                 cell2.innerHTML = "<input type=\"button\" value=\"remove\" onclick=\"remove("+ row.id  + ")\" />";
             }
             function showHide(){
